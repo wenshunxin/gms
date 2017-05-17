@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_feeding">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsFeeding">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="feeding_type" property="feedingType" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="investigate_area" property="investigateArea"
+			jdbcType="VARCHAR" />
+		<result column="investigate_company_name" property="investigateCompanyName"
+			jdbcType="VARCHAR" />
+		<result column="household_user_name" property="householdUserName"
+			jdbcType="VARCHAR" />
+		<result column="house_contracted_size" property="houseContractedSize"
+			jdbcType="DOUBLE" />
+		<result column="artificial_grass_size" property="artificialGrassSize"
+			jdbcType="DOUBLE" />
+		<result column="artificial_grass_amount" property="artificialGrassAmount"
+			jdbcType="DOUBLE" />
+		<result column="straw_amount" property="strawAmount" jdbcType="DOUBLE" />
+		<result column="silage_amount" property="silageAmount"
+			jdbcType="DOUBLE" />
+		<result column="food_amount" property="foodAmount" jdbcType="DOUBLE" />
+		<result column="supplement_days" property="supplementDays"
+			jdbcType="INTEGER" />
+		<result column="grazing_days" property="grazingDays" jdbcType="INTEGER" />
+		<result column="sheep_amount" property="sheepAmount" jdbcType="DOUBLE" />
+		<result column="goat_amount" property="goatAmount" jdbcType="DOUBLE" />
+		<result column="cow_amount" property="cowAmount" jdbcType="DOUBLE" />
+		<result column="horse_amount" property="horseAmount" jdbcType="DOUBLE" />
+		<result column="camel_amount" property="camelAmount" jdbcType="DOUBLE" />
+		<result column="mule_amount" property="muleAmount" jdbcType="DOUBLE" />
+		<result column="donkey_amount" property="donkeyAmount"
+			jdbcType="DOUBLE" />
+		<result column="other_herbivorous_amount" property="otherHerbivorousAmount"
+			jdbcType="DOUBLE" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsFeeding"
+		extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, feeding_type, investigate_data_id, investigate_date,
+		investigate_area, investigate_company_name,
+		household_user_name, house_contracted_size, artificial_grass_size,
+		artificial_grass_amount,
+		straw_amount, silage_amount, food_amount, supplement_days, grazing_days,
+		sheep_amount,
+		goat_amount, cow_amount, horse_amount, camel_amount, mule_amount, donkey_amount,
+		other_herbivorous_amount, create_user_id, create_user_name,
+		create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_feeding
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getFeedingByDataId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_feeding
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_feeding
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tcxt.gms.investigation.bean.GmsFeeding">
+		insert into gms_feeding (sid, feeding_type, investigate_data_id,
+		investigate_date, investigate_area, investigate_company_name,
+		household_user_name, house_contracted_size,
+		artificial_grass_size, artificial_grass_amount,
+		straw_amount, silage_amount, food_amount,
+		supplement_days, grazing_days, sheep_amount,
+		goat_amount, cow_amount, horse_amount,
+		camel_amount, mule_amount, donkey_amount,
+		other_herbivorous_amount, create_user_id, create_user_name,
+		create_time, investigate_user_ids, investigate_user_names,
+		remark)
+		values (#{sid,jdbcType=INTEGER}, #{feedingType,jdbcType=INTEGER},
+		#{investigateDataId,jdbcType=INTEGER},
+		#{investigateDate,jdbcType=DATE}, #{investigateArea,jdbcType=VARCHAR},
+		#{investigateCompanyName,jdbcType=VARCHAR},
+		#{householdUserName,jdbcType=VARCHAR},
+		#{houseContractedSize,jdbcType=DOUBLE},
+		#{artificialGrassSize,jdbcType=DOUBLE},
+		#{artificialGrassAmount,jdbcType=DOUBLE},
+		#{strawAmount,jdbcType=DOUBLE}, #{silageAmount,jdbcType=DOUBLE},
+		#{foodAmount,jdbcType=DOUBLE},
+		#{supplementDays,jdbcType=INTEGER}, #{grazingDays,jdbcType=INTEGER}, #{sheepAmount,jdbcType=DOUBLE},
+		#{goatAmount,jdbcType=DOUBLE}, #{cowAmount,jdbcType=DOUBLE},
+		#{horseAmount,jdbcType=DOUBLE},
+		#{camelAmount,jdbcType=DOUBLE}, #{muleAmount,jdbcType=DOUBLE}, #{donkeyAmount,jdbcType=DOUBLE},
+		#{otherHerbivorousAmount,jdbcType=DOUBLE},
+		#{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{investigateUserIds,jdbcType=LONGVARCHAR},
+		#{investigateUserNames,jdbcType=LONGVARCHAR},
+		#{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsFeeding">
+		insert into gms_feeding
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="feedingType != null">
+				feeding_type,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="householdUserName != null">
+				household_user_name,
+			</if>
+			<if test="houseContractedSize != null">
+				house_contracted_size,
+			</if>
+			<if test="artificialGrassSize != null">
+				artificial_grass_size,
+			</if>
+			<if test="artificialGrassAmount != null">
+				artificial_grass_amount,
+			</if>
+			<if test="strawAmount != null">
+				straw_amount,
+			</if>
+			<if test="silageAmount != null">
+				silage_amount,
+			</if>
+			<if test="foodAmount != null">
+				food_amount,
+			</if>
+			<if test="supplementDays != null">
+				supplement_days,
+			</if>
+			<if test="grazingDays != null">
+				grazing_days,
+			</if>
+			<if test="sheepAmount != null">
+				sheep_amount,
+			</if>
+			<if test="goatAmount != null">
+				goat_amount,
+			</if>
+			<if test="cowAmount != null">
+				cow_amount,
+			</if>
+			<if test="horseAmount != null">
+				horse_amount,
+			</if>
+			<if test="camelAmount != null">
+				camel_amount,
+			</if>
+			<if test="muleAmount != null">
+				mule_amount,
+			</if>
+			<if test="donkeyAmount != null">
+				donkey_amount,
+			</if>
+			<if test="otherHerbivorousAmount != null">
+				other_herbivorous_amount,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="feedingType != null">
+				#{feedingType,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="householdUserName != null">
+				#{householdUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="houseContractedSize != null">
+				#{houseContractedSize,jdbcType=DOUBLE},
+			</if>
+			<if test="artificialGrassSize != null">
+				#{artificialGrassSize,jdbcType=DOUBLE},
+			</if>
+			<if test="artificialGrassAmount != null">
+				#{artificialGrassAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="strawAmount != null">
+				#{strawAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="silageAmount != null">
+				#{silageAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="foodAmount != null">
+				#{foodAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="supplementDays != null">
+				#{supplementDays,jdbcType=INTEGER},
+			</if>
+			<if test="grazingDays != null">
+				#{grazingDays,jdbcType=INTEGER},
+			</if>
+			<if test="sheepAmount != null">
+				#{sheepAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="goatAmount != null">
+				#{goatAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="cowAmount != null">
+				#{cowAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="horseAmount != null">
+				#{horseAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="camelAmount != null">
+				#{camelAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="muleAmount != null">
+				#{muleAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="donkeyAmount != null">
+				#{donkeyAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="otherHerbivorousAmount != null">
+				#{otherHerbivorousAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsFeeding">
+		update gms_feeding
+		<set>
+				feeding_type = #{feedingType,jdbcType=INTEGER},
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+				investigate_company_name =
+				#{investigateCompanyName,jdbcType=VARCHAR},
+				household_user_name = #{householdUserName,jdbcType=VARCHAR},
+				house_contracted_size = #{houseContractedSize,jdbcType=DOUBLE},
+				artificial_grass_size = #{artificialGrassSize,jdbcType=DOUBLE},
+				artificial_grass_amount = #{artificialGrassAmount,jdbcType=DOUBLE},
+				straw_amount = #{strawAmount,jdbcType=DOUBLE},
+				silage_amount = #{silageAmount,jdbcType=DOUBLE},
+				food_amount = #{foodAmount,jdbcType=DOUBLE},
+				supplement_days = #{supplementDays,jdbcType=INTEGER},
+				grazing_days = #{grazingDays,jdbcType=INTEGER},
+				sheep_amount = #{sheepAmount,jdbcType=DOUBLE},
+				goat_amount = #{goatAmount,jdbcType=DOUBLE},
+				cow_amount = #{cowAmount,jdbcType=DOUBLE},
+				horse_amount = #{horseAmount,jdbcType=DOUBLE},
+				camel_amount = #{camelAmount,jdbcType=DOUBLE},
+				mule_amount = #{muleAmount,jdbcType=DOUBLE},
+				donkey_amount = #{donkeyAmount,jdbcType=DOUBLE},
+				other_herbivorous_amount =
+				#{otherHerbivorousAmount,jdbcType=DOUBLE},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryFeeding" parameterType="HashMap" resultType="hashMap">
+		select f.sid as sid, f.feeding_type as feedingType, f.investigate_data_id as investigateDataId, f.investigate_date as investigateDate,
+		f.investigate_area as investigateArea, f.investigate_company_name as investigateCompanyName,
+		f.household_user_name householdUserName, f.house_contracted_size as houseContractedSize, f.artificial_grass_size as artificialGrassSize,
+		f.artificial_grass_amount as artificialGrassAmount,
+		f.straw_amount as strawAmount, f.silage_amount as silageAmount, f.food_amount as foodAmount, f.supplement_days as supplementDays, 
+		f.grazing_days as grazingDays,
+		f.sheep_amount as sheepAmount,
+		f.goat_amount as goatAmount, f.cow_amount as cowAmount, f.horse_amount horseAmount, f.camel_amount as camelAmount, f.mule_amount as muleAmount, f.donkey_amount as donkeyAmount,
+		f.other_herbivorous_amount as otherHerbivorousAmount,f.investigate_user_names as investigateUserNames, 
+		d.audit_status as auditStatus
+		from gms_feeding f left join gms_investigate_data d on f.investigate_data_id= d.sid
+						   left join gms_user u on f.create_user_id = u.sid
+		where 1=1
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and f.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="feedingType !=null and feedingType !=-1">
+			and f.feeding_type = #{feedingType,jdbcType=INTEGER}
+		</if>
+		<if test="year !=null and year !=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="householdUserName !=null and householdUserName !=''">
+			and f.household_user_name = #{householdUserName,jdbcType=VARCHAR}
+		</if>
+		<if test="auditStatus !=null and auditStatus !=''">
+			and d.audit_status = #{auditStatus,jdbcType=INTEGER}
+		</if>
+		<if test="itemValue!='' and itemCondition!=''">
+			<if test="itemCondition==0  and itemValue!=''">
+					and ${queryItem} = #{itemValue,jdbcType=DOUBLE}
+			</if>
+			<if test="itemCondition==1  and itemValue!=''">
+					and ${queryItem} > #{itemValue,jdbcType=DOUBLE}
+			</if>
+			<if test="itemCondition==2 and itemValue!=''">
+					and ${queryItem} &lt; #{itemValue,jdbcType=DOUBLE}
+			</if>
+			<if test="itemCondition==3  and startValue!='' and endValue!=''">
+					and ${queryItem}>=#{startValue,jdbcType=DOUBLE} and ${queryItem} &lt;=#{endValue,jdbcType=DOUBLE}
+			</if>
+			<if test="itemCondition==4  and startValue!='' and endValue!=''">
+					and ${queryItem}&lt;#{startValue,jdbcType=DOUBLE} or ${queryItem} > #{endValue,jdbcType=DOUBLE}
+			</if>
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="queryFeedingList" parameterType="HashMap" resultType="hashMap">
+		SELECT gf.sid sid,gf.feeding_type feedingType,gf.investigate_data_id investigateDataId,gf.investigate_date investigateDate,gf.investigate_user_ids investigateUserIds,
+		gf.investigate_user_names investigateUserNames,gf.investigate_company_name investigateCompanyName,gf.investigate_area investigateArea,gf.household_user_name householdUserName,
+		gf.house_contracted_size houseContractedSize,gf.artificial_grass_size artificialGrassSize,gf.artificial_grass_amount artificialGrassAmount,gf.straw_amount strawAmount,
+		gf.silage_amount silageAmount,gf.food_amount foodAmount,gf.supplement_days supplementDays,gf.grazing_days grazingDays,gf.sheep_amount sheepAmount,gf.goat_amount goatAmount,
+		gf.cow_amount cowAmount,gf.horse_amount horseAmount,gf.camel_amount camelAmount,gf.mule_amount muleAmount,gf.donkey_amount donkeyAmount,gf.other_herbivorous_amount otherHerbivorousAmount,
+		gf.create_user_id createUserId,gf.create_user_name createUserName,gf.create_time createTime,gf.remark remark
+		FROM `gms_investigate_data` gid LEFT JOIN gms_feeding gf ON gid.sid=gf.investigate_data_id 
+		where gid.sid=gf.investigate_data_id 
+		<if test="auditStatus != null and auditStatus ==4">
+			 AND gid.audit_status=4 
+		</if>
+		<if test="auditStatus != null and auditStatus ==0">
+			 AND gid.audit_status=0 
+		</if>
+		<if test="auditStatus != null and auditStatus ==99">
+			 AND gid.audit_status>0
+		</if>
+		AND gid.investigate_type in (2,3) AND gid.`year`= #{year,jdbcType=INTEGER}
+		AND gid.create_user_id IN (select sid FROM gms_user where city_code LIKE '${cityCode}');
+	</select>
+</mapper>

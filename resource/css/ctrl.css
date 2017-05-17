@@ -1,0 +1,99 @@
+.sampleArea {
+	height: 45px;
+	line-height: 45px;
+	color:#333;
+	font-size:14px;
+	font-family: "Microsoft yahei";
+	
+}
+.sampleAreaWeight{
+	font-weight: 600;
+}
+.quadrat {
+	height: 32px;
+	line-height: 32px;
+	position:relative;
+	color:#000;
+	font-size:14px;
+	font-family: "Microsoft yahei";
+}
+.quadrat span{
+	display:inline-block;
+	height:31px;
+	width:8px;
+	/*background:red;*/
+	border-left:1px solid #666666;
+	border-bottom: 1px solid #666666;
+	border-top:0;
+	position:absolute;
+	top:-14px;
+	left:15px;
+}
+.quadrat b{
+	display:inline-block;
+	width:25px;
+}
+.sampleArea a{
+	color:#333 !important;
+}
+.quadrat a{
+	color:#333 !important;
+}
+.addCtrl {
+	display: inline-block;
+	height:32px;
+	width:100%;
+	line-height: 32px;
+	background: url(../images/sys/add.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.deleteCtrl {
+	display: inline-block;
+	line-height: 32px;
+	height:32px;
+	width:100%;
+	background: url(../images/sys/delete.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.editCtrl {
+	display: inline-block;
+	line-height: 32px;
+	height:32px;
+	width:100%;
+	background: url(../images/sys/edit.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.detailCtrl {
+	display: inline-block;
+	line-height: 32px;
+	height:32px;
+	width:100%;
+	background: url(../images/sys/detail.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.submitCtrl {
+	display: inline-block;
+	line-height: 32px;
+	height:32px;
+	width:100%;
+	background: url(../images/sys/submit.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.approveCtrl {
+	display: inline-block;
+	line-height: 32px;
+	height:32px;
+	width:100%;
+	background: url(../images/sys/approve.png) no-repeat center;
+	background-size: 15px 15px;
+}
+
+.sampleArea a{
+	height:45px;
+	line-height: 45px;
+}

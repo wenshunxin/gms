@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_ms_ecological" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="investigate_date" property="investigateDate" jdbcType="DATE" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="litter_amount" property="litterAmount" jdbcType="DOUBLE" />
+    <result column="auxiliary_using_type" property="auxiliaryUsingType" jdbcType="VARCHAR" />
+    <result column="auxiliary_using_status" property="auxiliaryUsingStatus" jdbcType="VARCHAR" />
+    <result column="soil_weight" property="soilWeight" jdbcType="DOUBLE" />
+    <result column="soil_salt" property="soilSalt" jdbcType="DOUBLE" />
+    <result column="soil_ph" property="soilPh" jdbcType="DOUBLE" />
+    <result column="soil_organic" property="soilOrganic" jdbcType="DOUBLE" />
+    <result column="soil_nitrogen" property="soilNitrogen" jdbcType="DOUBLE" />
+    <result column="plant_amount" property="plantAmount" jdbcType="INTEGER" />
+    <result column="main_plants" property="mainPlants" jdbcType="VARCHAR" />
+    <result column="first_plant_name" property="firstPlantName" jdbcType="VARCHAR" />
+    <result column="first_plant_coverage" property="firstPlantCoverage" jdbcType="DOUBLE" />
+    <result column="first_plant_weight" property="firstPlantWeight" jdbcType="DOUBLE" />
+    <result column="first_plant_advantage" property="firstPlantAdvantage" jdbcType="DOUBLE" />
+    <result column="second_plant_name" property="secondPlantName" jdbcType="VARCHAR" />
+    <result column="second_plant_coverage" property="secondPlantCoverage" jdbcType="DOUBLE" />
+    <result column="second_plant_weight" property="secondPlantWeight" jdbcType="DOUBLE" />
+    <result column="second_plant_advantage" property="secondPlantAdvantage" jdbcType="DOUBLE" />
+    <result column="third_plant_name" property="thirdPlantName" jdbcType="VARCHAR" />
+    <result column="third_plant_coverage" property="thirdPlantCoverage" jdbcType="DOUBLE" />
+    <result column="third_plant_weight" property="thirdPlantWeight" jdbcType="DOUBLE" />
+    <result column="third_plant_advantage" property="thirdPlantAdvantage" jdbcType="DOUBLE" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" extends="BaseResultMap" >
+    <result column="investigate_user_ids" property="investigateUserIds" jdbcType="LONGVARCHAR" />
+    <result column="investigate_user_names" property="investigateUserNames" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, monitoring_stations_id, investigate_date, contact_phone, litter_amount, auxiliary_using_type, 
+    auxiliary_using_status, soil_weight, soil_salt, soil_ph, soil_organic, soil_nitrogen, 
+    plant_amount, main_plants, first_plant_name, first_plant_coverage, first_plant_weight, 
+    first_plant_advantage, second_plant_name, second_plant_coverage, second_plant_weight, 
+    second_plant_advantage, third_plant_name, third_plant_coverage, third_plant_weight, 
+    third_plant_advantage, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    investigate_user_ids, investigate_user_names, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultType="hashMap" parameterType="java.lang.Integer" >
+    select 
+    gme.sid sid, gme.monitoring_stations_id monitoringStationsId, gme.investigate_date investigateDate, gme.litter_amount litterAmount, gme.auxiliary_using_type auxiliaryUsingType, 
+    gme.auxiliary_using_status auxiliaryUsingStatus, gme.soil_weight soilWeight, gme.soil_salt soilSalt, gme.soil_ph soilPh, gme.soil_organic soilOrganic, gme.soil_nitrogen soilNitrogen, 
+    gme.plant_amount plantAmount, gme.main_plants mainPlants, gme.first_plant_name firstPlantName, gme.first_plant_coverage firstPlantCoverage, gme.first_plant_weight firstPlantWeight, 
+    gme.first_plant_advantage firstPlantAdvantage, gme.second_plant_name secondPlantName, gme.second_plant_coverage secondPlantCoverage, gme.second_plant_weight secondPlantWeight, 
+    gme.second_plant_advantage secondPlantAdvantage, gme.third_plant_name thirdPlantName, gme.third_plant_coverage thirdPlantCoverage, gme.third_plant_weight thirdPlantWeight, 
+    gme.third_plant_advantage thirdPlantAdvantage, gme.create_user_id createUserId, gme.create_user_name createUserName, gme.create_time createTime,
+    gme.investigate_user_ids investigateUserIds, gme.investigate_user_names investigateUserNames, gme.remark remark,
+    gms.city_code cityCode,gms.grass_category grassCategory,gms.grass_type grassType,gms.stations_num stationsNum,gms.city_short_name as cityShortName
+    FROM `gms_ms_ecological` gme 
+	LEFT JOIN gms_monitoring_stations gms 
+	ON gme.monitoring_stations_id=gms.sid
+    where gme.sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_ms_ecological
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    insert into gms_ms_ecological (sid, monitoring_stations_id, investigate_date, 
+      contact_phone, litter_amount, auxiliary_using_type, 
+      auxiliary_using_status, soil_weight, soil_salt, 
+      soil_ph, soil_organic, soil_nitrogen, 
+      plant_amount, main_plants, first_plant_name, 
+      first_plant_coverage, first_plant_weight, first_plant_advantage, 
+      second_plant_name, second_plant_coverage, second_plant_weight, 
+      second_plant_advantage, third_plant_name, third_plant_coverage, 
+      third_plant_weight, third_plant_advantage, create_user_id, 
+      create_user_name, create_time, investigate_user_ids, 
+      investigate_user_names, remark)
+    values (#{sid,jdbcType=INTEGER}, #{monitoringStationsId,jdbcType=INTEGER}, #{investigateDate,jdbcType=DATE}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{litterAmount,jdbcType=DOUBLE}, #{auxiliaryUsingType,jdbcType=VARCHAR}, 
+      #{auxiliaryUsingStatus,jdbcType=VARCHAR}, #{soilWeight,jdbcType=DOUBLE}, #{soilSalt,jdbcType=DOUBLE}, 
+      #{soilPh,jdbcType=DOUBLE}, #{soilOrganic,jdbcType=DOUBLE}, #{soilNitrogen,jdbcType=DOUBLE}, 
+      #{plantAmount,jdbcType=INTEGER}, #{mainPlants,jdbcType=VARCHAR}, #{firstPlantName,jdbcType=VARCHAR}, 
+      #{firstPlantCoverage,jdbcType=DOUBLE}, #{firstPlantWeight,jdbcType=DOUBLE}, #{firstPlantAdvantage,jdbcType=DOUBLE}, 
+      #{secondPlantName,jdbcType=VARCHAR}, #{secondPlantCoverage,jdbcType=DOUBLE}, #{secondPlantWeight,jdbcType=DOUBLE}, 
+      #{secondPlantAdvantage,jdbcType=DOUBLE}, #{thirdPlantName,jdbcType=VARCHAR}, #{thirdPlantCoverage,jdbcType=DOUBLE}, 
+      #{thirdPlantWeight,jdbcType=DOUBLE}, #{thirdPlantAdvantage,jdbcType=DOUBLE}, #{createUserId,jdbcType=INTEGER}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{investigateUserIds,jdbcType=LONGVARCHAR}, 
+      #{investigateUserNames,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    insert into gms_ms_ecological
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="litterAmount != null" >
+        litter_amount,
+      </if>
+      <if test="auxiliaryUsingType != null" >
+        auxiliary_using_type,
+      </if>
+      <if test="auxiliaryUsingStatus != null" >
+        auxiliary_using_status,
+      </if>
+      <if test="soilWeight != null" >
+        soil_weight,
+      </if>
+      <if test="soilSalt != null" >
+        soil_salt,
+      </if>
+      <if test="soilPh != null" >
+        soil_ph,
+      </if>
+      <if test="soilOrganic != null" >
+        soil_organic,
+      </if>
+      <if test="soilNitrogen != null" >
+        soil_nitrogen,
+      </if>
+      <if test="plantAmount != null" >
+        plant_amount,
+      </if>
+      <if test="mainPlants != null" >
+        main_plants,
+      </if>
+      <if test="firstPlantName != null" >
+        first_plant_name,
+      </if>
+      <if test="firstPlantCoverage != null" >
+        first_plant_coverage,
+      </if>
+      <if test="firstPlantWeight != null" >
+        first_plant_weight,
+      </if>
+      <if test="firstPlantAdvantage != null" >
+        first_plant_advantage,
+      </if>
+      <if test="secondPlantName != null" >
+        second_plant_name,
+      </if>
+      <if test="secondPlantCoverage != null" >
+        second_plant_coverage,
+      </if>
+      <if test="secondPlantWeight != null" >
+        second_plant_weight,
+      </if>
+      <if test="secondPlantAdvantage != null" >
+        second_plant_advantage,
+      </if>
+      <if test="thirdPlantName != null" >
+        third_plant_name,
+      </if>
+      <if test="thirdPlantCoverage != null" >
+        third_plant_coverage,
+      </if>
+      <if test="thirdPlantWeight != null" >
+        third_plant_weight,
+      </if>
+      <if test="thirdPlantAdvantage != null" >
+        third_plant_advantage,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids,
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="litterAmount != null" >
+        #{litterAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="auxiliaryUsingType != null" >
+        #{auxiliaryUsingType,jdbcType=VARCHAR},
+      </if>
+      <if test="auxiliaryUsingStatus != null" >
+        #{auxiliaryUsingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="soilWeight != null" >
+        #{soilWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="soilSalt != null" >
+        #{soilSalt,jdbcType=DOUBLE},
+      </if>
+      <if test="soilPh != null" >
+        #{soilPh,jdbcType=DOUBLE},
+      </if>
+      <if test="soilOrganic != null" >
+        #{soilOrganic,jdbcType=DOUBLE},
+      </if>
+      <if test="soilNitrogen != null" >
+        #{soilNitrogen,jdbcType=DOUBLE},
+      </if>
+      <if test="plantAmount != null" >
+        #{plantAmount,jdbcType=INTEGER},
+      </if>
+      <if test="mainPlants != null" >
+        #{mainPlants,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPlantName != null" >
+        #{firstPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPlantCoverage != null" >
+        #{firstPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="firstPlantWeight != null" >
+        #{firstPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="firstPlantAdvantage != null" >
+        #{firstPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantName != null" >
+        #{secondPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPlantCoverage != null" >
+        #{secondPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantWeight != null" >
+        #{secondPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantAdvantage != null" >
+        #{secondPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantName != null" >
+        #{thirdPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPlantCoverage != null" >
+        #{thirdPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantWeight != null" >
+        #{thirdPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantAdvantage != null" >
+        #{thirdPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    update gms_ms_ecological
+    <set >
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date = #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="litterAmount != null" >
+        litter_amount = #{litterAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="auxiliaryUsingType != null" >
+        auxiliary_using_type = #{auxiliaryUsingType,jdbcType=VARCHAR},
+      </if>
+      <if test="auxiliaryUsingStatus != null" >
+        auxiliary_using_status = #{auxiliaryUsingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="soilWeight != null" >
+        soil_weight = #{soilWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="soilSalt != null" >
+        soil_salt = #{soilSalt,jdbcType=DOUBLE},
+      </if>
+      <if test="soilPh != null" >
+        soil_ph = #{soilPh,jdbcType=DOUBLE},
+      </if>
+      <if test="soilOrganic != null" >
+        soil_organic = #{soilOrganic,jdbcType=DOUBLE},
+      </if>
+      <if test="soilNitrogen != null" >
+        soil_nitrogen = #{soilNitrogen,jdbcType=DOUBLE},
+      </if>
+      <if test="plantAmount != null" >
+        plant_amount = #{plantAmount,jdbcType=INTEGER},
+      </if>
+      <if test="mainPlants != null" >
+        main_plants = #{mainPlants,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPlantName != null" >
+        first_plant_name = #{firstPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPlantCoverage != null" >
+        first_plant_coverage = #{firstPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="firstPlantWeight != null" >
+        first_plant_weight = #{firstPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="firstPlantAdvantage != null" >
+        first_plant_advantage = #{firstPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantName != null" >
+        second_plant_name = #{secondPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondPlantCoverage != null" >
+        second_plant_coverage = #{secondPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantWeight != null" >
+        second_plant_weight = #{secondPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="secondPlantAdvantage != null" >
+        second_plant_advantage = #{secondPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantName != null" >
+        third_plant_name = #{thirdPlantName,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPlantCoverage != null" >
+        third_plant_coverage = #{thirdPlantCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantWeight != null" >
+        third_plant_weight = #{thirdPlantWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdPlantAdvantage != null" >
+        third_plant_advantage = #{thirdPlantAdvantage,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    update gms_ms_ecological
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      litter_amount = #{litterAmount,jdbcType=DOUBLE},
+      auxiliary_using_type = #{auxiliaryUsingType,jdbcType=VARCHAR},
+      auxiliary_using_status = #{auxiliaryUsingStatus,jdbcType=VARCHAR},
+      soil_weight = #{soilWeight,jdbcType=DOUBLE},
+      soil_salt = #{soilSalt,jdbcType=DOUBLE},
+      soil_ph = #{soilPh,jdbcType=DOUBLE},
+      soil_organic = #{soilOrganic,jdbcType=DOUBLE},
+      soil_nitrogen = #{soilNitrogen,jdbcType=DOUBLE},
+      plant_amount = #{plantAmount,jdbcType=INTEGER},
+      main_plants = #{mainPlants,jdbcType=VARCHAR},
+      first_plant_name = #{firstPlantName,jdbcType=VARCHAR},
+      first_plant_coverage = #{firstPlantCoverage,jdbcType=DOUBLE},
+      first_plant_weight = #{firstPlantWeight,jdbcType=DOUBLE},
+      first_plant_advantage = #{firstPlantAdvantage,jdbcType=DOUBLE},
+      second_plant_name = #{secondPlantName,jdbcType=VARCHAR},
+      second_plant_coverage = #{secondPlantCoverage,jdbcType=DOUBLE},
+      second_plant_weight = #{secondPlantWeight,jdbcType=DOUBLE},
+      second_plant_advantage = #{secondPlantAdvantage,jdbcType=DOUBLE},
+      third_plant_name = #{thirdPlantName,jdbcType=VARCHAR},
+      third_plant_coverage = #{thirdPlantCoverage,jdbcType=DOUBLE},
+      third_plant_weight = #{thirdPlantWeight,jdbcType=DOUBLE},
+      third_plant_advantage = #{thirdPlantAdvantage,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsEcological" >
+    update gms_ms_ecological
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      litter_amount = #{litterAmount,jdbcType=DOUBLE},
+      auxiliary_using_type = #{auxiliaryUsingType,jdbcType=VARCHAR},
+      auxiliary_using_status = #{auxiliaryUsingStatus,jdbcType=VARCHAR},
+      soil_weight = #{soilWeight,jdbcType=DOUBLE},
+      soil_salt = #{soilSalt,jdbcType=DOUBLE},
+      soil_ph = #{soilPh,jdbcType=DOUBLE},
+      soil_organic = #{soilOrganic,jdbcType=DOUBLE},
+      soil_nitrogen = #{soilNitrogen,jdbcType=DOUBLE},
+      plant_amount = #{plantAmount,jdbcType=INTEGER},
+      main_plants = #{mainPlants,jdbcType=VARCHAR},
+      first_plant_name = #{firstPlantName,jdbcType=VARCHAR},
+      first_plant_coverage = #{firstPlantCoverage,jdbcType=DOUBLE},
+      first_plant_weight = #{firstPlantWeight,jdbcType=DOUBLE},
+      first_plant_advantage = #{firstPlantAdvantage,jdbcType=DOUBLE},
+      second_plant_name = #{secondPlantName,jdbcType=VARCHAR},
+      second_plant_coverage = #{secondPlantCoverage,jdbcType=DOUBLE},
+      second_plant_weight = #{secondPlantWeight,jdbcType=DOUBLE},
+      second_plant_advantage = #{secondPlantAdvantage,jdbcType=DOUBLE},
+      third_plant_name = #{thirdPlantName,jdbcType=VARCHAR},
+      third_plant_coverage = #{thirdPlantCoverage,jdbcType=DOUBLE},
+      third_plant_weight = #{thirdPlantWeight,jdbcType=DOUBLE},
+      third_plant_advantage = #{thirdPlantAdvantage,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 列表  搜索 -->
+  <select id="queryGme" resultType="hashMap" parameterType="HashMap" >
+    select 
+    gme.sid  sid, gme.monitoring_stations_id monitoringStationsId, gme.investigate_date investigateDate, gme.litter_amount litterAmount, gme.auxiliary_using_type auxiliaryUsingType, 
+    gme.auxiliary_using_status auxiliaryUsingStatus, gme.soil_weight soilWeight, gme.soil_salt soilSalt, gme.soil_ph soilPh, gme.soil_organic soilOrganic, gme.soil_nitrogen soilNitrogen, 
+    gme.plant_amount plantAmount, gme.main_plants mainPlants, gme.first_plant_name firstPlantName, gme.first_plant_coverage firstPlantCoverage, gme.first_plant_weight firstPlantWeight, 
+    gme.first_plant_advantage firstPlantAdvantage, gme.second_plant_name secondPlantName, gme.second_plant_coverage secondPlantCoverage, gme.second_plant_weight secondPlantWeight, 
+    gme.second_plant_advantage secondPlantAdvantage, gme.third_plant_name thirdPlantName, gme.third_plant_coverage thirdPlantCoverage, gme.third_plant_weight thirdPlantWeight, 
+    gme.third_plant_advantage thirdPlantAdvantage, gme.create_user_id createUserId, gme.create_user_name createUserName, gme.create_time createTime,
+    gme.investigate_user_ids investigateUserIds, gme.investigate_user_names investigateUserNames, gme.remark remark,
+    gms.city_code cityCode,gms.grass_category grassCategory,gms.grass_type grassType
+    FROM `gms_ms_ecological` gme 
+	LEFT JOIN gms_monitoring_stations gms 
+	ON gme.monitoring_stations_id=gms.sid
+    <where>
+    	<if test="cityCode != null and cityCode !=''">
+    	city_code like '%${cityCode}%'
+    	</if>
+    	<if test="grassCategory != null and grassCategory !=''">
+    	and grass_category = #{grassCategory}
+    	</if>
+    	<if test="grassType != null and grassType !=''">
+    	and grass_type = #{grassType}
+    	</if>
+    	<if test="beginLitterAmount != null">
+    	and litter_amount >= #{beginLitterAmount}
+    	</if>
+    	<if test="endLitterAmount !=null">
+    	and litter_amount &lt;= #{endLitterAmount}
+    	</if>
+    	<if test="beginSoilWeight != null">
+    	and soil_weight >= #{beginSoilWeight}
+    	</if>
+    	<if test="endSoilWeight !=null">
+    	and soil_weight &lt;= #{endCoverage}
+    	</if>
+    	<if test="beginSoilSalt != null">
+    	and soil_salt >= #{beginSoilSalt}
+    	</if>
+    	<if test="endSoilSalt !=null">
+    	and soil_salt &lt;= #{endSoilSalt}
+    	</if>
+    	<if test="beginSoilPh != null">
+    	and soil_ph >= #{beginSoilPh}
+    	</if>
+    	<if test="endSoilPh !=null">
+    	and soil_ph &lt;= #{endSoilPh}
+    	</if>
+    	<if test="beginSoilOrganic != null">
+    	and soil_organic >= #{beginSoilOrganic}
+    	</if>
+    	<if test="endSoilOrganic !=null">
+    	and soil_organic &lt;= #{endSoilOrganic}
+    	</if>
+    	<if test="beginSoilNitrogen != null">
+    	and soil_nitrogen >= #{beginSoilNitrogen} 
+    	</if>
+    	<if test="endSoilNitrogen !=null">
+    	and soil_nitrogen &lt;= #{endSoilNitrogen}
+    	</if>
+    	<if test="beginPlantAmount != null">
+    	and plant_amount >= #{beginPlantAmount}
+    	</if>
+    	<if test="endPlantAmount !=null">
+    	and plant_amount &lt;= #{endPlantAmount}
+    	</if>
+    	<if test="startYear != null and startYear !=0 ">
+    	and DATE_FORMAT(investigate_date,'%Y') >= #{startYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="endYear!=null and endYear!=0">
+    	and DATE_FORMAT(investigate_date,'%Y') &lt;=#{endYear,jdbcType=INTEGER}
+    	</if>
+    	<!-- <if test="month != null and month !=0">
+    	and MONTH(investigate_date) = #{month}
+    	</if> -->
+    	<if test="hasShrubs != null and hasShrubs !=-1">
+    	and has_shrubs = #{hasShrubs}
+    	</if>
+    	<if test="sids != null and sids !=''">
+    	and gme.sid in
+	    	<foreach item="item" index="index" collection="sids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteGmeById" parameterType="hashMap" >
+    delete from gms_ms_ecological where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+</mapper>

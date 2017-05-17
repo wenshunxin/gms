@@ -1,0 +1,63 @@
+
+.attachContainorDiv{
+	margin:0 auto;
+	width:225px;
+	height:174px;
+	position:relative;
+}
+.attachContainorDiv .preview{
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	width:225px;
+	height:137px;
+	z-index:10;
+	margin:0 auto;
+}
+.attachContainorDiv .temImg{
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	width:225px;
+	height:137px;
+	z-index:10;
+	margin:0 auto;
+}
+.attachContainorDiv label{
+	width:225px;
+	text-align:center;
+	margin-top:137px;
+	height:36px;
+	line-height:36px;
+	
+}
+.attachContainorDiv p{
+	width:225px;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    background: #42a575;
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    left:0;
+	cursor: pointer;
+	color:#fff;
+	z-index: 20;
+}
+.attachContainorDiv input{
+	width:225px;
+	height:30px;
+    opacity: 0;  
+	filter: alpha(opacity = 0); 
+    position: absolute;
+    margin:0 auto;
+    top:0;
+    left:0px;
+	cursor: pointer;
+}
+

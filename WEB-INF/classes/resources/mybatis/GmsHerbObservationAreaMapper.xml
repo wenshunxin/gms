@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_herb_observation_area" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="stations_type" property="stationsType" jdbcType="INTEGER" />
+    <result column="investigate_date" property="investigateDate" jdbcType="DATE" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="has_litter" property="hasLitter" jdbcType="VARCHAR" />
+    <result column="has_sand" property="hasSand" jdbcType="VARCHAR" />
+    <result column="has_surface_erosion" property="hasSurfaceErosion" jdbcType="VARCHAR" />
+    <result column="has_saline_spot" property="hasSalineSpot" jdbcType="VARCHAR" />
+    <result column="bare_land_area_ratio" property="bareLandAreaRatio" jdbcType="DOUBLE" />
+    <result column="soil_moisture" property="soilMoisture" jdbcType="DOUBLE" />
+    <result column="monitoring_period" property="monitoringPeriod" jdbcType="INTEGER" />
+    <result column="coverage" property="coverage" jdbcType="DOUBLE" />
+    <result column="grass_avg_height" property="grassAvgHeight" jdbcType="DOUBLE" />
+    <result column="plant_nums" property="plantNums" jdbcType="INTEGER" />
+    <result column="bad_grass_nums" property="badGrassNums" jdbcType="INTEGER" />
+    <result column="first_fresh_amount" property="firstFreshAmount" jdbcType="DOUBLE" />
+    <result column="first_dry_amount" property="firstDryAmount" jdbcType="DOUBLE" />
+    <result column="first_edible_fresh_amount" property="firstEdibleFreshAmount" jdbcType="DOUBLE" />
+    <result column="first_edible_dry_amount" property="firstEdibleDryAmount" jdbcType="DOUBLE" />
+    <result column="second_fresh_amount" property="secondFreshAmount" jdbcType="DOUBLE" />
+    <result column="second_dry_amount" property="secondDryAmount" jdbcType="DOUBLE" />
+    <result column="second_edible_fresh_amount" property="secondEdibleFreshAmount" jdbcType="DOUBLE" />
+    <result column="second_edible_dry_amount" property="secondEdibleDryAmount" jdbcType="DOUBLE" />
+    <result column="third_fresh_amount" property="thirdFreshAmount" jdbcType="DOUBLE" />
+    <result column="third_dry_amount" property="thirdDryAmount" jdbcType="DOUBLE" />
+    <result column="third_edible_fresh_amount" property="thirdEdibleFreshAmount" jdbcType="DOUBLE" />
+    <result column="third_edible_dry_amount" property="thirdEdibleDryAmount" jdbcType="DOUBLE" />
+    <result column="fresh_amount" property="freshAmount" jdbcType="DOUBLE" />
+    <result column="dry_amount" property="dryAmount" jdbcType="DOUBLE" />
+    <result column="edible_fresh_amount" property="edibleFreshAmount" jdbcType="DOUBLE" />
+    <result column="edible_dry_amount" property="edibleDryAmount" jdbcType="DOUBLE" />
+    <result column="permanent_coverage" property="permanentCoverage" jdbcType="DOUBLE" />
+    <result column="permanent_grass_avg_height" property="permanentGrassAvgHeight" jdbcType="DOUBLE" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" extends="BaseResultMap" >
+    <result column="investigate_user_ids" property="investigateUserIds" jdbcType="LONGVARCHAR" />
+    <result column="investigate_user_names" property="investigateUserNames" jdbcType="LONGVARCHAR" />
+    <result column="erosion_reason" property="erosionReason" jdbcType="LONGVARCHAR" />
+    <result column="main_plant" property="mainPlant" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, monitoring_stations_id, stations_type, investigate_date, contact_phone, has_litter, 
+    has_sand, has_surface_erosion, has_saline_spot, bare_land_area_ratio, soil_moisture, 
+    monitoring_period, coverage, grass_avg_height, plant_nums, bad_grass_nums, first_fresh_amount, 
+    first_dry_amount, first_edible_fresh_amount, first_edible_dry_amount, second_fresh_amount, 
+    second_dry_amount, second_edible_fresh_amount, second_edible_dry_amount, third_fresh_amount, 
+    third_dry_amount, third_edible_fresh_amount, third_edible_dry_amount, fresh_amount, 
+    dry_amount, edible_fresh_amount, edible_dry_amount, permanent_coverage, permanent_grass_avg_height, 
+    create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    investigate_user_ids, investigate_user_names, erosion_reason, main_plant, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultType="hashMap" parameterType="java.lang.Integer" >
+   SELECT ghoa.sid sid,ghoa.monitoring_stations_id monitoringStationsId,ghoa.stations_type stationsType,
+ghoa.investigate_user_ids investigateUserIds,ghoa.investigate_user_names investigateUserNames,ghoa.investigate_date investigateDate,
+ghoa.contact_phone contactPhone,ghoa.has_litter hasLitter,ghoa.has_sand hasSand,ghoa.has_surface_erosion hasSurfaceErosion,
+ghoa.erosion_reason erosionReason,ghoa.has_saline_spot hasSalineSpot,ghoa.bare_land_area_ratio bareLandAreaRatio,
+ghoa.soil_moisture soilMoisture,ghoa.monitoring_period monitoringPeriod,ghoa.coverage coverage, ghoa.grass_avg_height grassAvgHeight,
+ghoa.plant_nums plantNums,ghoa.main_plant mainPlant,ghoa.bad_grass_nums badGrassNums,ghoa.first_fresh_amount firstFreshAmount,
+ghoa.first_dry_amount firstDryAmount,ghoa.first_edible_fresh_amount firstEdibleFreshAmount,ghoa.first_edible_dry_amount firstEdibleDryAmount,
+ghoa.second_fresh_amount secondFreshAmount,ghoa.second_dry_amount secondDryAmount,ghoa.second_edible_fresh_amount secondEdibleFreshAmount,
+ghoa.second_edible_dry_amount secondEdibleDryAmount,ghoa.third_fresh_amount thirdFreshAmount,ghoa.third_dry_amount thirdDryAmount,
+ghoa.third_edible_fresh_amount thirdEdibleFreshAmount,ghoa.third_edible_dry_amount thirdEdibleDryAmount,ghoa.fresh_amount freshAmount,
+ghoa.dry_amount dryAmount,ghoa.edible_fresh_amount edibleFreshAmount,ghoa.edible_dry_amount edibleDryAmount,ghoa.permanent_coverage permanentCoverage,
+ghoa.permanent_grass_avg_height permanentGrassAvgHeight,ghoa.create_user_id createUserId,ghoa.create_user_name createUserName,ghoa.create_time createTime,
+ghoa.remark remark,gms.city_code cityCode,gms.grass_category grassCategory,gms.grass_type grassType,gms.stations_num stationsNum,gms.city_short_name as cityShortName
+ FROM `gms_herb_observation_area` ghoa LEFT JOIN gms_monitoring_stations gms ON ghoa.monitoring_stations_id=gms.sid
+    where ghoa.sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_herb_observation_area
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" >
+    insert into gms_herb_observation_area (sid, monitoring_stations_id, stations_type, 
+      investigate_date, contact_phone, has_litter, 
+      has_sand, has_surface_erosion, has_saline_spot, 
+      bare_land_area_ratio, soil_moisture, monitoring_period, 
+      coverage, grass_avg_height, plant_nums, 
+      bad_grass_nums, first_fresh_amount, first_dry_amount, 
+      first_edible_fresh_amount, first_edible_dry_amount, 
+      second_fresh_amount, second_dry_amount, second_edible_fresh_amount, 
+      second_edible_dry_amount, third_fresh_amount, 
+      third_dry_amount, third_edible_fresh_amount, third_edible_dry_amount, 
+      fresh_amount, dry_amount, edible_fresh_amount, 
+      edible_dry_amount, permanent_coverage, permanent_grass_avg_height, 
+      create_user_id, create_user_name, create_time, 
+      investigate_user_ids, investigate_user_names, 
+      erosion_reason, main_plant, remark
+      )
+    values (#{sid,jdbcType=INTEGER}, #{monitoringStationsId,jdbcType=INTEGER}, #{stationsType,jdbcType=INTEGER}, 
+      #{investigateDate,jdbcType=DATE}, #{contactPhone,jdbcType=VARCHAR}, #{hasLitter,jdbcType=VARCHAR}, 
+      #{hasSand,jdbcType=VARCHAR}, #{hasSurfaceErosion,jdbcType=VARCHAR}, #{hasSalineSpot,jdbcType=VARCHAR}, 
+      #{bareLandAreaRatio,jdbcType=DOUBLE}, #{soilMoisture,jdbcType=DOUBLE}, #{monitoringPeriod,jdbcType=INTEGER}, 
+      #{coverage,jdbcType=DOUBLE}, #{grassAvgHeight,jdbcType=DOUBLE}, #{plantNums,jdbcType=INTEGER}, 
+      #{badGrassNums,jdbcType=INTEGER}, #{firstFreshAmount,jdbcType=DOUBLE}, #{firstDryAmount,jdbcType=DOUBLE}, 
+      #{firstEdibleFreshAmount,jdbcType=DOUBLE}, #{firstEdibleDryAmount,jdbcType=DOUBLE}, 
+      #{secondFreshAmount,jdbcType=DOUBLE}, #{secondDryAmount,jdbcType=DOUBLE}, #{secondEdibleFreshAmount,jdbcType=DOUBLE}, 
+      #{secondEdibleDryAmount,jdbcType=DOUBLE}, #{thirdFreshAmount,jdbcType=DOUBLE}, 
+      #{thirdDryAmount,jdbcType=DOUBLE}, #{thirdEdibleFreshAmount,jdbcType=DOUBLE}, #{thirdEdibleDryAmount,jdbcType=DOUBLE}, 
+      #{freshAmount,jdbcType=DOUBLE}, #{dryAmount,jdbcType=DOUBLE}, #{edibleFreshAmount,jdbcType=DOUBLE}, 
+      #{edibleDryAmount,jdbcType=DOUBLE}, #{permanentCoverage,jdbcType=DOUBLE}, #{permanentGrassAvgHeight,jdbcType=DOUBLE}, 
+      #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{investigateUserIds,jdbcType=LONGVARCHAR}, #{investigateUserNames,jdbcType=LONGVARCHAR}, 
+      #{erosionReason,jdbcType=LONGVARCHAR}, #{mainPlant,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" useGeneratedKeys="true" keyProperty="sid">
+    insert into gms_herb_observation_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="stationsType != null" >
+        stations_type,
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="hasLitter != null" >
+        has_litter,
+      </if>
+      <if test="hasSand != null" >
+        has_sand,
+      </if>
+      <if test="hasSurfaceErosion != null" >
+        has_surface_erosion,
+      </if>
+      <if test="hasSalineSpot != null" >
+        has_saline_spot,
+      </if>
+      <if test="bareLandAreaRatio != null" >
+        bare_land_area_ratio,
+      </if>
+      <if test="soilMoisture != null" >
+        soil_moisture,
+      </if>
+      <if test="monitoringPeriod != null" >
+        monitoring_period,
+      </if>
+      <if test="coverage != null" >
+        coverage,
+      </if>
+      <if test="grassAvgHeight != null" >
+        grass_avg_height,
+      </if>
+      <if test="plantNums != null" >
+        plant_nums,
+      </if>
+      <if test="badGrassNums != null" >
+        bad_grass_nums,
+      </if>
+      <if test="firstFreshAmount != null" >
+        first_fresh_amount,
+      </if>
+      <if test="firstDryAmount != null" >
+        first_dry_amount,
+      </if>
+      <if test="firstEdibleFreshAmount != null" >
+        first_edible_fresh_amount,
+      </if>
+      <if test="firstEdibleDryAmount != null" >
+        first_edible_dry_amount,
+      </if>
+      <if test="secondFreshAmount != null" >
+        second_fresh_amount,
+      </if>
+      <if test="secondDryAmount != null" >
+        second_dry_amount,
+      </if>
+      <if test="secondEdibleFreshAmount != null" >
+        second_edible_fresh_amount,
+      </if>
+      <if test="secondEdibleDryAmount != null" >
+        second_edible_dry_amount,
+      </if>
+      <if test="thirdFreshAmount != null" >
+        third_fresh_amount,
+      </if>
+      <if test="thirdDryAmount != null" >
+        third_dry_amount,
+      </if>
+      <if test="thirdEdibleFreshAmount != null" >
+        third_edible_fresh_amount,
+      </if>
+      <if test="thirdEdibleDryAmount != null" >
+        third_edible_dry_amount,
+      </if>
+      <if test="freshAmount != null" >
+        fresh_amount,
+      </if>
+      <if test="dryAmount != null" >
+        dry_amount,
+      </if>
+      <if test="edibleFreshAmount != null" >
+        edible_fresh_amount,
+      </if>
+      <if test="edibleDryAmount != null" >
+        edible_dry_amount,
+      </if>
+      <if test="permanentCoverage != null" >
+        permanent_coverage,
+      </if>
+      <if test="permanentGrassAvgHeight != null" >
+        permanent_grass_avg_height,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids,
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names,
+      </if>
+      <if test="erosionReason != null" >
+        erosion_reason,
+      </if>
+      <if test="mainPlant != null" >
+        main_plant,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="stationsType != null" >
+        #{stationsType,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="hasLitter != null" >
+        #{hasLitter,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSand != null" >
+        #{hasSand,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSurfaceErosion != null" >
+        #{hasSurfaceErosion,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSalineSpot != null" >
+        #{hasSalineSpot,jdbcType=VARCHAR},
+      </if>
+      <if test="bareLandAreaRatio != null" >
+        #{bareLandAreaRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="soilMoisture != null" >
+        #{soilMoisture,jdbcType=DOUBLE},
+      </if>
+      <if test="monitoringPeriod != null" >
+        #{monitoringPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="coverage != null" >
+        #{coverage,jdbcType=DOUBLE},
+      </if>
+      <if test="grassAvgHeight != null" >
+        #{grassAvgHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="plantNums != null" >
+        #{plantNums,jdbcType=INTEGER},
+      </if>
+      <if test="badGrassNums != null" >
+        #{badGrassNums,jdbcType=INTEGER},
+      </if>
+      <if test="firstFreshAmount != null" >
+        #{firstFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstDryAmount != null" >
+        #{firstDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstEdibleFreshAmount != null" >
+        #{firstEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstEdibleDryAmount != null" >
+        #{firstEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondFreshAmount != null" >
+        #{secondFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondDryAmount != null" >
+        #{secondDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondEdibleFreshAmount != null" >
+        #{secondEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondEdibleDryAmount != null" >
+        #{secondEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdFreshAmount != null" >
+        #{thirdFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdDryAmount != null" >
+        #{thirdDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdEdibleFreshAmount != null" >
+        #{thirdEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdEdibleDryAmount != null" >
+        #{thirdEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="freshAmount != null" >
+        #{freshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="dryAmount != null" >
+        #{dryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleFreshAmount != null" >
+        #{edibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleDryAmount != null" >
+        #{edibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentCoverage != null" >
+        #{permanentCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentGrassAvgHeight != null" >
+        #{permanentGrassAvgHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="erosionReason != null" >
+        #{erosionReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mainPlant != null" >
+        #{mainPlant,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" >
+    update gms_herb_observation_area
+    <set >
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="stationsType != null" >
+        stations_type = #{stationsType,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date = #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="hasLitter != null" >
+        has_litter = #{hasLitter,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSand != null" >
+        has_sand = #{hasSand,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSurfaceErosion != null" >
+        has_surface_erosion = #{hasSurfaceErosion,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSalineSpot != null" >
+        has_saline_spot = #{hasSalineSpot,jdbcType=VARCHAR},
+      </if>
+      <if test="bareLandAreaRatio != null" >
+        bare_land_area_ratio = #{bareLandAreaRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="soilMoisture != null" >
+        soil_moisture = #{soilMoisture,jdbcType=DOUBLE},
+      </if>
+      <if test="monitoringPeriod != null" >
+        monitoring_period = #{monitoringPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="coverage != null" >
+        coverage = #{coverage,jdbcType=DOUBLE},
+      </if>
+      <if test="grassAvgHeight != null" >
+        grass_avg_height = #{grassAvgHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="plantNums != null" >
+        plant_nums = #{plantNums,jdbcType=INTEGER},
+      </if>
+      <if test="badGrassNums != null" >
+        bad_grass_nums = #{badGrassNums,jdbcType=INTEGER},
+      </if>
+      <if test="firstFreshAmount != null" >
+        first_fresh_amount = #{firstFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstDryAmount != null" >
+        first_dry_amount = #{firstDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstEdibleFreshAmount != null" >
+        first_edible_fresh_amount = #{firstEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="firstEdibleDryAmount != null" >
+        first_edible_dry_amount = #{firstEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondFreshAmount != null" >
+        second_fresh_amount = #{secondFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondDryAmount != null" >
+        second_dry_amount = #{secondDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondEdibleFreshAmount != null" >
+        second_edible_fresh_amount = #{secondEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="secondEdibleDryAmount != null" >
+        second_edible_dry_amount = #{secondEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdFreshAmount != null" >
+        third_fresh_amount = #{thirdFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdDryAmount != null" >
+        third_dry_amount = #{thirdDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdEdibleFreshAmount != null" >
+        third_edible_fresh_amount = #{thirdEdibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="thirdEdibleDryAmount != null" >
+        third_edible_dry_amount = #{thirdEdibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="freshAmount != null" >
+        fresh_amount = #{freshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="dryAmount != null" >
+        dry_amount = #{dryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleFreshAmount != null" >
+        edible_fresh_amount = #{edibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleDryAmount != null" >
+        edible_dry_amount = #{edibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentCoverage != null" >
+        permanent_coverage = #{permanentCoverage,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentGrassAvgHeight != null" >
+        permanent_grass_avg_height = #{permanentGrassAvgHeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="erosionReason != null" >
+        erosion_reason = #{erosionReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mainPlant != null" >
+        main_plant = #{mainPlant,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" >
+    update gms_herb_observation_area
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      stations_type = #{stationsType,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      has_litter = #{hasLitter,jdbcType=VARCHAR},
+      has_sand = #{hasSand,jdbcType=VARCHAR},
+      has_surface_erosion = #{hasSurfaceErosion,jdbcType=VARCHAR},
+      has_saline_spot = #{hasSalineSpot,jdbcType=VARCHAR},
+      bare_land_area_ratio = #{bareLandAreaRatio,jdbcType=DOUBLE},
+      soil_moisture = #{soilMoisture,jdbcType=DOUBLE},
+      monitoring_period = #{monitoringPeriod,jdbcType=INTEGER},
+      coverage = #{coverage,jdbcType=DOUBLE},
+      grass_avg_height = #{grassAvgHeight,jdbcType=DOUBLE},
+      plant_nums = #{plantNums,jdbcType=INTEGER},
+      bad_grass_nums = #{badGrassNums,jdbcType=INTEGER},
+      first_fresh_amount = #{firstFreshAmount,jdbcType=DOUBLE},
+      first_dry_amount = #{firstDryAmount,jdbcType=DOUBLE},
+      first_edible_fresh_amount = #{firstEdibleFreshAmount,jdbcType=DOUBLE},
+      first_edible_dry_amount = #{firstEdibleDryAmount,jdbcType=DOUBLE},
+      second_fresh_amount = #{secondFreshAmount,jdbcType=DOUBLE},
+      second_dry_amount = #{secondDryAmount,jdbcType=DOUBLE},
+      second_edible_fresh_amount = #{secondEdibleFreshAmount,jdbcType=DOUBLE},
+      second_edible_dry_amount = #{secondEdibleDryAmount,jdbcType=DOUBLE},
+      third_fresh_amount = #{thirdFreshAmount,jdbcType=DOUBLE},
+      third_dry_amount = #{thirdDryAmount,jdbcType=DOUBLE},
+      third_edible_fresh_amount = #{thirdEdibleFreshAmount,jdbcType=DOUBLE},
+      third_edible_dry_amount = #{thirdEdibleDryAmount,jdbcType=DOUBLE},
+      fresh_amount = #{freshAmount,jdbcType=DOUBLE},
+      dry_amount = #{dryAmount,jdbcType=DOUBLE},
+      edible_fresh_amount = #{edibleFreshAmount,jdbcType=DOUBLE},
+      edible_dry_amount = #{edibleDryAmount,jdbcType=DOUBLE},
+      permanent_coverage = #{permanentCoverage,jdbcType=DOUBLE},
+      permanent_grass_avg_height = #{permanentGrassAvgHeight,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      erosion_reason = #{erosionReason,jdbcType=LONGVARCHAR},
+      main_plant = #{mainPlant,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsHerbObservationArea" >
+    update gms_herb_observation_area
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      stations_type = #{stationsType,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      has_litter = #{hasLitter,jdbcType=VARCHAR},
+      has_sand = #{hasSand,jdbcType=VARCHAR},
+      has_surface_erosion = #{hasSurfaceErosion,jdbcType=VARCHAR},
+      has_saline_spot = #{hasSalineSpot,jdbcType=VARCHAR},
+      bare_land_area_ratio = #{bareLandAreaRatio,jdbcType=DOUBLE},
+      soil_moisture = #{soilMoisture,jdbcType=DOUBLE},
+      monitoring_period = #{monitoringPeriod,jdbcType=INTEGER},
+      coverage = #{coverage,jdbcType=DOUBLE},
+      grass_avg_height = #{grassAvgHeight,jdbcType=DOUBLE},
+      plant_nums = #{plantNums,jdbcType=INTEGER},
+      bad_grass_nums = #{badGrassNums,jdbcType=INTEGER},
+      first_fresh_amount = #{firstFreshAmount,jdbcType=DOUBLE},
+      first_dry_amount = #{firstDryAmount,jdbcType=DOUBLE},
+      first_edible_fresh_amount = #{firstEdibleFreshAmount,jdbcType=DOUBLE},
+      first_edible_dry_amount = #{firstEdibleDryAmount,jdbcType=DOUBLE},
+      second_fresh_amount = #{secondFreshAmount,jdbcType=DOUBLE},
+      second_dry_amount = #{secondDryAmount,jdbcType=DOUBLE},
+      second_edible_fresh_amount = #{secondEdibleFreshAmount,jdbcType=DOUBLE},
+      second_edible_dry_amount = #{secondEdibleDryAmount,jdbcType=DOUBLE},
+      third_fresh_amount = #{thirdFreshAmount,jdbcType=DOUBLE},
+      third_dry_amount = #{thirdDryAmount,jdbcType=DOUBLE},
+      third_edible_fresh_amount = #{thirdEdibleFreshAmount,jdbcType=DOUBLE},
+      third_edible_dry_amount = #{thirdEdibleDryAmount,jdbcType=DOUBLE},
+      fresh_amount = #{freshAmount,jdbcType=DOUBLE},
+      dry_amount = #{dryAmount,jdbcType=DOUBLE},
+      edible_fresh_amount = #{edibleFreshAmount,jdbcType=DOUBLE},
+      edible_dry_amount = #{edibleDryAmount,jdbcType=DOUBLE},
+      permanent_coverage = #{permanentCoverage,jdbcType=DOUBLE},
+      permanent_grass_avg_height = #{permanentGrassAvgHeight,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 列表  搜索 -->
+  <select id="queryGhoa" resultType="hashMap" parameterType="HashMap" >
+    SELECT ghoa.sid sid,ghoa.monitoring_stations_id monitoringStationsId,ghoa.stations_type stationsType,
+ghoa.investigate_user_ids investigateUserIds,ghoa.investigate_user_names investigateUserNames,ghoa.investigate_date investigateDate,
+ghoa.contact_phone contactPhone,ghoa.has_litter hasLitter,ghoa.has_sand hasSand,ghoa.has_surface_erosion hasSurfaceErosion,
+ghoa.erosion_reason erosionReason,ghoa.has_saline_spot hasSalineSpot,ghoa.bare_land_area_ratio bareLandAreaRatio,
+ghoa.soil_moisture soilMoisture,ghoa.monitoring_period monitoringPeriod,ghoa.coverage coverage, ghoa.grass_avg_height grassAvgHeight,
+ghoa.plant_nums plantNums,ghoa.main_plant mainPlant,ghoa.bad_grass_nums badGrassNums,ghoa.first_fresh_amount firstFreshAmount,
+ghoa.first_dry_amount firstDryAmount,ghoa.first_edible_fresh_amount firstEdibleFreshAmount,ghoa.first_edible_dry_amount firstEdibleDryAmount,
+ghoa.second_fresh_amount secondFreshAmount,ghoa.second_dry_amount secondDryAmount,ghoa.second_edible_fresh_amount secondEdibleFreshAmount,
+ghoa.second_edible_dry_amount secondEdibleDryAmount,ghoa.third_fresh_amount thirdFreshAmount,ghoa.third_dry_amount thirdDryAmount,
+ghoa.third_edible_fresh_amount thirdEdibleFreshAmount,ghoa.third_edible_dry_amount thirdEdibleDryAmount,ghoa.fresh_amount freshAmount,
+ghoa.dry_amount dryAmount,ghoa.edible_fresh_amount edibleFreshAmount,ghoa.edible_dry_amount edibleDryAmount,ghoa.permanent_coverage permanentCoverage,
+ghoa.permanent_grass_avg_height permanentGrassAvgHeight,ghoa.create_user_id createUserId,ghoa.create_user_name createUserName,ghoa.create_time createTime,
+ghoa.remark remark,gms.city_code cityCode,gms.grass_category grassCategory,gms.grass_type grassType
+ FROM `gms_herb_observation_area` ghoa LEFT JOIN gms_monitoring_stations gms ON ghoa.monitoring_stations_id=gms.sid
+    <where>
+    	<if test="cityCode != null and cityCode !=''">
+    	city_code like '%${cityCode}%'
+    	</if>
+    	<if test="grassCategory != null and grassCategory !=''">
+    	and grass_category = #{grassCategory}
+    	</if>
+    	<if test="grassType != null and grassType !=''">
+    	and grass_type = #{grassType}
+    	</if>
+    	<if test="beginSoilMoisture != null">
+    	and soil_moisture >= #{beginSoilMoisture}
+    	</if>
+    	<if test="endSoilMoisture !=null">
+    	and soil_moisture &lt;= #{endSoilMoisture}
+    	</if>
+    	<if test="beginCoverage != null">
+    	and coverage >= #{beginCoverage}
+    	</if>
+    	<if test="endCoverage !=null ">
+    	and coverage &lt;= #{endCoverage}
+    	</if>
+    	<if test="beginGrassAvgHeight != null">
+    	and grass_avg_height >= #{beginGrassAvgHeight}
+    	</if>
+    	<if test="endGrassAvgHeight !=null">
+    	and grass_avg_height &lt;= #{endGrassAvgHeight}
+    	</if>
+    	<if test="beginPlantNums != null and beginPlantNums !=-1">
+    	and plant_nums >= #{beginPlantNums}
+    	</if>
+    	<if test="endPlantNums !=null and endPlantNums !=-1">
+    	and plant_nums &lt;= #{endPlantNums}
+    	</if>
+    	<if test="beginBadGrassNums != null and beginBadGrassNums !=-1">
+    	and bad_grass_nums >= #{beginBadGrassNums}
+    	</if>
+    	<if test="endBadGrassNums !=null and endBadGrassNums !=-1">
+    	and bad_grass_nums &lt;= #{endBadGrassNums}
+    	</if>
+    	<if test="beginFreshAmount != null">
+    	and fresh_amount >= #{beginFreshAmount}
+    	</if>
+    	<if test="endFreshAmount !=null">
+    	and fresh_amount &lt;= #{endFreshAmount}
+    	</if>
+    	<if test="beginEdibleFreshAmount != null">
+    	and edible_fresh_amount >= #{beginEdibleFreshAmount}
+    	</if>
+    	<if test="endEdibleFreshAmount !=null">
+    	and edible_fresh_amount &lt;= #{endEdibleFreshAmount}
+    	</if>
+    	<if test="beginDryAmount != null">
+    	and end_dry_amount >= #{beginDryAmount}
+    	</if>
+    	<if test="endDryAmount !=null">
+    	and end_dry_amount &lt;=#{endDryAmount}
+    	</if>
+    	<if test="beginEdibleDryAmount != null">
+    	and end_edible_dry_amount >= #{beginEdibleDryAmount}
+    	</if>
+    	<if test="endEdibleDryAmount !=null">
+    	and end_edible_dry_amount &lt;= #{endEdibleDryAmount}
+    	</if>
+    	<if test="beginPermanentCoverage != null">
+    	and permanent_coverage >= #{beginPermanentCoverage}
+    	</if>
+    	<if test="endPermanentCoverage !=null">
+    	and permanent_coverage &lt;= #{endPermanentCoverage}
+    	</if>
+    	<if test="beginPermanentGrassAvgHeight != null">
+    	and permanent_grass_avgHeight >= #{beginPermanentGrassAvgHeight}
+    	</if>
+    	<if test="endPermanentGrassAvgHeight !=null">
+    	and permanent_grass_avgHeight &lt;= #{endPermanentGrassAvgHeight}
+    	</if>
+    	<if test="startYear != null and startYear !=0 ">
+    	and DATE_FORMAT(investigate_date,'%Y') >= #{startYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="endYear!=null and endYear!=0">
+    	and DATE_FORMAT(investigate_date,'%Y') &lt;=#{endYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="month != null and month !=0">
+    	and MONTH(investigate_date) = #{month}
+    	</if>
+    	<if test="stationsType != null and stationsType !=-1">
+    	and stations_type = #{stationsType}
+    	</if>
+    	<if test="sids != null and sids !=''">
+    	and ghoa.sid in
+	    	<foreach item="item" index="index" collection="sids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteGhoaById" parameterType="hashMap" >
+    delete from gms_herb_observation_area where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_herb_quadrat_item" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsHerbQuadratItem" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="quadrat_id" property="quadratId" jdbcType="INTEGER" />
+    <result column="fresh_amount" property="freshAmount" jdbcType="DOUBLE" />
+    <result column="edible_fresh_amount" property="edibleFreshAmount" jdbcType="DOUBLE" />
+    <result column="dry_amount" property="dryAmount" jdbcType="DOUBLE" />
+    <result column="edible_dry_amount" property="edibleDryAmount" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsHerbQuadratItem" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, quadrat_id, fresh_amount, edible_fresh_amount, dry_amount, edible_dry_amount
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_herb_quadrat_item
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="queryHerbQuadratItem" resultMap="ResultMapWithBLOBs" parameterType="hashMap" >
+    select 
+    sid, quadrat_id quadratId, fresh_amount freshAmount, edible_fresh_amount edibleFreshAmount, dry_amount dryAmount, edible_dry_amount edibleDryAmount,remark
+    from gms_herb_quadrat_item
+    where quadrat_id = #{quadratId,jdbcType=INTEGER}
+  </select>
+  <select id="getHerbQuadratItemByQuadratId" resultType="HashMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_herb_quadrat_item
+    where quadrat_id = #{sqsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_herb_quadrat_item
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteHerbQuadratItemByQuadratId" parameterType="java.lang.Integer" >
+    delete from gms_herb_quadrat_item
+    where quadrat_id = #{quadratId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsHerbQuadratItem" >
+    insert into gms_herb_quadrat_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="quadratId != null" >
+        quadrat_id,
+      </if>
+      <if test="freshAmount != null" >
+        fresh_amount,
+      </if>
+      <if test="edibleFreshAmount != null" >
+        edible_fresh_amount,
+      </if>
+      <if test="dryAmount != null" >
+        dry_amount,
+      </if>
+      <if test="edibleDryAmount != null" >
+        edible_dry_amount,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="quadratId != null" >
+        #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="freshAmount != null" >
+        #{freshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleFreshAmount != null" >
+        #{edibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="dryAmount != null" >
+        #{dryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleDryAmount != null" >
+        #{edibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsHerbQuadratItem" >
+    update gms_herb_quadrat_item
+    <set >
+      <if test="quadratId != null" >
+        quadrat_id = #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="freshAmount != null" >
+        fresh_amount = #{freshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleFreshAmount != null" >
+        edible_fresh_amount = #{edibleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="dryAmount != null" >
+        dry_amount = #{dryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="edibleDryAmount != null" >
+        edible_dry_amount = #{edibleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

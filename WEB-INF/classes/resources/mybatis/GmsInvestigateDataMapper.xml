@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gms_investigate_data">
+	<resultMap id="BaseResultMap"
+		type="com.tcxt.gms.investigation.bean.GmsInvestigateData">
+		<id column="sid" jdbcType="INTEGER" property="sid" />
+		<result column="year" jdbcType="INTEGER" property="year" />
+		<result column="investigate_area" jdbcType="VARCHAR" property="investigateArea" />
+		<result column="investigate_num" jdbcType="VARCHAR" property="investigateNum" />
+		<result column="investigate_company_name" jdbcType="VARCHAR"
+			property="investigateCompanyName" />
+		<result column="investigate_date" jdbcType="DATE" property="investigateDate" />
+		<result column="complete_status" jdbcType="INTEGER" property="completeStatus" />
+		<result column="investigate_type" jdbcType="INTEGER" property="investigateType" />
+		<result column="audit_status" jdbcType="INTEGER" property="auditStatus" />
+		<result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.tcxt.gms.investigation.bean.GmsInvestigateData">
+		<result column="investigate_user_ids" jdbcType="LONGVARCHAR"
+			property="investigateUserIds" />
+		<result column="investigate_user_names" jdbcType="LONGVARCHAR"
+			property="investigateUserNames" />
+		<result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, year, investigate_area, investigate_num, investigate_company_name,
+		investigate_date,
+		complete_status, investigate_type, audit_status, delete_status,
+		create_user_id,create_user_name, create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, remark
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_investigate_data
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_investigate_data
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsInvestigateData"
+		useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_investigate_data
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="year != null">
+				year,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="investigateNum != null">
+				investigate_num,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="completeStatus != null">
+				complete_status,
+			</if>
+			<if test="investigateType != null">
+				investigate_type,
+			</if>
+			<if test="auditStatus != null">
+				audit_status,
+			</if>
+			<if test="deleteStatus != null">
+				delete_status,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="year != null">
+				#{year,jdbcType=INTEGER},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateNum != null">
+				#{investigateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="completeStatus != null">
+				#{completeStatus,jdbcType=INTEGER},
+			</if>
+			<if test="investigateType != null">
+				#{investigateType,jdbcType=INTEGER},
+			</if>
+			<if test="auditStatus != null">
+				#{auditStatus,jdbcType=INTEGER},
+			</if>
+			<if test="deleteStatus != null">
+				#{deleteStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsInvestigateData">
+		update gms_investigate_data
+		<set>
+			<if test="year != null">
+				year = #{year,jdbcType=INTEGER},
+			</if>
+			<if test="investigateArea != null">
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateNum != null">
+				investigate_num = #{investigateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name = #{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateDate != null">
+				investigate_date = #{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="completeStatus != null">
+				complete_status = #{completeStatus,jdbcType=INTEGER},
+			</if>
+			<if test="investigateType != null">
+				investigate_type = #{investigateType,jdbcType=INTEGER},
+			</if>
+			<if test="auditStatus != null">
+				audit_status = #{auditStatus,jdbcType=INTEGER},
+			</if>
+			<if test="deleteStatus != null">
+				delete_status = #{deleteStatus,jdbcType=INTEGER},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+
+	<select id="queryData" parameterType="hashMap" resultType="hashMap">
+		select d.sid as dataId,d.investigate_num as investigateNum,d.year as
+		year,d.investigate_date as investigateDate,
+		d.investigate_type as investigateType,d.audit_status as auditStatus,d.complete_status as
+		completeStatus,d.investigate_area as investigateArea,
+		d.investigate_user_names as investigateUserNames
+		from gms_investigate_data d 
+			 left join gms_user u on d.create_user_id = u.sid
+		where 1=1 and d.delete_status=0
+
+		<if test="auditStatus!=null and auditNoStatus ==''">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditStatus"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="auditNoStatus !=null and auditNoStatus!=''">
+			and d.audit_status = #{auditNoStatus,jdbcType=INTEGER}
+		</if>
+		<if test="userId!=null and userId!=0">
+			and d.create_user_id = #{userId,jdbcType=INTEGER}
+		</if>
+		<if test="checkChild!=null and checkChild=='yes' and cityCode!=null and cityCode!=''">
+			and create_user_id in (select u.sid from gms_user u where u.city_code
+			like '${cityCode}')
+		</if>
+		<if test="investigateType!=null and investigateType!=-1 and investigateType!=0 and investigateType!=1 and investigateType!=2 and investigateType!=3">
+			and d.investigate_type = #{investigateType,jdbcType=INTEGER}
+		</if>
+		<if test="investigateType==0 or investigateType ==1"><!-- 0,1都是盛期调查 -->
+			and d.investigate_type in (0,1)
+		</if>
+		<if test="investigateType==2 or investigateType ==3"><!-- 2,3都是补饲调查 -->
+			and d.investigate_type in (2,3)
+		</if>
+		<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+		order by d.audit_status desc,dataId desc
+	</select>
+
+	<update id="mulitiSubmit" parameterType="hashMap">
+		update gms_investigate_data set audit_status = 1 where sid in
+		<foreach item="item" index="index" collection="dataIds" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+
+	<select id="getNumsByCondition" parameterType="hashMap" resultType="java.lang.Long">
+		select count(1) as nums 
+		from gms_investigate_data d left join gms_user u on d.create_user_id = u.sid
+		where d.year = #{year,jdbcType=INTEGER} and audit_status>0
+		and  u.city_code like '%${cityCode}%'
+		<if test="dataType !=null and dataType==3">
+			and d.investigate_type=3
+		</if>
+		<if test="dataType !=null and dataType==0">
+			and d.investigate_type in (0,1)
+		</if>
+	</select>
+	
+	<select id="getCountyNumsByCondition" parameterType="hashMap" resultType="java.lang.Long">
+		select count(1) as nums from (select 1
+		from gms_investigate_data d left join gms_user u on d.create_user_id = u.sid
+		where d.year = #{year,jdbcType=INTEGER} and audit_status>0
+		and  u.city_code like '%${cityCode}%'
+		<if test="dataType !=null and dataType==7">
+			and d.investigate_type=7
+		</if>
+		group by u.city_code) t
+	</select>
+	
+	<select id="statisticsTotalNums" parameterType="hashMap" resultType="hashMap">
+		select * from (select count(1) as saTotal from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1
+	 	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t1,
+	 	
+	 	(select count(1) as submitNums from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status >0
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t2,
+	 	
+	 	(select count(1) as noSubmitNums from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 0
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t3,
+	 	(select count(1) as auditYesNums from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 4
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t4,
+	 	(select count(1) as auditProvinceNoNums from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 5
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t5,
+	 	(select count(1) as auditCityNoNums from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 3
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t6,
+	 	(select count(1) as waitProvinceAudit from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 2
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t7,
+	 	(select count(1) as waitCityAudit from gms_investigate_data d 
+					  left join gms_user u on d.create_user_id = u.sid
+			     where 1=1 and d.audit_status = 1
+	  	<if test="dataType !=null and (dataType == 0 or dataType ==1)">
+	 		and d.investigate_type in (0,1)
+	 	</if>
+	 	<if test="dataType !=null and (dataType == 2 or dataType ==3)">
+	 		and d.investigate_type in (2,3)
+	 	</if>
+	 	<if test="dataType !=null and dataType>3">
+	 		and d.investigate_type = #{dataType,jdbcType=INTEGER}
+	 	</if>
+	 	<if test="cityCode !=null and cityCode != ''">
+	 		and u.city_code like '${cityCode}'
+	 	</if>
+	 	<if test="queryCityCode !=null and queryCityCode != ''">
+	 		and u.city_code like '${queryCityCode}'
+	 	</if>
+	 	<if test="year !=null and year !=0">
+	 		and DATE_FORMAT(d.investigate_date,"%Y")>=#{year,jdbcType=INTEGER}
+	 	</if>) t8
+	 	
+	</select>
+</mapper>

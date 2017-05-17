@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="E:/myselfworkspace/workspace/gms/src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.22.jar" />
+
+	<context id="gms_investigate_data" defaultModelType="flat">
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+		</plugin>
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.0.165:3306/gms" userId="root"
+			password="root" />
+		<javaModelGenerator targetPackage="com.tcxt.gms.monitoring_stations.bean"
+			targetProject="F:/eclipseWorkspace/gms/src/main/java" />
+		<sqlMapGenerator targetPackage="resources.mybatis"
+			targetProject="F:/eclipseWorkspace/gms/src/main/java" />
+		<javaClientGenerator targetPackage="com.tcxt.gms.monitoring_stations.mapper"
+			targetProject="F:/eclipseWorkspace/gms/src/main/java" type="XMLMAPPER" />
+		<table schema="MYSCHEMA" tableName="gms_monitoring_stations"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<generatedKey column="sid" sqlStatement="gms_investigate_data"
+				identity="true" />
+		</table>
+	</context>
+</generatorConfiguration>

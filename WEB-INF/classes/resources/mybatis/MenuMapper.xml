@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Menu">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.menu.bean.Menu">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent" property="parent" jdbcType="INTEGER" />
+		<result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.menu.bean.MenuWithBLOBs"
+		extends="BaseResultMap">
+		<result column="url" property="url" jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, parent,menu_icon
+	</sql>
+	<sql id="Blob_Column_List">
+		url, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_menu
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="queryMenu" parameterType="hashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_menu
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+
+	<select id="getFirstMenuList" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_menu where parent = 0;
+	</select>
+
+	<select id="getChildMenu" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_menu where parent = #{menuId,jdbcType=INTEGER};
+	</select>
+
+	<select id="getMenusByIds" parameterType="hashmap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_menu where id in
+		<foreach item="item" index="index" collection="menuIds" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_menu
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tcxt.gms.menu.bean.MenuWithBLOBs">
+		insert into gms_menu (id, name, parent, menu_icon,
+		url, remark)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{parent,jdbcType=INTEGER}, #{menuIcon,jdbcType=VARCHAR},
+		#{url,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.menu.bean.MenuWithBLOBs">
+		insert into gms_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="parent != null">
+				parent,
+			</if>
+			<if test="menuIcon != null">
+				menu_icon,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				#{parent,jdbcType=INTEGER},
+			</if>
+			<if test="menuIcon != null">
+				#{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.menu.bean.MenuWithBLOBs">
+		update gms_menu
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				parent = #{parent,jdbcType=INTEGER},
+			</if>
+			<if test="menuIcon != null">
+				menu_icon = #{menuIcon,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.menu.bean.MenuWithBLOBs">
+		update gms_menu
+		set name = #{name,jdbcType=VARCHAR},
+		parent = #{parent,jdbcType=INTEGER},
+		menu_icon = #{menuIcon,jdbcType=VARCHAR},
+		url = #{url,jdbcType=LONGVARCHAR},
+		remark = #{remark,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tcxt.gms.menu.bean.Menu">
+		update gms_menu
+		set name = #{name,jdbcType=VARCHAR},
+		parent = #{parent,jdbcType=INTEGER}
+		menu_icon = #{menuIcon,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

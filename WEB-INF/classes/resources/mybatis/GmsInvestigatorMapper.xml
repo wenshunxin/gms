@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_investigator" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.investigator.bean.GmsInvestigator" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="investigator_name" property="investigatorName" jdbcType="VARCHAR" />
+    <result column="investigator_national" property="investigatorNational" jdbcType="VARCHAR" />
+    <result column="investigator_age" property="investigatorAge" jdbcType="INTEGER" />
+    <result column="investigator_city_code" property="investigatorCityCode" jdbcType="VARCHAR" />
+    <result column="investigator_city_full_name" property="investigatorCityFullName" jdbcType="VARCHAR" />
+    <result column="investigator_city_short_name" property="investigatorCityShortName" jdbcType="VARCHAR" />
+    <result column="investigator_major" property="investigatorMajor" jdbcType="VARCHAR" />
+    <result column="investigator_degree" property="investigatorDegree" jdbcType="VARCHAR" />
+    <result column="investigator_company_name" property="investigatorCompanyName" jdbcType="VARCHAR" />
+    <result column="investigator_phone" property="investigatorPhone" jdbcType="VARCHAR" />
+    <result column="investigator_telphone" property="investigatorTelphone" jdbcType="VARCHAR" />
+    <result column="investigator_email" property="investigatorEmail" jdbcType="VARCHAR" />
+    <result column="subsidy_amount" property="subsidyAmount" jdbcType="DOUBLE" />
+    <result column="local_assort_amount" property="localAssortAmount" jdbcType="DOUBLE" />
+    <result column="trip_amount" property="tripAmount" jdbcType="DOUBLE" />
+    <result column="training_nums" property="trainingNums" jdbcType="INTEGER" />
+    <result column="is_report" property="isReport" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigator.bean.GmsInvestigator" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, year, investigator_name, investigator_national, investigator_age, investigator_city_code, 
+    investigator_city_full_name, investigator_city_short_name, investigator_major, investigator_degree, 
+    investigator_company_name, investigator_phone, investigator_telphone, investigator_email, 
+    subsidy_amount, local_assort_amount, trip_amount, training_nums, is_report, parent_id, 
+    create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_investigator
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_investigator
+    where sid = #{sid,jdbcType=INTEGER} or parent_id = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.investigator.bean.GmsInvestigator" >
+    insert into gms_investigator (sid, year, investigator_name, 
+      investigator_national, investigator_age, investigator_city_code, 
+      investigator_city_full_name, investigator_city_short_name, 
+      investigator_major, investigator_degree, 
+      investigator_company_name, investigator_phone, 
+      investigator_telphone, investigator_email, 
+      subsidy_amount, local_assort_amount, trip_amount, 
+      training_nums, is_report, parent_id, 
+      create_user_id, create_user_name, create_time, 
+      remark)
+    values (#{sid,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, #{investigatorName,jdbcType=VARCHAR}, 
+      #{investigatorNational,jdbcType=VARCHAR}, #{investigatorAge,jdbcType=INTEGER}, #{investigatorCityCode,jdbcType=VARCHAR}, 
+      #{investigatorCityFullName,jdbcType=VARCHAR}, #{investigatorCityShortName,jdbcType=VARCHAR}, 
+      #{investigatorMajor,jdbcType=VARCHAR}, #{investigatorDegree,jdbcType=VARCHAR}, 
+      #{investigatorCompanyName,jdbcType=VARCHAR}, #{investigatorPhone,jdbcType=VARCHAR}, 
+      #{investigatorTelphone,jdbcType=VARCHAR}, #{investigatorEmail,jdbcType=VARCHAR}, 
+      #{subsidyAmount,jdbcType=DOUBLE}, #{localAssortAmount,jdbcType=DOUBLE}, #{tripAmount,jdbcType=DOUBLE}, 
+      #{trainingNums,jdbcType=INTEGER}, #{isReport,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.investigator.bean.GmsInvestigator" useGeneratedKeys="true" keyProperty="sid" >
+    insert into gms_investigator
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="investigatorName != null" >
+        investigator_name,
+      </if>
+      <if test="investigatorNational != null" >
+        investigator_national,
+      </if>
+      <if test="investigatorAge != null" >
+        investigator_age,
+      </if>
+      <if test="investigatorCityCode != null" >
+        investigator_city_code,
+      </if>
+      <if test="investigatorCityFullName != null" >
+        investigator_city_full_name,
+      </if>
+      <if test="investigatorCityShortName != null" >
+        investigator_city_short_name,
+      </if>
+      <if test="investigatorMajor != null" >
+        investigator_major,
+      </if>
+      <if test="investigatorDegree != null" >
+        investigator_degree,
+      </if>
+      <if test="investigatorCompanyName != null" >
+        investigator_company_name,
+      </if>
+      <if test="investigatorPhone != null" >
+        investigator_phone,
+      </if>
+      <if test="investigatorTelphone != null" >
+        investigator_telphone,
+      </if>
+      <if test="investigatorEmail != null" >
+        investigator_email,
+      </if>
+      <if test="subsidyAmount != null" >
+        subsidy_amount,
+      </if>
+      <if test="localAssortAmount != null" >
+        local_assort_amount,
+      </if>
+      <if test="tripAmount != null" >
+        trip_amount,
+      </if>
+      <if test="trainingNums != null" >
+        training_nums,
+      </if>
+      <if test="isReport != null" >
+        is_report,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="investigatorName != null" >
+        #{investigatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorNational != null" >
+        #{investigatorNational,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorAge != null" >
+        #{investigatorAge,jdbcType=INTEGER},
+      </if>
+      <if test="investigatorCityCode != null" >
+        #{investigatorCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCityFullName != null" >
+        #{investigatorCityFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCityShortName != null" >
+        #{investigatorCityShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorMajor != null" >
+        #{investigatorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorDegree != null" >
+        #{investigatorDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCompanyName != null" >
+        #{investigatorCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorPhone != null" >
+        #{investigatorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorTelphone != null" >
+        #{investigatorTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorEmail != null" >
+        #{investigatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidyAmount != null" >
+        #{subsidyAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="localAssortAmount != null" >
+        #{localAssortAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="tripAmount != null" >
+        #{tripAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="trainingNums != null" >
+        #{trainingNums,jdbcType=INTEGER},
+      </if>
+      <if test="isReport != null" >
+        #{isReport,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigator.bean.GmsInvestigator" >
+    update gms_investigator
+    <set >
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="investigatorName != null" >
+        investigator_name = #{investigatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorNational != null" >
+        investigator_national = #{investigatorNational,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorAge != null" >
+        investigator_age = #{investigatorAge,jdbcType=INTEGER},
+      </if>
+      <if test="investigatorCityCode != null" >
+        investigator_city_code = #{investigatorCityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCityFullName != null" >
+        investigator_city_full_name = #{investigatorCityFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCityShortName != null" >
+        investigator_city_short_name = #{investigatorCityShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorMajor != null" >
+        investigator_major = #{investigatorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorDegree != null" >
+        investigator_degree = #{investigatorDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorCompanyName != null" >
+        investigator_company_name = #{investigatorCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorPhone != null" >
+        investigator_phone = #{investigatorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorTelphone != null" >
+        investigator_telphone = #{investigatorTelphone,jdbcType=VARCHAR},
+      </if>
+      <if test="investigatorEmail != null" >
+        investigator_email = #{investigatorEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidyAmount != null" >
+        subsidy_amount = #{subsidyAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="localAssortAmount != null" >
+        local_assort_amount = #{localAssortAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="tripAmount != null" >
+        trip_amount = #{tripAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="trainingNums != null" >
+        training_nums = #{trainingNums,jdbcType=INTEGER},
+      </if>
+      <if test="isReport != null" >
+        is_report = #{isReport,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <select id="queryInvestigator" parameterType="hashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_investigator where 1=1
+		<if test="parentId != null">
+			and parent_id = #{parentId,jdbcType=INTEGER}
+		</if>
+		<if test="year != null and year!=0">
+			and year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="dataIds!=null">
+			and sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="investigatorDegree != null and investigatorDegree !=''">
+			and investigator_degree = #{investigatorDegree,jdbcType=VARCHAR}
+		</if>
+		<if test="investigatorMajor != null and investigatorMajor !=''">
+			and investigator_major = #{investigatorMajor,jdbcType=VARCHAR}
+		</if>
+		<if test="ageStart != null and ageStart != 0">
+			and investigator_age >= #{ageStart,jdbcType=INTEGER}
+		</if>
+		<if test="ageEnd != null and ageEnd !=0">
+			and investigator_age &lt;= #{ageEnd,jdbcType=INTEGER}
+		</if>
+		<if test="cityCode != null and cityCode !=''">
+			and investigator_city_code like '%${cityCode}%'
+		</if>
+		
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+</mapper>

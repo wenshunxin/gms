@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Role">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.role.bean.Role">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="parent" property="parent" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.role.bean.RoleWithBLOBs"
+		extends="BaseResultMap">
+		<result column="menu_ids" property="menuIds" jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, parent
+	</sql>
+	<sql id="Blob_Column_List">
+		menu_ids, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_role
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="queryRole" parameterType="hashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_role
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tcxt.gms.role.bean.RoleWithBLOBs">
+		insert into gms_role (id, name, parent,
+		menu_ids, remark)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{parent,jdbcType=INTEGER},
+		#{menuIds,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.role.bean.RoleWithBLOBs">
+		insert into gms_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="parent != null">
+				parent,
+			</if>
+			<if test="menuIds != null">
+				menu_ids,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				#{parent,jdbcType=INTEGER},
+			</if>
+			<if test="menuIds != null">
+				#{menuIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.role.bean.RoleWithBLOBs">
+		update gms_role
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="parent != null">
+				parent = #{parent,jdbcType=INTEGER},
+			</if>
+			<if test="menuIds != null">
+				menu_ids = #{menuIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.role.bean.RoleWithBLOBs">
+		update gms_role
+		set name = #{name,jdbcType=VARCHAR},
+		parent = #{parent,jdbcType=INTEGER},
+		menu_ids = #{menuIds,jdbcType=LONGVARCHAR},
+		remark = #{remark,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tcxt.gms.role.bean.Role">
+		update gms_role
+		set name = #{name,jdbcType=VARCHAR},
+		parent = #{parent,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

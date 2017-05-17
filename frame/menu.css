@@ -1,0 +1,58 @@
+.gmsmenu {
+	font-family: 微软雅黑;
+	width: 98%;
+	margin: 0 auto;
+	padding: 0 auto;
+	padding-left: 0px;
+	list-style-type: none;
+}
+
+.gmsmenu li {
+	cursor: pointer;
+	width: 98%;
+	margin: 0 auto;
+	padding: 0 auto;
+	line-height: 56px;
+	border-bottom: 1px solid rgb(208, 208, 208);
+	text-align: center;
+	border: 1px solid #246042;
+	/* -moz-border-radius: 15px;      Gecko browsers
+    -webkit-border-radius: 15px;   Webkit browsers
+    border-radius:15px;   */
+}
+
+.child {
+	display: none;
+}
+
+.child, .child li {
+	margin: 0 auto;
+	padding: 0 auto;
+	list-style-type: none;
+	padding-left: 0px;
+	text-align: center;
+	background: #3b966a;
+	color: #ffffff;
+	font-size: 16px;
+	/*   -moz-border-radius: 15px;      Gecko browsers
+    -webkit-border-radius: 15px;   Webkit browsers
+    border-radius:15px; */
+}
+
+.child li {
+	background: #3b966a;
+	line-height: 46px;
+	border: 0;
+}
+
+.level1 {
+	background: #286648;
+	color: #ffffff;
+	font-size: 18px;
+}
+
+.level1 img {
+	width: 26px;
+	height: 26px;
+	margin-right: 10px;
+}

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_audit_records" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsAuditRecords" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="investigate_data_id" property="investigateDataId" jdbcType="INTEGER" />
+    <result column="sample_area_id" property="sampleAreaId" jdbcType="INTEGER" />
+    <result column="quadrat_id" property="quadratId" jdbcType="INTEGER" />
+    <result column="audit_user_id" property="auditUserId" jdbcType="INTEGER" />
+    <result column="audit_user_name" property="auditUserName" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="records_type" property="recordsType" jdbcType="INTEGER" />
+    <result column="is_history" property="isHistory" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsAuditRecords" extends="BaseResultMap" >
+    <result column="audit_content" property="auditContent" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, investigate_data_id, sample_area_id, quadrat_id, audit_user_id, audit_user_name, 
+    operate_time, records_type, is_history
+  </sql>
+  <sql id="Blob_Column_List" >
+    audit_content, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_audit_records
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_audit_records
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsAuditRecords" >
+    insert into gms_audit_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="investigateDataId != null" >
+        investigate_data_id,
+      </if>
+      <if test="sampleAreaId != null" >
+        sample_area_id,
+      </if>
+      <if test="quadratId != null" >
+        quadrat_id,
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id,
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="recordsType != null" >
+        records_type,
+      </if>
+      <if test="isHistory != null" >
+        is_history,
+      </if>
+      <if test="auditContent != null" >
+        audit_content,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDataId != null" >
+        #{investigateDataId,jdbcType=INTEGER},
+      </if>
+      <if test="sampleAreaId != null" >
+        #{sampleAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="quadratId != null" >
+        #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserId != null" >
+        #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordsType != null" >
+        #{recordsType,jdbcType=INTEGER},
+      </if>
+      <if test="isHistory != null" >
+        #{isHistory,jdbcType=INTEGER},
+      </if>
+      <if test="auditContent != null" >
+        #{auditContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsAuditRecords" >
+    update gms_audit_records
+    <set >
+      <if test="investigateDataId != null" >
+        investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+      </if>
+      <if test="sampleAreaId != null" >
+        sample_area_id = #{sampleAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="quadratId != null" >
+        quadrat_id = #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserId != null" >
+        audit_user_id = #{auditUserId,jdbcType=INTEGER},
+      </if>
+      <if test="auditUserName != null" >
+        audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordsType != null" >
+        records_type = #{recordsType,jdbcType=INTEGER},
+      </if>
+      <if test="isHistory != null" >
+        is_history = #{isHistory,jdbcType=INTEGER},
+      </if>
+      <if test="auditContent != null" >
+        audit_content = #{auditContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+ <select id="getLastAuditRecord" resultMap="ResultMapWithBLOBs" parameterType="hashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_audit_records
+    where investigate_data_id = #{dataId,jdbcType=INTEGER} and sample_area_id =#{sampleAreaId,jdbcType=INTEGER} and quadrat_id = #{quadratId,jdbcType=INTEGER} 
+    <if test="isHistory!=null and isHistory==1">
+    	and is_history=0
+    </if>
+    and sid = (select max(sid) from gms_audit_records where  investigate_data_id = #{dataId,jdbcType=INTEGER} and sample_area_id =#{sampleAreaId,jdbcType=INTEGER} and quadrat_id = #{quadratId,jdbcType=INTEGER}
+    <if test="isHistory!=null and isHistory==1">
+    	and is_history=0
+    </if>
+    )
+  </select>
+  <!-- 根据条件查询数据审核记录 -->
+ <select id="queryAuditRecords" resultType="hashMap" parameterType="hashMap" >
+    select 
+      r.sid as sid ,  r.audit_user_id as auditUserId, r.audit_user_name as auditUserName, 
+      r.operate_time as operateTime, r.records_type as recordsType,r.audit_content as auditContent,
+      u.city_short_name as companyName
+    from gms_audit_records r left join gms_user u on r.audit_user_id = u.sid
+    where 1=1 
+    <if test="dataId!=null and dataId != 0">
+    	and r.investigate_data_id = #{dataId,jdbcType=INTEGER} 
+    </if>
+    <if test="saId !=null and saId != 0 and qId==0">
+    	and r.sample_area_id =#{saId,jdbcType=INTEGER} and r.quadrat_id =0 
+    </if>
+    <if test="qId !=null and qId != 0">
+	   and r.sample_area_id =#{saId,jdbcType=INTEGER} and r.quadrat_id = #{qId,jdbcType=INTEGER} 
+    </if>
+     order by r.sid desc
+  </select>
+  
+  <update id="historyAuditRecords" parameterType="hashMap">
+  	update gms_audit_records set is_history = 1 where investigate_data_id = #{dataId,jdbcType=INTEGER}
+  	and sample_area_id = #{sampleAreaId,jdbcType=INTEGER}
+  	<if test="userLevel==2"><!-- 市级不通过时 -->
+  		 and records_type=1
+  	</if>
+  	<if test="userLevel==1"><!-- 省级不通过时 -->
+  		 and records_type!=2
+  	</if>
+  </update>
+</mapper>

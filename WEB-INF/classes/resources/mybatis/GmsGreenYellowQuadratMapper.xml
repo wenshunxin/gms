@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_green_yellow_quadrat">
+	<resultMap id="BaseResultMap"
+		type="com.tcxt.gms.investigation.bean.GmsGreenYellowQuadrat">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="quadrat_type" property="quadratType" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="sample_area_id" property="sampleAreaId"
+			jdbcType="INTEGER" />
+		<result column="quadrat_number" property="quadratNumber"
+			jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="altitude" property="altitude" jdbcType="DOUBLE" />
+		<result column="percentage" property="percentage" jdbcType="DOUBLE" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.tcxt.gms.investigation.bean.GmsGreenYellowQuadrat" extends="BaseResultMap">
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, quadrat_type, investigate_data_id, sample_area_id, quadrat_number,
+		longitude,
+		latitude, altitude, percentage, create_user_id,create_user_name,create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_quadrat
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getGreenYellowQuadratByNumber" resultMap="ResultMapWithBLOBs"
+		parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_quadrat
+		where sample_area_id = #{saId,jdbcType=INTEGER} and quadrat_number = #{quadratNumber,jdbcType=VARCHAR}
+	</select>
+	<select id="getGreenYellowQuadratBySaid" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_quadrat
+		where sample_area_id = #{gysasid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_green_yellow_quadrat
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteGreenYellowQuadratByDataId" parameterType="java.lang.Integer">
+		delete from gms_green_yellow_quadrat
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective"
+		parameterType="com.tcxt.gms.investigation.bean.GmsGreenYellowQuadrat" useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_green_yellow_quadrat
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="quadratType != null">
+				quadrat_type,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="sampleAreaId != null">
+				sample_area_id,
+			</if>
+			<if test="quadratNumber != null">
+				quadrat_number,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="altitude != null">
+				altitude,
+			</if>
+			<if test="percentage != null">
+				percentage,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="quadratType != null">
+				#{quadratType,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="sampleAreaId != null">
+				#{sampleAreaId,jdbcType=INTEGER},
+			</if>
+			<if test="quadratNumber != null">
+				#{quadratNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="altitude != null">
+				#{altitude,jdbcType=DOUBLE},
+			</if>
+			<if test="percentage != null">
+				#{percentage,jdbcType=DOUBLE},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tcxt.gms.investigation.bean.GmsGreenYellowQuadrat">
+		update gms_green_yellow_quadrat
+		<set>
+				quadrat_type = #{quadratType,jdbcType=INTEGER},
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				sample_area_id = #{sampleAreaId,jdbcType=INTEGER},
+				quadrat_number = #{quadratNumber,jdbcType=VARCHAR},
+				longitude = #{longitude,jdbcType=DOUBLE},
+				latitude = #{latitude,jdbcType=DOUBLE},
+				altitude = #{altitude,jdbcType=DOUBLE},
+				percentage = #{percentage,jdbcType=DOUBLE},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryGreenYellowQuadrat" parameterType="HashMap"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_quadrat
+		where 1=1
+		<if test="investigateDataId!=null and investigateDataId!=0">
+			and investigate_data_id = #{investigateDataId,jdbcType=INTEGER}
+		</if>
+		<if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="getMaxQuadratNumber" parameterType="HashMap" resultType="hashMap">
+		select max(quadrat_number) as maxQuadratNumber
+		from gms_green_yellow_quadrat
+		where sample_area_id = #{saId,jdbcType=INTEGER} and quadrat_number like '%${saNumber}%'
+	</select>
+</mapper>

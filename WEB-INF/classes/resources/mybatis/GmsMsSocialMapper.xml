@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_ms_social" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="investigate_date" property="investigateDate" jdbcType="DATE" />
+    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="land_area" property="landArea" jdbcType="DOUBLE" />
+    <result column="prairie_area" property="prairieArea" jdbcType="DOUBLE" />
+    <result column="natural_prairie_area" property="naturalPrairieArea" jdbcType="DOUBLE" />
+    <result column="available_natural_prairie_area" property="availableNaturalPrairieArea" jdbcType="DOUBLE" />
+    <result column="degradation_prairie_area" property="degradationPrairieArea" jdbcType="DOUBLE" />
+    <result column="herding_nums" property="herdingNums" jdbcType="INTEGER" />
+    <result column="animal_amount" property="animalAmount" jdbcType="DOUBLE" />
+    <result column="worker_avg_salary" property="workerAvgSalary" jdbcType="DOUBLE" />
+    <result column="herding_net_income" property="herdingNetIncome" jdbcType="DOUBLE" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" extends="BaseResultMap" >
+    <result column="investigate_user_ids" property="investigateUserIds" jdbcType="LONGVARCHAR" />
+    <result column="investigate_user_names" property="investigateUserNames" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, monitoring_stations_id, investigate_date,mobile_phone, land_area, prairie_area, natural_prairie_area, 
+    available_natural_prairie_area, degradation_prairie_area, herding_nums, animal_amount, 
+    worker_avg_salary, herding_net_income, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    investigate_user_ids, investigate_user_names, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_ms_social
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_ms_social
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" >
+    insert into gms_ms_social (sid, monitoring_stations_id, investigate_date, mobile_phone,
+      land_area, prairie_area, natural_prairie_area, 
+      available_natural_prairie_area, degradation_prairie_area, 
+      herding_nums, animal_amount, worker_avg_salary, 
+      herding_net_income, create_user_id, create_user_name, 
+      create_time, investigate_user_ids, investigate_user_names, 
+      remark)
+    values (#{sid,jdbcType=INTEGER}, #{monitoringStationsId,jdbcType=INTEGER}, #{investigateDate,jdbcType=DATE}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{landArea,jdbcType=DOUBLE}, #{prairieArea,jdbcType=DOUBLE}, #{naturalPrairieArea,jdbcType=DOUBLE}, 
+      #{availableNaturalPrairieArea,jdbcType=DOUBLE}, #{degradationPrairieArea,jdbcType=DOUBLE}, 
+      #{herdingNums,jdbcType=INTEGER}, #{animalAmount,jdbcType=DOUBLE}, #{workerAvgSalary,jdbcType=DOUBLE}, 
+      #{herdingNetIncome,jdbcType=DOUBLE}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{investigateUserIds,jdbcType=LONGVARCHAR}, #{investigateUserNames,jdbcType=LONGVARCHAR}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" useGeneratedKeys="true" keyProperty="sid">
+    insert into gms_ms_social
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="landArea != null" >
+        land_area,
+      </if>
+      <if test="prairieArea != null" >
+        prairie_area,
+      </if>
+      <if test="naturalPrairieArea != null" >
+        natural_prairie_area,
+      </if>
+      <if test="availableNaturalPrairieArea != null" >
+        available_natural_prairie_area,
+      </if>
+      <if test="degradationPrairieArea != null" >
+        degradation_prairie_area,
+      </if>
+      <if test="herdingNums != null" >
+        herding_nums,
+      </if>
+      <if test="animalAmount != null" >
+        animal_amount,
+      </if>
+      <if test="workerAvgSalary != null" >
+        worker_avg_salary,
+      </if>
+      <if test="herdingNetIncome != null" >
+        herding_net_income,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids,
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=DATE},
+      </if>
+      <if test="landArea != null" >
+        #{landArea,jdbcType=DOUBLE},
+      </if>
+      <if test="prairieArea != null" >
+        #{prairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="naturalPrairieArea != null" >
+        #{naturalPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="availableNaturalPrairieArea != null" >
+        #{availableNaturalPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="degradationPrairieArea != null" >
+        #{degradationPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="herdingNums != null" >
+        #{herdingNums,jdbcType=INTEGER},
+      </if>
+      <if test="animalAmount != null" >
+        #{animalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="workerAvgSalary != null" >
+        #{workerAvgSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="herdingNetIncome != null" >
+        #{herdingNetIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" >
+    update gms_ms_social
+    <set >
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date = #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="landArea != null" >
+        land_area = #{landArea,jdbcType=DOUBLE},
+      </if>
+      <if test="prairieArea != null" >
+        prairie_area = #{prairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="naturalPrairieArea != null" >
+        natural_prairie_area = #{naturalPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="availableNaturalPrairieArea != null" >
+        available_natural_prairie_area = #{availableNaturalPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="degradationPrairieArea != null" >
+        degradation_prairie_area = #{degradationPrairieArea,jdbcType=DOUBLE},
+      </if>
+      <if test="herdingNums != null" >
+        herding_nums = #{herdingNums,jdbcType=INTEGER},
+      </if>
+      <if test="animalAmount != null" >
+        animal_amount = #{animalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="workerAvgSalary != null" >
+        worker_avg_salary = #{workerAvgSalary,jdbcType=DOUBLE},
+      </if>
+      <if test="herdingNetIncome != null" >
+        herding_net_income = #{herdingNetIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" >
+    update gms_ms_social
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      land_area = #{landArea,jdbcType=DOUBLE},
+      prairie_area = #{prairieArea,jdbcType=DOUBLE},
+      natural_prairie_area = #{naturalPrairieArea,jdbcType=DOUBLE},
+      available_natural_prairie_area = #{availableNaturalPrairieArea,jdbcType=DOUBLE},
+      degradation_prairie_area = #{degradationPrairieArea,jdbcType=DOUBLE},
+      herding_nums = #{herdingNums,jdbcType=INTEGER},
+      animal_amount = #{animalAmount,jdbcType=DOUBLE},
+      worker_avg_salary = #{workerAvgSalary,jdbcType=DOUBLE},
+      herding_net_income = #{herdingNetIncome,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsSocial" >
+    update gms_ms_social
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      land_area = #{landArea,jdbcType=DOUBLE},
+      prairie_area = #{prairieArea,jdbcType=DOUBLE},
+      natural_prairie_area = #{naturalPrairieArea,jdbcType=DOUBLE},
+      available_natural_prairie_area = #{availableNaturalPrairieArea,jdbcType=DOUBLE},
+      degradation_prairie_area = #{degradationPrairieArea,jdbcType=DOUBLE},
+      herding_nums = #{herdingNums,jdbcType=INTEGER},
+      animal_amount = #{animalAmount,jdbcType=DOUBLE},
+      worker_avg_salary = #{workerAvgSalary,jdbcType=DOUBLE},
+      herding_net_income = #{herdingNetIncome,jdbcType=DOUBLE},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 列表  搜索？？？？ -->
+  <select id="queryGms" resultType="hashMap" parameterType="HashMap" >
+    select 
+    gms.sid as sid,gms.monitoring_stations_id as stationId, gms.investigate_date as investigateDate,gms.mobile_phone as mobilePhone,
+    gms.land_area as landArea, gms.prairie_area as prairieArea, gms.natural_prairie_area as naturalPrairieArea, 
+    gms.available_natural_prairie_area as availableNaturalPrairieArea, gms.degradation_prairie_area as degradationPrairieArea,
+    gms.herding_nums as herdingNums, gms.animal_amount as animalAmount, 
+    gms.worker_avg_salary as workerAvgSalary, gms.herding_net_income as herdingNetIncome,gms.investigate_user_names investigateUserNames,
+    ms.city_code as cityCode
+    from gms_ms_social gms left join gms_monitoring_stations ms on gms.monitoring_stations_id = ms.sid
+    <where>
+    	<if test="prairieAreaStart !=null">
+    		and gms.prairie_area>=#{prairieAreaStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="prairieAreaEnd !=null">
+    		and gms.prairie_area &lt;=#{prairieAreaEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="naturalPrairieAreaStart !=null">
+    		and gms.natural_prairie_area>=#{naturalPrairieAreaStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="naturalPrairieAreaEnd !=null">
+    		and gms.natural_prairie_area &lt;=#{naturalPrairieAreaEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="availableNaturalPrairieAreaStart !=null">
+    		and gms.available_natural_prairie_area>=#{availableNaturalPrairieAreaStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="availableNaturalPrairieAreaEnd !=null">
+    		and gms.available_natural_prairie_area &lt;=#{availableNaturalPrairieAreaEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="degradationPrairieAreaStart !=null">
+    		and gms.degradation_prairie_area>=#{degradationPrairieAreaStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="degradationPrairieAreaEnd !=null">
+    		and gms.degradation_prairie_area &lt;=#{degradationPrairieAreaEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="herdingNumsStart !=null and herdingNumsStart !=-1">
+    		and gms.herding_nums>=#{herdingNumsStart,jdbcType=INTEGER}
+    	</if>
+    	<if test="herdingNumsEnd !=null and herdingNumsEnd !=-1">
+    		and gms.herding_nums &lt;=#{herdingNumsEnd,jdbcType=INTEGER}
+    	</if>
+    	<if test="animalAmountStart !=null">
+    		and gms.animal_amount>=#{animalAmountStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="animalAmountEnd !=null">
+    		and gms.animal_amount &lt;=#{animalAmountEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="workerAvgSalaryStart !=null">
+    		and gms.worker_avg_salary>=#{workerAvgSalaryStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="workerAvgSalaryEnd !=null">
+    		and gms.worker_avg_salary &lt;=#{workerAvgSalaryEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="herdingNetIncomeStart !=null">
+    		and gms.herding_net_income>=#{herdingNetIncomeStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="herdingNetIncomeEnd !=null">
+    		and gms.herding_net_income &lt;=#{herdingNetIncomeEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="cityCode !=null and cityCode !=''">
+    		and ms.city_code like '%${cityCode}%'
+    	</if>
+    	<if test="startYear !=null and startYear !=0">
+    		and DATE_FORMAT(gms.investigate_date,"%Y")>=#{startYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="endYear !=null and endYear !=0">
+    		and DATE_FORMAT(gms.investigate_date,"%Y")&lt;=#{endYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="hasShrubs != null and hasShrubs !=-1">
+    	and has_shrubs = #{hasShrubs}
+    	</if>
+    	<if test="sids != null and sids !=''">
+    	and gms.sid in
+	    	<foreach item="item" index="index" collection="sids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteGmsById" parameterType="hashMap" >
+    delete from gms_ms_social where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+</mapper>

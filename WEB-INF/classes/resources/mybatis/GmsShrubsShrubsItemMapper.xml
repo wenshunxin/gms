@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_shrubs_shrubs_item" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="quadrat_id" property="quadratId" jdbcType="INTEGER" />
+    <result column="plant_name" property="plantName" jdbcType="VARCHAR" />
+    <result column="large_radius" property="largeRadius" jdbcType="DOUBLE" />
+    <result column="large_fresh_amount" property="largeFreshAmount" jdbcType="DOUBLE" />
+    <result column="large_dry_amount" property="largeDryAmount" jdbcType="DOUBLE" />
+    <result column="large_nums" property="largeNums" jdbcType="INTEGER" />
+    <result column="middle_radius" property="middleRadius" jdbcType="DOUBLE" />
+    <result column="middle_fresh_amount" property="middleFreshAmount" jdbcType="DOUBLE" />
+    <result column="middle_dry_amount" property="middleDryAmount" jdbcType="DOUBLE" />
+    <result column="middle_nums" property="middleNums" jdbcType="INTEGER" />
+    <result column="small_radius" property="smallRadius" jdbcType="DOUBLE" />
+    <result column="small_fresh_amount" property="smallFreshAmount" jdbcType="DOUBLE" />
+    <result column="small_dry_amount" property="smallDryAmount" jdbcType="DOUBLE" />
+    <result column="small_nums" property="smallNums" jdbcType="INTEGER" />
+    <result column="cover_size" property="coverSize" jdbcType="DOUBLE" />
+    <result column="convert_fresh_amount" property="convertFreshAmount" jdbcType="DOUBLE" />
+    <result column="convert_dry_amount" property="convertDryAmount" jdbcType="DOUBLE" />
+    <result column="heightly" property="heightly" jdbcType="DOUBLE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, quadrat_id, plant_name, large_radius, large_fresh_amount, large_dry_amount, 
+    large_nums, middle_radius, middle_fresh_amount, middle_dry_amount, middle_nums, small_radius, 
+    small_fresh_amount, small_dry_amount, small_nums, cover_size, convert_fresh_amount, 
+    convert_dry_amount, heightly
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_shrubs_shrubs_item
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="queryShrubsShrubsItem" resultMap="ResultMapWithBLOBs" parameterType="hashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_shrubs_shrubs_item
+    where quadrat_id = #{quadratId,jdbcType=INTEGER}
+  </select>
+  <select id="getShrubsShrubsByQuadratId" resultType="HashMap" parameterType="java.lang.Integer" >
+    select 
+    sid, quadrat_id quadratId, plant_name plantName, large_radius largeRadius, large_fresh_amount largeFreshAmount, 
+    large_dry_amount largeDryAmount, large_nums largeNums, middle_radius middleRadius, middle_fresh_amount middlefreshAmount, 
+    middle_dry_amount middleDryAmount, middle_nums middleNums, small_radius smallRadius, 
+    small_fresh_amount smallFreshAmount, small_dry_amount smallDryAmount, small_nums smallNums, 
+    cover_size coverSize, convert_fresh_amount convertFreshAmount, 
+    convert_dry_amount convertDryAmount, heightly,remark
+    from gms_shrubs_shrubs_item
+    where quadrat_id = #{sqsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_shrubs_shrubs_item
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteShrubsShrubsItemByQuadratId" parameterType="java.lang.Integer" >
+    delete from gms_shrubs_shrubs_item
+    where quadrat_id = #{quadratId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    insert into gms_shrubs_shrubs_item (sid, quadrat_id, plant_name, 
+      large_radius, large_fresh_amount, large_dry_amount, 
+      large_nums, middle_radius, middle_fresh_amount, 
+      middle_dry_amount, middle_nums, small_radius, 
+      small_fresh_amount, small_dry_amount, small_nums, 
+      cover_size, convert_fresh_amount, convert_dry_amount, 
+      heightly, remark)
+    values (#{sid,jdbcType=INTEGER}, #{quadratId,jdbcType=INTEGER}, #{plantName,jdbcType=VARCHAR}, 
+      #{largeRadius,jdbcType=DOUBLE}, #{largeFreshAmount,jdbcType=DOUBLE}, #{largeDryAmount,jdbcType=DOUBLE}, 
+      #{largeNums,jdbcType=INTEGER}, #{middleRadius,jdbcType=DOUBLE}, #{middleFreshAmount,jdbcType=DOUBLE}, 
+      #{middleDryAmount,jdbcType=DOUBLE}, #{middleNums,jdbcType=INTEGER}, #{smallRadius,jdbcType=DOUBLE}, 
+      #{smallFreshAmount,jdbcType=DOUBLE}, #{smallDryAmount,jdbcType=DOUBLE}, #{smallNums,jdbcType=INTEGER}, 
+      #{coverSize,jdbcType=DOUBLE}, #{convertFreshAmount,jdbcType=DOUBLE}, #{convertDryAmount,jdbcType=DOUBLE}, 
+      #{heightly,jdbcType=DOUBLE}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    insert into gms_shrubs_shrubs_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="quadratId != null" >
+        quadrat_id,
+      </if>
+      <if test="plantName != null" >
+        plant_name,
+      </if>
+      <if test="largeRadius != null" >
+        large_radius,
+      </if>
+      <if test="largeFreshAmount != null" >
+        large_fresh_amount,
+      </if>
+      <if test="largeDryAmount != null" >
+        large_dry_amount,
+      </if>
+      <if test="largeNums != null" >
+        large_nums,
+      </if>
+      <if test="middleRadius != null" >
+        middle_radius,
+      </if>
+      <if test="middleFreshAmount != null" >
+        middle_fresh_amount,
+      </if>
+      <if test="middleDryAmount != null" >
+        middle_dry_amount,
+      </if>
+      <if test="middleNums != null" >
+        middle_nums,
+      </if>
+      <if test="smallRadius != null" >
+        small_radius,
+      </if>
+      <if test="smallFreshAmount != null" >
+        small_fresh_amount,
+      </if>
+      <if test="smallDryAmount != null" >
+        small_dry_amount,
+      </if>
+      <if test="smallNums != null" >
+        small_nums,
+      </if>
+      <if test="coverSize != null" >
+        cover_size,
+      </if>
+      <if test="convertFreshAmount != null" >
+        convert_fresh_amount,
+      </if>
+      <if test="convertDryAmount != null" >
+        convert_dry_amount,
+      </if>
+      <if test="heightly != null" >
+        heightly,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="quadratId != null" >
+        #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="plantName != null" >
+        #{plantName,jdbcType=VARCHAR},
+      </if>
+      <if test="largeRadius != null" >
+        #{largeRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="largeFreshAmount != null" >
+        #{largeFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="largeDryAmount != null" >
+        #{largeDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="largeNums != null" >
+        #{largeNums,jdbcType=INTEGER},
+      </if>
+      <if test="middleRadius != null" >
+        #{middleRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="middleFreshAmount != null" >
+        #{middleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="middleDryAmount != null" >
+        #{middleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="middleNums != null" >
+        #{middleNums,jdbcType=INTEGER},
+      </if>
+      <if test="smallRadius != null" >
+        #{smallRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="smallFreshAmount != null" >
+        #{smallFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="smallDryAmount != null" >
+        #{smallDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="smallNums != null" >
+        #{smallNums,jdbcType=INTEGER},
+      </if>
+      <if test="coverSize != null" >
+        #{coverSize,jdbcType=DOUBLE},
+      </if>
+      <if test="convertFreshAmount != null" >
+        #{convertFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="convertDryAmount != null" >
+        #{convertDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="heightly != null" >
+        #{heightly,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    update gms_shrubs_shrubs_item
+    <set >
+      <if test="quadratId != null" >
+        quadrat_id = #{quadratId,jdbcType=INTEGER},
+      </if>
+      <if test="plantName != null" >
+        plant_name = #{plantName,jdbcType=VARCHAR},
+      </if>
+      <if test="largeRadius != null" >
+        large_radius = #{largeRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="largeFreshAmount != null" >
+        large_fresh_amount = #{largeFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="largeDryAmount != null" >
+        large_dry_amount = #{largeDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="largeNums != null" >
+        large_nums = #{largeNums,jdbcType=INTEGER},
+      </if>
+      <if test="middleRadius != null" >
+        middle_radius = #{middleRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="middleFreshAmount != null" >
+        middle_fresh_amount = #{middleFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="middleDryAmount != null" >
+        middle_dry_amount = #{middleDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="middleNums != null" >
+        middle_nums = #{middleNums,jdbcType=INTEGER},
+      </if>
+      <if test="smallRadius != null" >
+        small_radius = #{smallRadius,jdbcType=DOUBLE},
+      </if>
+      <if test="smallFreshAmount != null" >
+        small_fresh_amount = #{smallFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="smallDryAmount != null" >
+        small_dry_amount = #{smallDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="smallNums != null" >
+        small_nums = #{smallNums,jdbcType=INTEGER},
+      </if>
+      <if test="coverSize != null" >
+        cover_size = #{coverSize,jdbcType=DOUBLE},
+      </if>
+      <if test="convertFreshAmount != null" >
+        convert_fresh_amount = #{convertFreshAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="convertDryAmount != null" >
+        convert_dry_amount = #{convertDryAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="heightly != null" >
+        heightly = #{heightly,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    update gms_shrubs_shrubs_item
+    set quadrat_id = #{quadratId,jdbcType=INTEGER},
+      plant_name = #{plantName,jdbcType=VARCHAR},
+      large_radius = #{largeRadius,jdbcType=DOUBLE},
+      large_fresh_amount = #{largeFreshAmount,jdbcType=DOUBLE},
+      large_dry_amount = #{largeDryAmount,jdbcType=DOUBLE},
+      large_nums = #{largeNums,jdbcType=INTEGER},
+      middle_radius = #{middleRadius,jdbcType=DOUBLE},
+      middle_fresh_amount = #{middleFreshAmount,jdbcType=DOUBLE},
+      middle_dry_amount = #{middleDryAmount,jdbcType=DOUBLE},
+      middle_nums = #{middleNums,jdbcType=INTEGER},
+      small_radius = #{smallRadius,jdbcType=DOUBLE},
+      small_fresh_amount = #{smallFreshAmount,jdbcType=DOUBLE},
+      small_dry_amount = #{smallDryAmount,jdbcType=DOUBLE},
+      small_nums = #{smallNums,jdbcType=INTEGER},
+      cover_size = #{coverSize,jdbcType=DOUBLE},
+      convert_fresh_amount = #{convertFreshAmount,jdbcType=DOUBLE},
+      convert_dry_amount = #{convertDryAmount,jdbcType=DOUBLE},
+      heightly = #{heightly,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsShrubsItem" >
+    update gms_shrubs_shrubs_item
+    set quadrat_id = #{quadratId,jdbcType=INTEGER},
+      plant_name = #{plantName,jdbcType=VARCHAR},
+      large_radius = #{largeRadius,jdbcType=DOUBLE},
+      large_fresh_amount = #{largeFreshAmount,jdbcType=DOUBLE},
+      large_dry_amount = #{largeDryAmount,jdbcType=DOUBLE},
+      large_nums = #{largeNums,jdbcType=INTEGER},
+      middle_radius = #{middleRadius,jdbcType=DOUBLE},
+      middle_fresh_amount = #{middleFreshAmount,jdbcType=DOUBLE},
+      middle_dry_amount = #{middleDryAmount,jdbcType=DOUBLE},
+      middle_nums = #{middleNums,jdbcType=INTEGER},
+      small_radius = #{smallRadius,jdbcType=DOUBLE},
+      small_fresh_amount = #{smallFreshAmount,jdbcType=DOUBLE},
+      small_dry_amount = #{smallDryAmount,jdbcType=DOUBLE},
+      small_nums = #{smallNums,jdbcType=INTEGER},
+      cover_size = #{coverSize,jdbcType=DOUBLE},
+      convert_fresh_amount = #{convertFreshAmount,jdbcType=DOUBLE},
+      convert_dry_amount = #{convertDryAmount,jdbcType=DOUBLE},
+      heightly = #{heightly,jdbcType=DOUBLE}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

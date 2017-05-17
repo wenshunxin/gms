@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_sample_area">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsSampleArea">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="investigate_area" property="investigateArea"
+			jdbcType="VARCHAR" />
+		<result column="investigate_company_name" property="investigateCompanyName"
+			jdbcType="VARCHAR" />
+		<result column="project_id" property="projectId" jdbcType="INTEGER" />
+		<result column="in_or_out" property="inOrOut" jdbcType="INTEGER" />
+		<result column="sample_area_number" property="sampleAreaNumber"
+			jdbcType="VARCHAR" />
+		<result column="has_shrubs" property="hasShrubs" jdbcType="VARCHAR" />
+		<result column="grass_category" property="grassCategory"
+			jdbcType="VARCHAR" />
+		<result column="grass_type" property="grassType" jdbcType="VARCHAR" />
+		<result column="grass_landscape" property="grassLandscape"
+			jdbcType="VARCHAR" />
+		<result column="grass_slope" property="grassSlope" jdbcType="VARCHAR" />
+		<result column="grass_slope_position" property="grassSlopePosition"
+			jdbcType="VARCHAR" />
+		<result column="soil_texture" property="soilTexture" jdbcType="VARCHAR" />
+		<result column="has_litter" property="hasLitter" jdbcType="VARCHAR" />
+		<result column="has_sand" property="hasSand" jdbcType="VARCHAR" />
+		<result column="has_surface_erosion" property="hasSurfaceErosion"
+			jdbcType="VARCHAR" />
+		<result column="has_saline_spot" property="hasSalineSpot"
+			jdbcType="VARCHAR" />
+		<result column="bare_land_area_ratio" property="bareLandAreaRatio"
+			jdbcType="DOUBLE" />
+		<result column="has_seasonal_water" property="hasSeasonalWater"
+			jdbcType="VARCHAR" />
+		<result column="average_annual_rainfall" property="averageAnnualRainfall"
+			jdbcType="DOUBLE" />
+		<result column="using_type" property="usingType" jdbcType="VARCHAR" />
+		<result column="using_status" property="usingStatus" jdbcType="VARCHAR" />
+		<result column="evaluation" property="evaluation" jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsSampleArea"
+		extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="erosion_reason" property="erosionReason"
+			jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, investigate_data_id, investigate_date, investigate_area,
+		investigate_company_name,
+		project_id, in_or_out, sample_area_number, has_shrubs, grass_category,
+		grass_type,
+		grass_landscape, grass_slope, grass_slope_position, soil_texture, has_litter,
+		has_sand,
+		has_surface_erosion, has_saline_spot, bare_land_area_ratio, has_seasonal_water,
+		average_annual_rainfall, using_type, using_status, evaluation,
+		create_user_id, create_user_name,
+		create_time
+	</sql>
+	<sql id="min_sid_List">
+		min(sid) as sid, investigate_data_id, investigate_date, investigate_area,
+		investigate_company_name,
+		project_id, in_or_out, sample_area_number, has_shrubs, grass_category,
+		grass_type,
+		grass_landscape, grass_slope, grass_slope_position, soil_texture, has_litter,
+		has_sand,
+		has_surface_erosion, has_saline_spot, bare_land_area_ratio, has_seasonal_water,
+		average_annual_rainfall, using_type, using_status, evaluation,
+		create_user_id, create_user_name,
+		create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, erosion_reason, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sample_area
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getSampleAreaByDataId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="min_sid_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sample_area
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	<select id="getMaxSampleAreaByNumber" resultType="hashMap"
+		parameterType="hashMap">
+		select max(cast(SUBSTRING(sample_area_number,CHAR_LENGTH('${preNumber}')+1) as signed)) as maxNumber
+		from gms_sample_area
+		where 1=1
+		<if test="dataType!=null and dataType==0">
+			and in_or_out >0
+		</if>
+		<if test="dataType!=null and dataType==1">
+			and in_or_out =0
+		</if>
+		and sample_area_number like '%${preNumber}%' and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_sample_area
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteSampleAreaByDataId" parameterType="java.lang.Integer">
+		delete from gms_sample_area
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsSampleArea"
+		useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_sample_area
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="projectId != null">
+				project_id,
+			</if>
+			<if test="inOrOut != null">
+				in_or_out,
+			</if>
+			<if test="sampleAreaNumber != null">
+				sample_area_number,
+			</if>
+			<if test="hasShrubs != null">
+				has_shrubs,
+			</if>
+			<if test="grassCategory != null">
+				grass_category,
+			</if>
+			<if test="grassType != null">
+				grass_type,
+			</if>
+			<if test="grassLandscape != null">
+				grass_landscape,
+			</if>
+			<if test="grassSlope != null">
+				grass_slope,
+			</if>
+			<if test="grassSlopePosition != null">
+				grass_slope_position,
+			</if>
+			<if test="soilTexture != null">
+				soil_texture,
+			</if>
+			<if test="hasLitter != null">
+				has_litter,
+			</if>
+			<if test="hasSand != null">
+				has_sand,
+			</if>
+			<if test="hasSurfaceErosion != null">
+				has_surface_erosion,
+			</if>
+			<if test="hasSalineSpot != null">
+				has_saline_spot,
+			</if>
+			<if test="bareLandAreaRatio != null">
+				bare_land_area_ratio,
+			</if>
+			<if test="hasSeasonalWater != null">
+				has_seasonal_water,
+			</if>
+			<if test="averageAnnualRainfall != null">
+				average_annual_rainfall,
+			</if>
+			<if test="usingType != null">
+				using_type,
+			</if>
+			<if test="usingStatus != null">
+				using_status,
+			</if>
+			<if test="evaluation != null">
+				evaluation,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="erosionReason != null">
+				erosion_reason,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="projectId != null">
+				#{projectId,jdbcType=INTEGER},
+			</if>
+			<if test="inOrOut != null">
+				#{inOrOut,jdbcType=INTEGER},
+			</if>
+			<if test="sampleAreaNumber != null">
+				#{sampleAreaNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="hasShrubs != null">
+				#{hasShrubs,jdbcType=VARCHAR},
+			</if>
+			<if test="grassCategory != null">
+				#{grassCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="grassType != null">
+				#{grassType,jdbcType=VARCHAR},
+			</if>
+			<if test="grassLandscape != null">
+				#{grassLandscape,jdbcType=VARCHAR},
+			</if>
+			<if test="grassSlope != null">
+				#{grassSlope,jdbcType=VARCHAR},
+			</if>
+			<if test="grassSlopePosition != null">
+				#{grassSlopePosition,jdbcType=VARCHAR},
+			</if>
+			<if test="soilTexture != null">
+				#{soilTexture,jdbcType=VARCHAR},
+			</if>
+			<if test="hasLitter != null">
+				#{hasLitter,jdbcType=VARCHAR},
+			</if>
+			<if test="hasSand != null">
+				#{hasSand,jdbcType=VARCHAR},
+			</if>
+			<if test="hasSurfaceErosion != null">
+				#{hasSurfaceErosion,jdbcType=VARCHAR},
+			</if>
+			<if test="hasSalineSpot != null">
+				#{hasSalineSpot,jdbcType=VARCHAR},
+			</if>
+			<if test="bareLandAreaRatio != null">
+				#{bareLandAreaRatio,jdbcType=DOUBLE},
+			</if>
+			<if test="hasSeasonalWater != null">
+				#{hasSeasonalWater,jdbcType=VARCHAR},
+			</if>
+			<if test="averageAnnualRainfall != null">
+				#{averageAnnualRainfall,jdbcType=DOUBLE},
+			</if>
+			<if test="usingType != null">
+				#{usingType,jdbcType=VARCHAR},
+			</if>
+			<if test="usingStatus != null">
+				#{usingStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluation != null">
+				#{evaluation,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="erosionReason != null">
+				#{erosionReason,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsSampleArea">
+		update gms_sample_area
+		<set>
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+				investigate_company_name =
+				#{investigateCompanyName,jdbcType=VARCHAR},
+				project_id = #{projectId,jdbcType=INTEGER},
+			<if test="inOrOut!=null">
+				in_or_out = #{inOrOut,jdbcType=INTEGER},
+			</if>
+				sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR},
+			<if test="hasShrubs!=null">
+				has_shrubs = #{hasShrubs,jdbcType=VARCHAR},
+			</if>
+				grass_category = #{grassCategory,jdbcType=VARCHAR},
+				grass_type = #{grassType,jdbcType=VARCHAR},
+				grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+				grass_slope = #{grassSlope,jdbcType=VARCHAR},
+				grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR},
+				soil_texture = #{soilTexture,jdbcType=VARCHAR},
+				has_litter = #{hasLitter,jdbcType=VARCHAR},
+				has_sand = #{hasSand,jdbcType=VARCHAR},
+				has_surface_erosion = #{hasSurfaceErosion,jdbcType=VARCHAR},
+				has_saline_spot = #{hasSalineSpot,jdbcType=VARCHAR},
+				bare_land_area_ratio = #{bareLandAreaRatio,jdbcType=DOUBLE},
+				has_seasonal_water = #{hasSeasonalWater,jdbcType=VARCHAR},
+				average_annual_rainfall = #{averageAnnualRainfall,jdbcType=DOUBLE},
+				using_type = #{usingType,jdbcType=VARCHAR},
+				using_status = #{usingStatus,jdbcType=VARCHAR},
+				evaluation = #{evaluation,jdbcType=VARCHAR},
+			<if test="createUserId !=null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName !=null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime !=null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				erosion_reason = #{erosionReason,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="querySampleArea" parameterType="HashMap" resultType="hashMap">
+		select distinct(sa.sid) as sid,sa.sample_area_number as sampleAreaNumber,sa.investigate_date as investigateDate,
+		sa.investigate_data_id as dataId,
+		sa.grass_category as grassCategory,sa.has_shrubs as hasShrubs,d.audit_status as auditStatus,
+		sa.in_or_out as inOrOut,
+		sa.investigate_data_id as investigateDataId, sa.investigate_area as investigateArea,
+		sa.investigate_company_name as investigateCompanyName,
+		sa.grass_type as grassType,
+		sa.grass_landscape as grassLandscape, sa.grass_slope as grassSlope, sa.grass_slope_position grassSlopePosition, sa.soil_texture as soilTexture, sa.has_litter as hasLitter,
+		sa.has_sand as hasSand,
+		sa.has_surface_erosion as hasSurfaceErosion, sa.has_saline_spot as hasSalineSpot, sa.bare_land_area_ratio as bareLandAreaRatio, sa.has_seasonal_water as hasSeasonalWater,
+		sa.average_annual_rainfall as averageAnnualRainfall, sa.using_type as usingType, sa.using_status as usingStatus, sa.evaluation as evaluation,
+		sa.investigate_user_names as investigateUserNames, sa.erosion_reason as erosionReason,
+		p.project_name as projectName, p.project_size as projectSize, p.project_measures as projectMeasures, p.project_investment projectInvestment,
+		p.project_national_investment as projectNationalInvestment,
+		p.project_area as projectArea, p.project_building_date as projectBuildingDate, p.project_address as projectAddress
+		from gms_sample_area sa
+		 left join gms_investigate_data d on sa.investigate_data_id = d.sid
+		 left join gms_user u on sa.create_user_id = u.sid
+		 left join gms_project p on sa.project_id = p.sid
+		 left join gms_audit_records rs on (rs.investigate_data_id = d.sid and rs.quadrat_id = 0 and rs.sample_area_id !=0)
+		where 1=1 
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and sa.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="year!=null and year!=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test=" inOrOut !=null and inOrOut !=-1">
+			and sa.in_or_out = #{inOrOut,jdbcType=INTEGER}
+		</if>
+		<if test=" inOrOut !=null and inOrOut ==-1">
+			and sa.in_or_out > 0
+		</if>
+		<if test="averageAnnualRainfall!=null and averageAnnualRainfall!=0">
+			and sa.average_annual_rainfall = #{averageAnnualRainfall,jdbcType=DOUBLE}
+		</if>
+		<if test="grassSlope!=null and grassSlope!=''">
+			and sa.grass_slope = #{grassSlope,jdbcType=VARCHAR}
+		</if>
+		<if test="grassSlopePosition!=null and grassSlopePosition!=''">
+			and sa.grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR}
+		</if>
+		<if test="grassCategory !=null and grassCategory !=''">
+			and sa.grass_category = #{grassCategory,jdbcType=VARCHAR}
+		</if>
+		<if test="grassLandscape !=null and grassLandscape !=''">
+			and sa.grass_landscape = #{grassLandscape,jdbcType=VARCHAR}
+		</if>
+		<if test="soilTexture !=null and soilTexture !=''">
+			and sa.soil_texture = #{soilTexture,jdbcType=VARCHAR}
+		</if>
+		<if test="usingType !=null and usingType !=''">
+			and sa.using_type = #{usingType,jdbcType=VARCHAR}
+		</if>
+		<if test="usingStatus !=null and usingStatus !=''">
+			and sa.using_status = #{usingStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="hasShrubs !=null and hasShrubs !=''">
+			and sa.has_shrubs = #{hasShrubs,jdbcType=VARCHAR}
+		</if>
+		<if test="auditStatus !=null and auditStatus ==0 and auditStatus!=''">
+			and d.audit_status = #{auditStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="auditStatus !=null and auditStatus ==1">
+			and d.audit_status = #{auditStatus,jdbcType=VARCHAR} and ((select count(1) from gms_audit_records where sample_area_id = sa.sid and quadrat_id = 0)=0 or
+			 sa.sid = (select sample_area_id from gms_audit_records where records_type in(1,3) and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id =0)))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==2">
+			 and sa.sid = (select sample_area_id from gms_audit_records where records_type=0 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = 0))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==3">
+			 and sa.sid = (select sample_area_id from gms_audit_records where is_history = 0 and records_type= 1 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = 0))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==4">
+			 and sa.sid = (select sample_area_id from gms_audit_records where records_type= 2 and  sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = 0))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==5">
+			and sa.sid = (select sample_area_id from gms_audit_records where is_history = 0 and records_type= 3 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = 0))
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="getSampleAreaListByDataId" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sample_area
+		where 1=1 and investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getSampleAreaByNumber" parameterType="hashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sample_area
+		where in_or_out = #{inOrOut,jdbcType=INTEGER}
+		and sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR} and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<select id="querySampleAreaList" resultType="HashMap" parameterType="HashMap">
+		SELECT gsa.sid sid,gsa.investigate_data_id investigateDataId,gsa.investigate_date 
+		investigateDate,gsa.sample_area_number sampleAreaNumber,gsa.investigate_user_ids investigateUserIds,gsa.project_id projectId,gsa.in_or_out inOrOut,
+		gsa.investigate_user_names investigateUserNames,gsa.investigate_company_name investigateCompanyName,gsa.investigate_area investigateArea,
+		gsa.has_shrubs hasShrubs,gsa.grass_category grassCategory,gsa.grass_type grassType,gsa.grass_landscape grassLandscape,gsa.grass_slope grassSlope,
+		gsa.grass_slope_position grassSlopePosition,gsa.soil_texture soilTexture,gsa.has_litter hasLitter,
+		gsa.has_sand hasSand,gsa.has_surface_erosion hasSurfaceErosion,gsa.erosion_reason erosionReason,gsa.has_saline_spot hasSalineSpot,
+		gsa.bare_land_area_ratio bareLandAreaRatio,gsa.has_seasonal_water hasSeasonalWater,gsa.average_annual_rainfall averageAnnualRainfall,
+		gsa.using_type usingType,gsa.using_status usingStatus,gsa.evaluation evaluation,
+		gsa.create_user_id createUserId,gsa.create_user_name createUserName,gsa.create_time createTime,gsa.remark remark,
+		gp.project_name projectName,gp.project_size projectSize,gp.project_measures projectMeasures,gp.project_investment projectInvestment,
+		gp.project_area projectArea,gp.project_building_date projectBuildingDate,gp.project_address projectAddress
+		FROM gms_sample_area gsa 
+		LEFT JOIN `gms_investigate_data` gid ON gsa.investigate_data_id=gid.sid 
+		LEFT JOIN gms_project gp ON gp.sid=gsa.project_id 
+		where 1=1
+		<if test="auditStatus != null and auditStatus ==4">
+			 AND gid.audit_status=4 
+		</if>
+		<if test="auditStatus != null and auditStatus ==0">
+			 AND gid.audit_status=0 
+		</if>
+		<if test="auditStatus != null and auditStatus ==99">
+			 AND gid.audit_status>0
+		</if>
+		AND gid.investigate_type IN (0,1) AND gid.`year`= #{year,jdbcType=INTEGER}
+		AND gid.create_user_id IN (select sid FROM gms_user where city_code LIKE '${cityCode}');
+	</select>
+</mapper>

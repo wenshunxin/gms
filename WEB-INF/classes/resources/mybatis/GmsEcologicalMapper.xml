@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_ecological">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsEcological">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="investigate_area" property="investigateArea"
+			jdbcType="VARCHAR" />
+		<result column="sample_area_number" property="sampleAreaNumber"
+			jdbcType="VARCHAR" />
+		<result column="investigate_company_name" property="investigateCompanyName"
+			jdbcType="VARCHAR" />
+		<result column="degradation_area" property="degradationArea"
+			jdbcType="VARCHAR" />
+		<result column="degradation_size" property="degradationSize"
+			jdbcType="DOUBLE" />
+		<result column="degradation_mild_size" property="degradationMildSize"
+			jdbcType="DOUBLE" />
+		<result column="degradation_moderate_size" property="degradationModerateSize"
+			jdbcType="DOUBLE" />
+		<result column="degradation_severe_size" property="degradationSevereSize"
+			jdbcType="DOUBLE" />
+		<result column="desertification_area" property="desertificationArea"
+			jdbcType="VARCHAR" />
+		<result column="desertification_size" property="desertificationSize"
+			jdbcType="DOUBLE" />
+		<result column="desertification_mild_size" property="desertificationMildSize"
+			jdbcType="DOUBLE" />
+		<result column="desertification_moderate_size" property="desertificationModerateSize"
+			jdbcType="DOUBLE" />
+		<result column="desertification_severe_size" property="desertificationSevereSize"
+			jdbcType="DOUBLE" />
+		<result column="salinization_area" property="salinizationArea"
+			jdbcType="VARCHAR" />
+		<result column="salinization_size" property="salinizationSize"
+			jdbcType="DOUBLE" />
+		<result column="salinization_mild_size" property="salinizationMildSize"
+			jdbcType="DOUBLE" />
+		<result column="salinization_moderate_size" property="salinizationModerateSize"
+			jdbcType="DOUBLE" />
+		<result column="salinization_severe_size" property="salinizationSevereSize"
+			jdbcType="DOUBLE" />
+		<result column="rocky_desertification_area" property="rockyDesertificationArea"
+			jdbcType="VARCHAR" />
+		<result column="rocky_desertification_size" property="rockyDesertificationSize"
+			jdbcType="DOUBLE" />
+		<result column="rocky_desertification_mild_size" property="rockyDesertificationMildSize"
+			jdbcType="DOUBLE" />
+		<result column="rocky_desertification_moderate_size" property="rockyDesertificationModerateSize"
+			jdbcType="DOUBLE" />
+		<result column="rocky_desertification_severe_size" property="rockyDesertificationSevereSize"
+			jdbcType="DOUBLE" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsEcological"
+		extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, investigate_data_id, investigate_date, investigate_area,
+		sample_area_number,
+		investigate_company_name, degradation_area, degradation_size, degradation_mild_size,
+		degradation_moderate_size, degradation_severe_size,
+		desertification_area, desertification_size,
+		desertification_mild_size, desertification_moderate_size, desertification_severe_size,
+		salinization_area, salinization_size, salinization_mild_size,
+		salinization_moderate_size,
+		salinization_severe_size, rocky_desertification_area, rocky_desertification_size,
+		rocky_desertification_mild_size, rocky_desertification_moderate_size,
+		rocky_desertification_severe_size,
+		create_user_id, create_user_name, create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_ecological
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getEcologicalByDataId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_ecological
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	<select id="getMaxSampleAreaByNumber" resultType="hashMap"
+		parameterType="hashMap">
+		select max(cast(SUBSTRING(sample_area_number,CHAR_LENGTH('${preNumber}')+1) as signed)) as maxNumber
+		from gms_ecological
+		where sample_area_number like '%${preNumber}%' and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_ecological
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsEcological">
+		insert into gms_ecological
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="sampleAreaNumber != null">
+				sample_area_number,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="degradationArea != null">
+				degradation_area,
+			</if>
+			<if test="degradationSize != null">
+				degradation_size,
+			</if>
+			<if test="degradationMildSize != null">
+				degradation_mild_size,
+			</if>
+			<if test="degradationModerateSize != null">
+				degradation_moderate_size,
+			</if>
+			<if test="degradationSevereSize != null">
+				degradation_severe_size,
+			</if>
+			<if test="desertificationArea != null">
+				desertification_area,
+			</if>
+			<if test="desertificationSize != null">
+				desertification_size,
+			</if>
+			<if test="desertificationMildSize != null">
+				desertification_mild_size,
+			</if>
+			<if test="desertificationModerateSize != null">
+				desertification_moderate_size,
+			</if>
+			<if test="desertificationSevereSize != null">
+				desertification_severe_size,
+			</if>
+			<if test="salinizationArea != null">
+				salinization_area,
+			</if>
+			<if test="salinizationSize != null">
+				salinization_size,
+			</if>
+			<if test="salinizationMildSize != null">
+				salinization_mild_size,
+			</if>
+			<if test="salinizationModerateSize != null">
+				salinization_moderate_size,
+			</if>
+			<if test="salinizationSevereSize != null">
+				salinization_severe_size,
+			</if>
+			<if test="rockyDesertificationArea != null">
+				rocky_desertification_area,
+			</if>
+			<if test="rockyDesertificationSize != null">
+				rocky_desertification_size,
+			</if>
+			<if test="rockyDesertificationMildSize != null">
+				rocky_desertification_mild_size,
+			</if>
+			<if test="rockyDesertificationModerateSize != null">
+				rocky_desertification_moderate_size,
+			</if>
+			<if test="rockyDesertificationSevereSize != null">
+				rocky_desertification_severe_size,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="sampleAreaNumber != null">
+				#{sampleAreaNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="degradationArea != null">
+				#{degradationArea,jdbcType=VARCHAR},
+			</if>
+			<if test="degradationSize != null">
+				#{degradationSize,jdbcType=DOUBLE},
+			</if>
+			<if test="degradationMildSize != null">
+				#{degradationMildSize,jdbcType=DOUBLE},
+			</if>
+			<if test="degradationModerateSize != null">
+				#{degradationModerateSize,jdbcType=DOUBLE},
+			</if>
+			<if test="degradationSevereSize != null">
+				#{degradationSevereSize,jdbcType=DOUBLE},
+			</if>
+			<if test="desertificationArea != null">
+				#{desertificationArea,jdbcType=VARCHAR},
+			</if>
+			<if test="desertificationSize != null">
+				#{desertificationSize,jdbcType=DOUBLE},
+			</if>
+			<if test="desertificationMildSize != null">
+				#{desertificationMildSize,jdbcType=DOUBLE},
+			</if>
+			<if test="desertificationModerateSize != null">
+				#{desertificationModerateSize,jdbcType=DOUBLE},
+			</if>
+			<if test="desertificationSevereSize != null">
+				#{desertificationSevereSize,jdbcType=DOUBLE},
+			</if>
+			<if test="salinizationArea != null">
+				#{salinizationArea,jdbcType=VARCHAR},
+			</if>
+			<if test="salinizationSize != null">
+				#{salinizationSize,jdbcType=DOUBLE},
+			</if>
+			<if test="salinizationMildSize != null">
+				#{salinizationMildSize,jdbcType=DOUBLE},
+			</if>
+			<if test="salinizationModerateSize != null">
+				#{salinizationModerateSize,jdbcType=DOUBLE},
+			</if>
+			<if test="salinizationSevereSize != null">
+				#{salinizationSevereSize,jdbcType=DOUBLE},
+			</if>
+			<if test="rockyDesertificationArea != null">
+				#{rockyDesertificationArea,jdbcType=VARCHAR},
+			</if>
+			<if test="rockyDesertificationSize != null">
+				#{rockyDesertificationSize,jdbcType=DOUBLE},
+			</if>
+			<if test="rockyDesertificationMildSize != null">
+				#{rockyDesertificationMildSize,jdbcType=DOUBLE},
+			</if>
+			<if test="rockyDesertificationModerateSize != null">
+				#{rockyDesertificationModerateSize,jdbcType=DOUBLE},
+			</if>
+			<if test="rockyDesertificationSevereSize != null">
+				#{rockyDesertificationSevereSize,jdbcType=DOUBLE},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsEcological">
+		update gms_ecological
+		<set>
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+				sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR},
+				investigate_company_name =
+				#{investigateCompanyName,jdbcType=VARCHAR},
+				degradation_area = #{degradationArea,jdbcType=VARCHAR},
+				degradation_size = #{degradationSize,jdbcType=DOUBLE},
+				degradation_mild_size = #{degradationMildSize,jdbcType=DOUBLE},
+				degradation_moderate_size =
+				#{degradationModerateSize,jdbcType=DOUBLE},
+				degradation_severe_size = #{degradationSevereSize,jdbcType=DOUBLE},
+				desertification_area = #{desertificationArea,jdbcType=VARCHAR},
+				desertification_size = #{desertificationSize,jdbcType=DOUBLE},
+				desertification_mild_size =
+				#{desertificationMildSize,jdbcType=DOUBLE},
+				desertification_moderate_size =
+				#{desertificationModerateSize,jdbcType=DOUBLE},
+				desertification_severe_size =
+				#{desertificationSevereSize,jdbcType=DOUBLE},
+				salinization_area = #{salinizationArea,jdbcType=VARCHAR},
+				salinization_size = #{salinizationSize,jdbcType=DOUBLE},
+				salinization_mild_size = #{salinizationMildSize,jdbcType=DOUBLE},
+				salinization_moderate_size =
+				#{salinizationModerateSize,jdbcType=DOUBLE},
+				salinization_severe_size =
+				#{salinizationSevereSize,jdbcType=DOUBLE},
+				rocky_desertification_area =
+				#{rockyDesertificationArea,jdbcType=VARCHAR},
+				rocky_desertification_size =
+				#{rockyDesertificationSize,jdbcType=DOUBLE},
+				rocky_desertification_mild_size =
+				#{rockyDesertificationMildSize,jdbcType=DOUBLE},
+				rocky_desertification_moderate_size =
+				#{rockyDesertificationModerateSize,jdbcType=DOUBLE},
+				rocky_desertification_severe_size =
+				#{rockyDesertificationSevereSize,jdbcType=DOUBLE},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryEcological" parameterType="HashMap" resultType="hashMap">
+		select 
+		g.sid as sid, g.investigate_data_id as investigateDataId, 
+		g.investigate_date as investigateDate, 
+		g.sample_area_number as sampleAreaNumber,
+		g.investigate_area as investigateArea,
+		g.degradation_size as degradationSize,g.degradation_area as degradationArea,
+		g.desertification_size as desertificationSize,g.desertification_area as desertificationArea,
+		g.salinization_size as salinizationSize,g.salinization_area as salinizationArea, 
+		g.rocky_desertification_size as rockyDesertificationSize,g.rocky_desertification_area as rockyDesertificationArea,
+		
+		g.investigate_company_name as investigateCompanyName,
+		g.degradation_mild_size as degradationMildSize,
+		g.degradation_moderate_size as degradationModerateSize, 
+		g.degradation_severe_size as degradationSevereSize,
+		g.desertification_mild_size as desertificationMildSize,
+		g.desertification_moderate_size as desertificationModerateSize,
+		g.desertification_severe_size as desertificationSevereSize,
+		g.salinization_mild_size as salinizationMildSize,
+		g.salinization_moderate_size as salinizationModerateSize,
+		g.salinization_severe_size as salinizationSevereSize,
+		g.rocky_desertification_mild_size as rockyDesertificationMildSize, 
+		g.rocky_desertification_moderate_size as rockyDesertificationModerateSize,
+		g.rocky_desertification_severe_size as rockyDesertificationSevereSize,
+		g.investigate_user_names as investigateUserNames,
+		g.remark as remark,
+		d.audit_status as auditStatus
+		from gms_ecological g left join gms_investigate_data d on g.investigate_data_id = d.sid
+							  left join gms_user u on g.create_user_id = u.sid
+		where 1=1
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and g.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="year !=null and year !=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="auditStatus !=null and auditStatus !=''">
+			and d.audit_status = #{auditStatus,jdbcType=INTEGER}
+		</if>
+		<if test="degradationValue!='' and degradationCondition!=''">
+			<if test="degradationCondition==0  and degradationValue!=''">
+					and ${degradation} = #{degradationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="degradationCondition==1  and degradationValue!=''">
+					and ${degradation} > #{degradationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="degradationCondition==2 and degradationValue!=''">
+					and ${degradation} &lt; #{degradationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="degradationCondition==3  and startDegradationValue!='' and endDegradationValue!=''">
+					and ${degradation}>=#{startDegradationValue!=,jdbcType=DOUBLE} and ${degradation} &lt;=#{endDegradationValue!=,jdbcType=DOUBLE}
+			</if>
+			<if test="degradationCondition==4  and startDegradationValue!='' and endDegradationValue!=''">
+					and ${degradation}&lt;#{startDegradationValue!=,jdbcType=DOUBLE} or ${degradation} > #{endDegradationValue!=,jdbcType=DOUBLE}
+			</if>
+		</if>
+		<if test="salinizationValue!='' and salinizationCondition!=''">
+			<if test="salinizationCondition==0  and salinizationValue!=''">
+					and ${salinization} = #{salinizationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="salinizationCondition==1  and salinizationValue!=''">
+					and ${salinization} > #{salinizationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="salinizationCondition==2 and salinizationValue!=''">
+					and ${salinization} &lt; #{salinizationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="salinizationCondition==3  and startSalinizationValue!='' and endSalinizationValue!=''">
+					and ${salinization}>=#{startSalinizationValue,jdbcType=DOUBLE} and ${salinization} &lt;=#{endSalinizationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="salinizationCondition==4  and startSalinizationValue!='' and endSalinizationValue!=''">
+					and ${salinization}&lt;#{startSalinizationValue,jdbcType=DOUBLE} or ${salinization} > #{endSalinizationValue,jdbcType=DOUBLE}
+			</if>
+		</if>
+		<if test="desertificationValue!='' and desertificationCondition!=''">
+			<if test="desertificationCondition==0  and desertificationValue!=''">
+					and ${desertification} = #{desertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="desertificationCondition==1  and desertificationValue!=''">
+					and ${desertification} > #{desertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="desertificationCondition==2 and desertificationValue!=''">
+					and ${desertification} &lt; #{desertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="desertificationCondition==3  and startDesertificationValue!='' and endDesertificationValue!=''">
+					and ${desertification}>=#{startDesertificationValue,jdbcType=DOUBLE} and ${desertification} &lt;=#{endDesertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="desertificationCondition==4  and startDesertificationValue!='' and endDesertificationValue!=''">
+					and ${desertification}&lt;#{startDesertificationValue,jdbcType=DOUBLE} or ${desertification} > #{endDesertificationValue,jdbcType=DOUBLE}
+			</if>
+		</if>
+		<if test="rockyDesertificationValue!='' and rockyDesertificationCondition!=''">
+			<if test="rockyDesertificationCondition==0  and rockyDesertificationValue!=''">
+					and ${rockyDesertification} = #{rockyDesertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="rockyDesertificationCondition==1  and rockyDesertificationValue!=''">
+					and ${rockyDesertification} > #{rockyDesertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="rockyDesertificationCondition==2 and rockyDesertificationValue!=''">
+					and ${rockyDesertification} &lt; #{rockyDesertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="rockyDesertificationCondition==3  and startRockyDesertificationValue!='' and endRockyDesertificationValue!=''">
+					and ${rockyDesertification}>=#{startRockyDesertificationValue,jdbcType=DOUBLE} and ${queryItem} &lt;=#{endRockyDesertificationValue,jdbcType=DOUBLE}
+			</if>
+			<if test="rockyDesertificationCondition==4  and startRockyDesertificationValue!='' and endRockyDesertificationValue!=''">
+					and ${rockyDesertification}&lt;#{startRockyDesertificationValue,jdbcType=DOUBLE} or ${queryItem} > #{endRockyDesertificationValue,jdbcType=DOUBLE}
+			</if>
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="queryEcologicalList" parameterType="HashMap" resultType="hashMap">
+		SELECT ge.sid sid,ge.investigate_data_id investigateDataId,ge.investigate_date investigateDate,ge.sample_area_number sampleAreaNumber,
+		ge.investigate_user_ids investigateUserIds,
+		ge.investigate_user_names investigateUserNames,ge.investigate_company_name investigateCompanyName,ge.investigate_area investigateArea,ge.degradation_size degradationSize,
+		ge.degradation_area degradationArea,ge.degradation_mild_size degradationMildSize,ge.degradation_moderate_size degradationModerateSize,ge.degradation_severe_size degradationSevereSize,
+		ge.desertification_area desertificationArea,ge.desertification_size desertificationSize,ge.degradation_mild_size degradationMildSize,ge.desertification_moderate_size
+		degradationModerateSize,ge.desertification_severe_size desertificationSevereSize,ge.salinization_area salinizationArea,ge.salinization_size salinizationSize,
+		ge.salinization_mild_size salinizationMildSize,ge.salinization_moderate_size salinizationModerateSize,ge.salinization_severe_size salinizationSevereSize,
+		ge.rocky_desertification_area rockyDesertificationSrea,ge.rocky_desertification_size rockyDesertificationSize,ge.rocky_desertification_mild_size rockyDesertificationMildSize,
+		ge.rocky_desertification_moderate_size rocky_desertificationModerateSize,ge.rocky_desertification_severe_size rockyDesertificationSevereSize,
+		ge.create_user_id createUserId,ge.create_user_name createUserName,ge.create_time createTime1,ge.remark remark
+		FROM `gms_investigate_data` gid LEFT JOIN gms_ecological ge ON gid.sid=ge.investigate_data_id 
+		where gid.sid=ge.investigate_data_id 
+		<if test="auditStatus != null and auditStatus ==4">
+	 		AND gid.audit_status=4 
+		</if>
+		<if test="auditStatus != null and auditStatus ==0">
+			 AND gid.audit_status=0 
+		</if>
+		<if test="auditStatus != null and auditStatus ==99">
+			 AND gid.audit_status>0
+		</if>
+		AND gid.investigate_type = 4  AND gid.`year`= #{year,jdbcType=INTEGER}
+		AND gid.create_user_id IN (select sid FROM gms_user where city_code LIKE '${cityCode}')
+	</select>
+</mapper>

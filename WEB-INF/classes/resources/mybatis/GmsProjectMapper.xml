@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_project">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.investigation.bean.GmsProject">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="project_name" property="projectName" jdbcType="VARCHAR" />
+		<result column="project_size" property="projectSize" jdbcType="DOUBLE" />
+		<result column="project_measures" property="projectMeasures"
+			jdbcType="VARCHAR" />
+		<result column="project_investment" property="projectInvestment"
+			jdbcType="DOUBLE" />
+		<result column="project_national_investment" property="projectNationalInvestment"
+			jdbcType="DOUBLE" />
+		<result column="project_area" property="projectArea" jdbcType="VARCHAR" />
+		<result column="project_building_date" property="projectBuildingDate"
+			jdbcType="DATE" />
+		<result column="project_address" property="projectAddress"
+			jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.investigation.bean.GmsProject"
+		extends="BaseResultMap">
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		p.sid, project_name, project_size, project_measures, project_investment,
+		project_national_investment,
+		project_area, project_building_date, project_address,
+		p.create_user_id,p.create_user_name, p.create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		p.remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_project p
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_project
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsProject"
+		useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_project
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="projectName != null">
+				project_name,
+			</if>
+			<if test="projectSize != null">
+				project_size,
+			</if>
+			<if test="projectMeasures != null">
+				project_measures,
+			</if>
+			<if test="projectInvestment != null">
+				project_investment,
+			</if>
+			<if test="projectNationalInvestment != null">
+				project_national_investment,
+			</if>
+			<if test="projectArea != null">
+				project_area,
+			</if>
+			<if test="projectBuildingDate != null">
+				project_building_date,
+			</if>
+			<if test="projectAddress != null">
+				project_address,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="projectName != null">
+				#{projectName,jdbcType=VARCHAR},
+			</if>
+			<if test="projectSize != null">
+				#{projectSize,jdbcType=DOUBLE},
+			</if>
+			<if test="projectMeasures != null">
+				#{projectMeasures,jdbcType=VARCHAR},
+			</if>
+			<if test="projectInvestment != null">
+				#{projectInvestment,jdbcType=DOUBLE},
+			</if>
+			<if test="projectNationalInvestment != null">
+				#{projectNationalInvestment,jdbcType=DOUBLE},
+			</if>
+			<if test="projectArea != null">
+				#{projectArea,jdbcType=VARCHAR},
+			</if>
+			<if test="projectBuildingDate != null">
+				#{projectBuildingDate,jdbcType=DATE},
+			</if>
+			<if test="projectAddress != null">
+				#{projectAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsProject">
+		update gms_project
+		<set>
+			<if test="projectName != null">
+				project_name = #{projectName,jdbcType=VARCHAR},
+			</if>
+			<if test="projectSize != null">
+				project_size = #{projectSize,jdbcType=DOUBLE},
+			</if>
+			<if test="projectMeasures != null">
+				project_measures = #{projectMeasures,jdbcType=VARCHAR},
+			</if>
+			<if test="projectInvestment != null">
+				project_investment = #{projectInvestment,jdbcType=DOUBLE},
+			</if>
+			<if test="projectNationalInvestment != null">
+				project_national_investment =
+				#{projectNationalInvestment,jdbcType=DOUBLE},
+			</if>
+			<if test="projectArea != null">
+				project_area = #{projectArea,jdbcType=VARCHAR},
+			</if>
+			<if test="projectBuildingDate != null">
+				project_building_date = #{projectBuildingDate,jdbcType=DATE},
+			</if>
+			<if test="projectAddress != null">
+				project_address = #{projectAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryProject" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_project p left join gms_user u on p.create_user_id = u.sid
+		where 1=1
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'		
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+</mapper>

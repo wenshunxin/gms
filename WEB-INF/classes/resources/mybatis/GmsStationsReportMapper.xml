@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_stations_report" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.stations_report.bean.GmsStationsReport" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.stations_report.bean.GmsStationsReport" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, monitoring_stations_id, year, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_stations_report
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_stations_report
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.stations_report.bean.GmsStationsReport" >
+    insert into gms_stations_report (sid, monitoring_stations_id, year, 
+      create_user_id, create_user_name, create_time, 
+      remark)
+    values (#{sid,jdbcType=INTEGER}, #{monitoringStationsId,jdbcType=INTEGER}, #{year,jdbcType=INTEGER}, 
+      #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.stations_report.bean.GmsStationsReport" useGeneratedKeys="true" keyProperty="sid">
+    insert into gms_stations_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.stations_report.bean.GmsStationsReport" >
+    update gms_stations_report
+    <set >
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.stations_report.bean.GmsStationsReport" >
+    update gms_stations_report
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.stations_report.bean.GmsStationsReport" >
+    update gms_stations_report
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+     <!-- 列表  搜索 -->
+  <select id="queryStationsReport" resultType="HashMap" parameterType="HashMap" >
+    SELECT 
+	gsr.sid sid,gsr.monitoring_stations_id monitoringStationsId,gsr.year year,gsr.create_time createTime,gsr.create_user_id createUserId, gsr.create_user_name createUserName,gsr.remark remark,
+	gms.city_code cityCode,ga.attach_name attachName,ga.attach_path attachPath,
+	ga.attach_suffix as attachSuffix
+ FROM `gms_stations_report` gsr LEFT JOIN gms_monitoring_stations gms ON gsr.monitoring_stations_id=gms.sid LEFT JOIN gms_attachment ga ON ga.business_id = gsr.sid 
+    <where>
+    ga.attach_model='stations_report' AND ga.attach_module='固定监测点'
+    	<if test="cityCode != null and cityCode !=''">
+    	and gms.city_code like '%${cityCode}%'
+    	</if>
+    	<if test="beginYear != null and beginYear !=0 or endYear !=null and endYear !=0">
+    	and year between #{beginYear} and #{endYear}
+    	</if>
+    	<if test="type !=null and type !=-1">
+    	and gms.has_shrubs = #{type,jdbcType=INTEGER}
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+	</if>
+  </select>
+   <!-- 单删或多删 -->
+  <delete id="deleteStationsReportById" parameterType="hashMap" >
+    delete from gms_stations_report where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+  
+  
+</mapper>

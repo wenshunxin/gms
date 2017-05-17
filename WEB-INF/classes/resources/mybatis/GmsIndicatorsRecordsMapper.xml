@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_indicators_records" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="indicators_id" property="indicatorsId" jdbcType="INTEGER" />
+    <result column="indicators_value" property="indicatorsValue" jdbcType="VARCHAR" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="investigate_date" property="investigateDate" jdbcType="DATE" />
+    <result column="investigate_user_ids" property="investigateUserIds" jdbcType="VARCHAR" />
+    <result column="investigate_user_names" property="investigateUserNames" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, indicators_id, indicators_value, monitoring_stations_id, investigate_date, investigate_user_ids, 
+    investigate_user_names, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultType="hashMap" parameterType="java.lang.Integer" >
+   SELECT gir.sid sid,gir.indicators_id indicatorsId,gir.indicators_value indicatorsValue,gir.monitoring_stations_id monitoringStationsId,gir.investigate_date investigateDate,
+	gir.investigate_user_ids investigateUserIds,gir.investigate_user_names investigateUserNames,gir.create_user_id createUserId,gir.create_user_name createUserName,
+	gir.create_time createTime,gir.remark remark,gi.indicators_name indicatorsName,gms.city_code cityCode,gms.sid gmsSid,gms.stations_num stationsNum
+	FROM gms_indicators_records gir 
+	LEFT JOIN gms_indicators gi ON gir.indicators_id = gi.sid 
+	LEFT JOIN gms_monitoring_stations gms ON gms.sid = gir.monitoring_stations_id
+ where gir.sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_indicators_records
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    insert into gms_indicators_records (sid, indicators_id, indicators_value, 
+      monitoring_stations_id, investigate_date, investigate_user_ids, 
+      investigate_user_names, create_user_id, create_user_name, 
+      create_time, remark)
+    values (#{sid,jdbcType=INTEGER}, #{indicatorsId,jdbcType=INTEGER}, #{indicatorsValue,jdbcType=VARCHAR}, 
+      #{monitoringStationsId,jdbcType=INTEGER}, #{investigateDate,jdbcType=DATE}, #{investigateUserIds,jdbcType=VARCHAR}, 
+      #{investigateUserNames,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    insert into gms_indicators_records
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="indicatorsId != null" >
+        indicators_id,
+      </if>
+      <if test="indicatorsValue != null" >
+        indicators_value,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date,
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids,
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="indicatorsId != null" >
+        #{indicatorsId,jdbcType=INTEGER},
+      </if>
+      <if test="indicatorsValue != null" >
+        #{indicatorsValue,jdbcType=VARCHAR},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="investigateUserIds != null" >
+        #{investigateUserIds,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        #{investigateUserNames,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    update gms_indicators_records
+    <set >
+      <if test="indicatorsId != null" >
+        indicators_id = #{indicatorsId,jdbcType=INTEGER},
+      </if>
+      <if test="indicatorsValue != null" >
+        indicators_value = #{indicatorsValue,jdbcType=VARCHAR},
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date = #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids = #{investigateUserIds,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names = #{investigateUserNames,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    update gms_indicators_records
+    set indicators_id = #{indicatorsId,jdbcType=INTEGER},
+      indicators_value = #{indicatorsValue,jdbcType=VARCHAR},
+      monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      investigate_user_ids = #{investigateUserIds,jdbcType=VARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.indicators_records.bean.GmsIndicatorsRecords" >
+    update gms_indicators_records
+    set indicators_id = #{indicatorsId,jdbcType=INTEGER},
+      indicators_value = #{indicatorsValue,jdbcType=VARCHAR},
+      monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      investigate_user_ids = #{investigateUserIds,jdbcType=VARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 列表  搜索？？？？ -->
+  <select id="queryIndicatorsRecords" resultType="hashMap" parameterType="HashMap" >
+    select 
+   	gir.sid sid,gir.indicators_id indicatorsId,gir.indicators_value indicatorsValue,gir.monitoring_stations_id monitoringStationsId,gir.investigate_date investigateDate,
+	gir.investigate_user_ids investigateUserIds,gir.investigate_user_names investigateUserNames,gir.create_user_id createUserId,gir.create_user_name createUserName,
+	gir.create_time createTime,gir.remark remark,gi.indicators_name indicatorsName,gms.city_code cityCode,
+	gms.stations_num as stationNum,gi.indicators_unit as indicatorsUnit
+    from gms_indicators_records gir LEFT JOIN gms_indicators gi ON gir.indicators_id = gi.sid
+    LEFT JOIN gms_monitoring_stations gms ON gms.sid = gir.monitoring_stations_id
+    left join gms_user u on gir.create_user_id = u.sid
+    <where>
+   		<if test="dataIds!=null">
+			and gir.sid in
+		<foreach item="item" index="index" collection="dataIds"
+			open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		</if>
+    	<if test="userId!=null and userId != 0">
+    		and gir.create_user_id = #{userId,jdbcType=INTEGER}
+    	</if>
+    	<if test="cityCode!=null and cityCode!=''">
+    		and u.city_code like '%${cityCode}%'
+    	</if>
+    	<if test="startYear !=null and startYear !=0">
+    		and DATE_FORMAT(gir.investigate_date,"%Y")>=#{startYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="endYear !=null and endYear !=0">
+    		and DATE_FORMAT(gir.investigate_date,"%Y")&lt;=#{endYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="month !=null and month !=0">
+    		and DATE_FORMAT(gir.investigate_date,"%m")=#{month,jdbcType=INTEGER}
+    	</if>
+    	<if test="type!=null and type !=-1">
+    		and gms.has_shrubs = #{type,jdbcType=INTEGER}
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+	</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteIndicatorsRecordsById" parameterType="hashMap" >
+    delete from gms_indicators_records where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+</mapper>

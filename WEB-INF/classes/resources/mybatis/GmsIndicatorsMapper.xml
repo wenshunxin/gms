@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_indicators" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="indicators_name" property="indicatorsName" jdbcType="VARCHAR" />
+    <result column="indicators_unit" property="indicatorsUnit" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.indicators.bean.GmsIndicators" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, indicators_name, indicators_unit, city_code, create_user_id, create_user_name, 
+    create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_indicators
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_indicators
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    insert into gms_indicators (sid, indicators_name, indicators_unit, 
+      city_code, create_user_id, create_user_name, 
+      create_time, remark)
+    values (#{sid,jdbcType=INTEGER}, #{indicatorsName,jdbcType=VARCHAR}, #{indicatorsUnit,jdbcType=VARCHAR}, 
+      #{cityCode,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    insert into gms_indicators
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="indicatorsName != null" >
+        indicators_name,
+      </if>
+      <if test="indicatorsUnit != null" >
+        indicators_unit,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="indicatorsName != null" >
+        #{indicatorsName,jdbcType=VARCHAR},
+      </if>
+      <if test="indicatorsUnit != null" >
+        #{indicatorsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    update gms_indicators
+    <set >
+      <if test="indicatorsName != null" >
+        indicators_name = #{indicatorsName,jdbcType=VARCHAR},
+      </if>
+      <if test="indicatorsUnit != null" >
+        indicators_unit = #{indicatorsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    update gms_indicators
+    set indicators_name = #{indicatorsName,jdbcType=VARCHAR},
+      indicators_unit = #{indicatorsUnit,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.indicators.bean.GmsIndicators" >
+    update gms_indicators
+    set indicators_name = #{indicatorsName,jdbcType=VARCHAR},
+      indicators_unit = #{indicatorsUnit,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  
+    <!-- 列表  搜索？？？？ -->
+  <select id="queryIndicators" resultMap="ResultMapWithBLOBs" parameterType="HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_indicators
+    <where>
+    	<if test="cityCode != null and cityCode !=''">
+    	city_code like "${cityCode}"
+    	</if>
+    	<if test="indicatorsName != null and indicatorsName !=''">
+    	and indicators_name like '%${indicatorsName}%'
+    	</if>
+    	<if test="indicatorsUnit != null and indicatorsUnit !=''">
+    	and indicators_unit like '% ${indicatorsUnit} %'
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+	</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteIndicatorsById" parameterType="hashMap" >
+    delete from gms_indicators where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+  
+  <!-- 根据所选监测点查所属指标 -->
+  <select id="getIndicatorsByCityCode" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+  	 select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_indicators
+    <where>
+    	<if test="newCityCode != null">
+    	city_code like "${newCityCode}"
+    	</if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="annual_monitoring_plan" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="phenological_nums" property="phenologicalNums" jdbcType="INTEGER" />
+    <result column="sample_area_nums" property="sampleAreaNums" jdbcType="INTEGER" />
+    <result column="feeding_house_nums" property="feedingHouseNums" jdbcType="INTEGER" />
+    <result column="monitoring_stations_nums" property="monitoringStationsNums" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, year, city_code, province_name, phenological_nums, sample_area_nums, feeding_house_nums, 
+    monitoring_stations_nums, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from annual_monitoring_plan
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from annual_monitoring_plan
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" >
+    insert into annual_monitoring_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="provinceName != null" >
+        province_name,
+      </if>
+      <if test="phenologicalNums != null" >
+        phenological_nums,
+      </if>
+      <if test="sampleAreaNums != null" >
+        sample_area_nums,
+      </if>
+      <if test="feedingHouseNums != null" >
+        feeding_house_nums,
+      </if>
+      <if test="monitoringStationsNums != null" >
+        monitoring_stations_nums,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="phenologicalNums != null" >
+        #{phenologicalNums,jdbcType=INTEGER},
+      </if>
+      <if test="sampleAreaNums != null" >
+        #{sampleAreaNums,jdbcType=INTEGER},
+      </if>
+      <if test="feedingHouseNums != null" >
+        #{feedingHouseNums,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsNums != null" >
+        #{monitoringStationsNums,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" >
+    update annual_monitoring_plan
+    <set >
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceName != null" >
+        province_name = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="phenologicalNums != null" >
+        phenological_nums = #{phenologicalNums,jdbcType=INTEGER},
+      </if>
+      <if test="sampleAreaNums != null" >
+        sample_area_nums = #{sampleAreaNums,jdbcType=INTEGER},
+      </if>
+      <if test="feedingHouseNums != null" >
+        feeding_house_nums = #{feedingHouseNums,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsNums != null" >
+        monitoring_stations_nums = #{monitoringStationsNums,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" >
+    update annual_monitoring_plan
+    set year = #{year,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      phenological_nums = #{phenologicalNums,jdbcType=INTEGER},
+      sample_area_nums = #{sampleAreaNums,jdbcType=INTEGER},
+      feeding_house_nums = #{feedingHouseNums,jdbcType=INTEGER},
+      monitoring_stations_nums = #{monitoringStationsNums,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.annualMonitoringPlan.bean.AnnualMonitoringPlan" >
+    update annual_monitoring_plan
+    set year = #{year,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      phenological_nums = #{phenologicalNums,jdbcType=INTEGER},
+      sample_area_nums = #{sampleAreaNums,jdbcType=INTEGER},
+      feeding_house_nums = #{feedingHouseNums,jdbcType=INTEGER},
+      monitoring_stations_nums = #{monitoringStationsNums,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+   <!-- 列表  搜索？？？？ -->
+  <select id="queryAnnualMonitoringPlan" resultType="HashMap" parameterType="HashMap" >
+    select 
+    sid, year, city_code cityCode, province_name provinceName, phenological_nums phenologicalNums, sample_area_nums sampleAreaNums,
+    feeding_house_nums feedingHouseNums, 
+    monitoring_stations_nums monitoringStationsNums, create_user_id createUserId, create_user_name createUserName, create_time createTime,count(province_name) as provinceCount
+    from annual_monitoring_plan
+    <where>
+    	<!-- <if test="beginAltitude != null ">
+    	altitude &gt;= #{beginAltitude,jdbcType=DOUBLE}
+    	</if>
+    	<if test="endAltitude != null ">
+    	and altitude &gt;= #{endAltitude,jdbcType=DOUBLE}
+    	</if> -->
+    </where>
+    GROUP BY `year`
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+	</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteAnnualMonitoringPlanByYear" parameterType="hashMap" >
+    delete from annual_monitoring_plan where year in
+    <foreach item="item" index="index" collection="ye" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+  
+  <select id="selectByYear" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from annual_monitoring_plan
+    where year = #{year,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getAnnualMonitoringPlanByCondition" resultType="hashMap" parameterType="hashMap" >
+    select 
+    sid as sid, year as year , city_code as cityCode, province_name as provinceName, phenological_nums as phenologicalNums,
+    sample_area_nums as sampleAreaNums, feeding_house_nums as feedingHouseNums, 
+    monitoring_stations_nums as monitoringStationsNums, create_user_id as createUserId, 
+    create_user_name as createUserName, create_time as createTime,
+    remark as remark
+    from annual_monitoring_plan
+    where 1=1
+    <if test="year !=null and year !=0">
+    	and year = #{year,jdbcType=INTEGER}
+    </if>
+     <if test="cityCode !=null and cityCode !=''">
+    	and city_code = #{cityCode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+</mapper>

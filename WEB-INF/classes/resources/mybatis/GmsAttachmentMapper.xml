@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_attachment">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.attach.bean.GmsAttachment">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="attach_module" property="attachModule"
+			jdbcType="VARCHAR" />
+		<result column="attach_model" property="attachModel" jdbcType="VARCHAR" />
+		<result column="attach_year" property="attachYear" jdbcType="INTEGER" />
+		<result column="business_id" property="businessId" jdbcType="INTEGER" />
+		<result column="attach_id" property="attachId" jdbcType="VARCHAR" />
+		<result column="attach_name" property="attachName" jdbcType="VARCHAR" />
+		<result column="attach_suffix" property="attachSuffix"
+			jdbcType="VARCHAR" />
+		<result column="attach_size" property="attachSize" jdbcType="DOUBLE" />
+		<result column="attach_path" property="attachPath" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.attach.bean.GmsAttachment"
+		extends="BaseResultMap">
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, attach_module, attach_model, attach_year, business_id, attach_id,
+		attach_name,
+		attach_suffix, attach_size, attach_path
+	</sql>
+	<sql id="Blob_Column_List">
+		remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_attachment
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_attachment
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tcxt.gms.attach.bean.GmsAttachment">
+		insert into gms_attachment (id, attach_module, attach_model,
+		attach_year, business_id, attach_id,
+		attach_name, attach_suffix, attach_size,
+		attach_path, remark)
+		values (#{id,jdbcType=INTEGER}, #{attachModule,jdbcType=VARCHAR},
+		#{attachModel,jdbcType=VARCHAR},
+		#{attachYear,jdbcType=INTEGER}, #{businessId,jdbcType=INTEGER}, #{attachId,jdbcType=VARCHAR},
+		#{attachName,jdbcType=VARCHAR}, #{attachSuffix,jdbcType=VARCHAR},
+		#{attachSize,jdbcType=DOUBLE},
+		#{attachPath,jdbcType=VARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.attach.bean.GmsAttachment">
+		insert into gms_attachment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="attachModule != null">
+				attach_module,
+			</if>
+			<if test="attachModel != null">
+				attach_model,
+			</if>
+			<if test="attachYear != null">
+				attach_year,
+			</if>
+			<if test="businessId != null">
+				business_id,
+			</if>
+			<if test="attachId != null">
+				attach_id,
+			</if>
+			<if test="attachName != null">
+				attach_name,
+			</if>
+			<if test="attachSuffix != null">
+				attach_suffix,
+			</if>
+			<if test="attachSize != null">
+				attach_size,
+			</if>
+			<if test="attachPath != null">
+				attach_path,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="attachModule != null">
+				#{attachModule,jdbcType=VARCHAR},
+			</if>
+			<if test="attachModel != null">
+				#{attachModel,jdbcType=VARCHAR},
+			</if>
+			<if test="attachYear != null">
+				#{attachYear,jdbcType=INTEGER},
+			</if>
+			<if test="businessId != null">
+				#{businessId,jdbcType=INTEGER},
+			</if>
+			<if test="attachId != null">
+				#{attachId,jdbcType=VARCHAR},
+			</if>
+			<if test="attachName != null">
+				#{attachName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachSuffix != null">
+				#{attachSuffix,jdbcType=VARCHAR},
+			</if>
+			<if test="attachSize != null">
+				#{attachSize,jdbcType=DOUBLE},
+			</if>
+			<if test="attachPath != null">
+				#{attachPath,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.attach.bean.GmsAttachment">
+		update gms_attachment
+		<set>
+			<if test="attachModule != null">
+				attach_module = #{attachModule,jdbcType=VARCHAR},
+			</if>
+			<if test="attachModel != null">
+				attach_model = #{attachModel,jdbcType=VARCHAR},
+			</if>
+			<if test="attachYear != null">
+				attach_year = #{attachYear,jdbcType=INTEGER},
+			</if>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=INTEGER},
+			</if>
+			<if test="attachId != null">
+				attach_id = #{attachId,jdbcType=VARCHAR},
+			</if>
+			<if test="attachName != null">
+				attach_name = #{attachName,jdbcType=VARCHAR},
+			</if>
+			<if test="attachSuffix != null">
+				attach_suffix = #{attachSuffix,jdbcType=VARCHAR},
+			</if>
+			<if test="attachSize != null">
+				attach_size = #{attachSize,jdbcType=DOUBLE},
+			</if>
+			<if test="attachPath != null">
+				attach_path = #{attachPath,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="getAttachByAttachId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_attachment
+		where attach_id = #{attachId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getAttachByBusinessId" resultMap="ResultMapWithBLOBs"
+		parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_attachment
+		where business_id = #{businessId,jdbcType=INTEGER}
+		and attach_module = #{attachModule,jdbcType=VARCHAR}
+		and attach_model = #{attachModel,jdbcType=VARCHAR}
+	</select>
+</mapper>

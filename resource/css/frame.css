@@ -1,0 +1,94 @@
+.frameTop {
+	margin: 0 auto;
+	width: 50%;
+	height: 80px;
+	background: #41a675;
+	border-bottom: 1px solid #258d6a;
+	float:left;
+}
+
+.frameTop #topLeft {
+	margin: 0 auto;
+	width: 100%;
+	float: left;
+	height: 60px;
+	/*background: url(../images/frame/logo-lg.png) no-repeat left center; */
+
+}
+.frameTop #topLeft .topLeft_p{
+	height:48px;
+	width:100%;
+	line-height: 48px;
+	margin-top:18px;
+	margin-left:30px;
+}
+.frameTop #topLeft span.logo{
+	float: left;
+	display: inline-block;
+	background:url(../images/frame/logo.png) no-repeat;
+	width:42px;
+	height:48px;
+}
+.frameTop #topLeft b{
+	float: left;
+	display: inline-block;
+	width:1px;
+	height:48px;
+	background:#307956;
+	margin-left:20px;
+}
+.frameTop #topLeft i{
+	float: left;
+	display: inline-block;
+	width:1px;
+	height:48px;
+	background:#4abe86;
+	margin-right:20px;
+}
+
+.frameTop #topLeft span.span{
+	float: left;
+	display: inline-block;
+	font-size:26px;
+	font-family: "microsoft yahei";
+	color:#ffffff;
+}
+.frameTop #topRight {
+	margin: 0 auto;
+	width: 60%;
+	float: left;
+	height: 60px;
+	/* 	background:url(../images/frame/frameTop.png) right; */
+}
+
+.frameTips {
+	margin: 0 auto;
+	width: 50%;
+	height: 80px;
+	/* 	background:url(../images/frame/linebg.png) repeat-x; */
+	float:right;
+	color:#ffffff;
+	font-family: "microsoft yahei";
+	
+	
+}
+
+.frameTips #tipLeft {
+	
+	margin: 30px auto 0;
+	width:auto;
+	height: 30px;
+	float: right;
+	font-size: 18px;
+	display: inline-block;
+	line-height: 30px;
+	/* background:url(../images/frame/tipLeft.png)no-repeat; */
+	margin-right:30px;
+	cursor: pointer;
+}
+.frameTips #tipLeft  img{
+	width:20px;
+	height:20px;
+	margin-right:6px;
+}
+

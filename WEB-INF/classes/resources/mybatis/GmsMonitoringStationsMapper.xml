@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_monitoring_stations" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="city_full_name" property="cityFullName" jdbcType="VARCHAR" />
+    <result column="city_short_name" property="cityShortName" jdbcType="VARCHAR" />
+    <result column="stations_num" property="stationsNum" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
+    <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="altitude" property="altitude" jdbcType="DOUBLE" />
+    <result column="grass_category" property="grassCategory" jdbcType="VARCHAR" />
+    <result column="grass_type" property="grassType" jdbcType="VARCHAR" />
+    <result column="grass_landscape" property="grassLandscape" jdbcType="VARCHAR" />
+    <result column="grass_slope" property="grassSlope" jdbcType="VARCHAR" />
+    <result column="grass_slope_position" property="grassSlopePosition" jdbcType="VARCHAR" />
+    <result column="soil_texture" property="soilTexture" jdbcType="VARCHAR" />
+    <result column="has_seasonal_water" property="hasSeasonalWater" jdbcType="VARCHAR" />
+    <result column="average_annual_rainfall" property="averageAnnualRainfall" jdbcType="DOUBLE" />
+    <result column="has_shrubs" property="hasShrubs" jdbcType="INTEGER" />
+    <result column="main_stations_size" property="mainStationsSize" jdbcType="DOUBLE" />
+    <result column="conventional_stations_size" property="conventionalStationsSize" jdbcType="DOUBLE" />
+    <result column="permanent_stations_size" property="permanentStationsSize" jdbcType="DOUBLE" />
+    <result column="mowing_stations_size" property="mowingStationsSize" jdbcType="DOUBLE" />
+    <result column="fire_stations_size" property="fireStationsSize" jdbcType="DOUBLE" />
+    <result column="research_stations_size" property="researchStationsSize" jdbcType="DOUBLE" />
+    <result column="stations_building_date" property="stationsBuildingDate" jdbcType="DATE" />
+    <result column="report_date" property="reportDate" jdbcType="DATE" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="contact_user_name" property="contactUserName" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="contact_fax" property="contactFax" jdbcType="VARCHAR" />
+    <result column="contact_email" property="contactEmail" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, city_code, city_full_name, city_short_name, stations_num, longitude, latitude, 
+    altitude, grass_category, grass_type, grass_landscape, grass_slope, grass_slope_position, 
+    soil_texture, has_seasonal_water, average_annual_rainfall, has_shrubs, main_stations_size, 
+    conventional_stations_size, permanent_stations_size, mowing_stations_size, fire_stations_size, 
+    research_stations_size, stations_building_date, report_date, company_name, contact_user_name, 
+    contact_phone, contact_fax, contact_email, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_monitoring_stations
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 列表 -->
+  <select id="queryMonitoringStations" resultMap="ResultMapWithBLOBs" parameterType="HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_monitoring_stations
+    <where>
+    	<if test="beginAltitude != null">
+    	altitude >= #{beginAltitude,jdbcType=DOUBLE}
+    	</if>
+    	<if test="endAltitude != null">
+    	and altitude &lt;= #{endAltitude,jdbcType=DOUBLE}
+    	</if>
+    	<if test="beginAverageAnnualRainfall != null and beginAverageAnnualRainfall !=-1">
+    	and average_annual_rainfall >= #{beginAverageAnnualRainfall,jdbcType=DOUBLE}
+    	</if>
+    	<if test="endAverageAnnualRainfall != null and endAverageAnnualRainfall !=-1">
+    	and average_annual_rainfall &lt;= #{endAverageAnnualRainfall,jdbcType=DOUBLE}
+    	</if>
+    	<if test="beginStationsBuildingDate != null and beginStationsBuildingDate !=''">
+    	and stations_building_date >= #{beginStationsBuildingDate,jdbcType=DATE}
+    	</if>
+    	<if test="endStationsBuildingDate != null and endStationsBuildingDate !=''">
+    	and stations_building_date &lt;= #{endStationsBuildingDate,jdbcType=DATE}
+    	</if>
+    	<if test="cityCode != null and cityCode !=''">
+    		and city_code  like '%${cityCode}%'
+    	</if>
+    	<if test="grassCategory != null and grassCategory!=''">
+    		and grass_category = #{grassCategory,jdbcType=VARCHAR}
+    	</if>
+    	<if test="grassType != null and grassType!=''">
+    		and grass_type = #{grassType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="grassLandscape != null and grassLandscape!=''">
+    		and grass_landscape = #{grassLandscape,jdbcType=VARCHAR}
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+  </select>
+  <select id="monitoringStationsByNum" resultMap="ResultMapWithBLOBs" parameterType="hashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_monitoring_stations
+    where stations_num = #{stationsNum,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_monitoring_stations
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <!-- 单删或多删 -->
+  <delete id="deleteMonitoringStationsById" parameterType="hashMap" >
+    delete from gms_monitoring_stations where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+  
+  
+  
+  <insert id="insert" parameterType="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" >
+    insert into gms_monitoring_stations (sid, city_code, city_full_name, 
+      city_short_name, stations_num, longitude, 
+      latitude, altitude, grass_category, 
+      grass_type, grass_landscape, grass_slope, 
+      grass_slope_position, soil_texture, has_seasonal_water, 
+      average_annual_rainfall, has_shrubs, main_stations_size, 
+      conventional_stations_size, permanent_stations_size, 
+      mowing_stations_size, fire_stations_size, research_stations_size, 
+      stations_building_date, report_date, company_name, 
+      contact_user_name, contact_phone, contact_fax, 
+      contact_email, create_user_id, create_user_name, 
+      create_time, remark)
+    values (#{sid,jdbcType=INTEGER}, #{cityCode,jdbcType=VARCHAR}, #{cityFullName,jdbcType=VARCHAR}, 
+      #{cityShortName,jdbcType=VARCHAR}, #{stationsNum,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, 
+      #{latitude,jdbcType=DOUBLE}, #{altitude,jdbcType=DOUBLE}, #{grassCategory,jdbcType=VARCHAR}, 
+      #{grassType,jdbcType=VARCHAR}, #{grassLandscape,jdbcType=VARCHAR}, #{grassSlope,jdbcType=VARCHAR}, 
+      #{grassSlopePosition,jdbcType=VARCHAR}, #{soilTexture,jdbcType=VARCHAR}, #{hasSeasonalWater,jdbcType=VARCHAR}, 
+      #{averageAnnualRainfall,jdbcType=DOUBLE}, #{hasShrubs,jdbcType=INTEGER}, #{mainStationsSize,jdbcType=DOUBLE}, 
+      #{conventionalStationsSize,jdbcType=DOUBLE}, #{permanentStationsSize,jdbcType=DOUBLE}, 
+      #{mowingStationsSize,jdbcType=DOUBLE}, #{fireStationsSize,jdbcType=DOUBLE}, #{researchStationsSize,jdbcType=DOUBLE}, 
+      #{stationsBuildingDate,jdbcType=DATE}, #{reportDate,jdbcType=DATE}, #{companyName,jdbcType=VARCHAR}, 
+      #{contactUserName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, #{contactFax,jdbcType=VARCHAR}, 
+      #{contactEmail,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" 
+  useGeneratedKeys="true" keyProperty="sid">
+    insert into gms_monitoring_stations
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="cityFullName != null" >
+        city_full_name,
+      </if>
+      <if test="cityShortName != null" >
+        city_short_name,
+      </if>
+      <if test="stationsNum != null" >
+        stations_num,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="altitude != null" >
+        altitude,
+      </if>
+      <if test="grassCategory != null" >
+        grass_category,
+      </if>
+      <if test="grassType != null" >
+        grass_type,
+      </if>
+      <if test="grassLandscape != null" >
+        grass_landscape,
+      </if>
+      <if test="grassSlope != null" >
+        grass_slope,
+      </if>
+      <if test="grassSlopePosition != null" >
+        grass_slope_position,
+      </if>
+      <if test="soilTexture != null" >
+        soil_texture,
+      </if>
+      <if test="hasSeasonalWater != null" >
+        has_seasonal_water,
+      </if>
+      <if test="averageAnnualRainfall != null" >
+        average_annual_rainfall,
+      </if>
+      <if test="hasShrubs != null" >
+        has_shrubs,
+      </if>
+      <if test="mainStationsSize != null" >
+        main_stations_size,
+      </if>
+      <if test="conventionalStationsSize != null" >
+        conventional_stations_size,
+      </if>
+      <if test="permanentStationsSize != null" >
+        permanent_stations_size,
+      </if>
+      <if test="mowingStationsSize != null" >
+        mowing_stations_size,
+      </if>
+      <if test="fireStationsSize != null" >
+        fire_stations_size,
+      </if>
+      <if test="researchStationsSize != null" >
+        research_stations_size,
+      </if>
+      <if test="stationsBuildingDate != null" >
+        stations_building_date,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="contactUserName != null" >
+        contact_user_name,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="contactFax != null" >
+        contact_fax,
+      </if>
+      <if test="contactEmail != null" >
+        contact_email,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityFullName != null" >
+        #{cityFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityShortName != null" >
+        #{cityShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationsNum != null" >
+        #{stationsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="altitude != null" >
+        #{altitude,jdbcType=DOUBLE},
+      </if>
+      <if test="grassCategory != null" >
+        #{grassCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="grassType != null" >
+        #{grassType,jdbcType=VARCHAR},
+      </if>
+      <if test="grassLandscape != null" >
+        #{grassLandscape,jdbcType=VARCHAR},
+      </if>
+      <if test="grassSlope != null" >
+        #{grassSlope,jdbcType=VARCHAR},
+      </if>
+      <if test="grassSlopePosition != null" >
+        #{grassSlopePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="soilTexture != null" >
+        #{soilTexture,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSeasonalWater != null" >
+        #{hasSeasonalWater,jdbcType=VARCHAR},
+      </if>
+      <if test="averageAnnualRainfall != null" >
+        #{averageAnnualRainfall,jdbcType=DOUBLE},
+      </if>
+      <if test="hasShrubs != null" >
+        #{hasShrubs,jdbcType=INTEGER},
+      </if>
+      <if test="mainStationsSize != null" >
+        #{mainStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="conventionalStationsSize != null" >
+        #{conventionalStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentStationsSize != null" >
+        #{permanentStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="mowingStationsSize != null" >
+        #{mowingStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="fireStationsSize != null" >
+        #{fireStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="researchStationsSize != null" >
+        #{researchStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="stationsBuildingDate != null" >
+        #{stationsBuildingDate,jdbcType=DATE},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUserName != null" >
+        #{contactUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactFax != null" >
+        #{contactFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" >
+    update gms_monitoring_stations
+    <set >
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityFullName != null" >
+        city_full_name = #{cityFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityShortName != null" >
+        city_short_name = #{cityShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationsNum != null" >
+        stations_num = #{stationsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="altitude != null" >
+        altitude = #{altitude,jdbcType=DOUBLE},
+      </if>
+      <if test="grassCategory != null" >
+        grass_category = #{grassCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="grassType != null" >
+        grass_type = #{grassType,jdbcType=VARCHAR},
+      </if>
+      <if test="grassLandscape != null" >
+        grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+      </if>
+      <if test="grassSlope != null" >
+        grass_slope = #{grassSlope,jdbcType=VARCHAR},
+      </if>
+      <if test="grassSlopePosition != null" >
+        grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="soilTexture != null" >
+        soil_texture = #{soilTexture,jdbcType=VARCHAR},
+      </if>
+      <if test="hasSeasonalWater != null" >
+        has_seasonal_water = #{hasSeasonalWater,jdbcType=VARCHAR},
+      </if>
+      <if test="averageAnnualRainfall != null" >
+        average_annual_rainfall = #{averageAnnualRainfall,jdbcType=DOUBLE},
+      </if>
+      <if test="hasShrubs != null" >
+        has_shrubs = #{hasShrubs,jdbcType=INTEGER},
+      </if>
+      <if test="mainStationsSize != null" >
+        main_stations_size = #{mainStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="conventionalStationsSize != null" >
+        conventional_stations_size = #{conventionalStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="permanentStationsSize != null" >
+        permanent_stations_size = #{permanentStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="mowingStationsSize != null" >
+        mowing_stations_size = #{mowingStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="fireStationsSize != null" >
+        fire_stations_size = #{fireStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="researchStationsSize != null" >
+        research_stations_size = #{researchStationsSize,jdbcType=DOUBLE},
+      </if>
+      <if test="stationsBuildingDate != null" >
+        stations_building_date = #{stationsBuildingDate,jdbcType=DATE},
+      </if>
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=DATE},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactUserName != null" >
+        contact_user_name = #{contactUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactFax != null" >
+        contact_fax = #{contactFax,jdbcType=VARCHAR},
+      </if>
+      <if test="contactEmail != null" >
+        contact_email = #{contactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" >
+    update gms_monitoring_stations
+    set city_code = #{cityCode,jdbcType=VARCHAR},
+      city_full_name = #{cityFullName,jdbcType=VARCHAR},
+      city_short_name = #{cityShortName,jdbcType=VARCHAR},
+      stations_num = #{stationsNum,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      altitude = #{altitude,jdbcType=DOUBLE},
+      grass_category = #{grassCategory,jdbcType=VARCHAR},
+      grass_type = #{grassType,jdbcType=VARCHAR},
+      grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+      grass_slope = #{grassSlope,jdbcType=VARCHAR},
+      grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR},
+      soil_texture = #{soilTexture,jdbcType=VARCHAR},
+      has_seasonal_water = #{hasSeasonalWater,jdbcType=VARCHAR},
+      average_annual_rainfall = #{averageAnnualRainfall,jdbcType=DOUBLE},
+      has_shrubs = #{hasShrubs,jdbcType=INTEGER},
+      main_stations_size = #{mainStationsSize,jdbcType=DOUBLE},
+      conventional_stations_size = #{conventionalStationsSize,jdbcType=DOUBLE},
+      permanent_stations_size = #{permanentStationsSize,jdbcType=DOUBLE},
+      mowing_stations_size = #{mowingStationsSize,jdbcType=DOUBLE},
+      fire_stations_size = #{fireStationsSize,jdbcType=DOUBLE},
+      research_stations_size = #{researchStationsSize,jdbcType=DOUBLE},
+      stations_building_date = #{stationsBuildingDate,jdbcType=DATE},
+      report_date = #{reportDate,jdbcType=DATE},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      contact_user_name = #{contactUserName,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_fax = #{contactFax,jdbcType=VARCHAR},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.monitoring_stations.bean.GmsMonitoringStations" >
+    update gms_monitoring_stations
+    set city_code = #{cityCode,jdbcType=VARCHAR},
+      city_full_name = #{cityFullName,jdbcType=VARCHAR},
+      city_short_name = #{cityShortName,jdbcType=VARCHAR},
+      stations_num = #{stationsNum,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      altitude = #{altitude,jdbcType=DOUBLE},
+      grass_category = #{grassCategory,jdbcType=VARCHAR},
+      grass_type = #{grassType,jdbcType=VARCHAR},
+      grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+      grass_slope = #{grassSlope,jdbcType=VARCHAR},
+      grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR},
+      soil_texture = #{soilTexture,jdbcType=VARCHAR},
+      has_seasonal_water = #{hasSeasonalWater,jdbcType=VARCHAR},
+      average_annual_rainfall = #{averageAnnualRainfall,jdbcType=DOUBLE},
+      has_shrubs = #{hasShrubs,jdbcType=INTEGER},
+      main_stations_size = #{mainStationsSize,jdbcType=DOUBLE},
+      conventional_stations_size = #{conventionalStationsSize,jdbcType=DOUBLE},
+      permanent_stations_size = #{permanentStationsSize,jdbcType=DOUBLE},
+      mowing_stations_size = #{mowingStationsSize,jdbcType=DOUBLE},
+      fire_stations_size = #{fireStationsSize,jdbcType=DOUBLE},
+      research_stations_size = #{researchStationsSize,jdbcType=DOUBLE},
+      stations_building_date = #{stationsBuildingDate,jdbcType=DATE},
+      report_date = #{reportDate,jdbcType=DATE},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      contact_user_name = #{contactUserName,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_fax = #{contactFax,jdbcType=VARCHAR},
+      contact_email = #{contactEmail,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <!-- 根据登录人查所属省监测点 -->
+  <select id="getMonitoringStationsByUid" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+  	 select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_monitoring_stations
+    <where>
+    	<if test="newCityCode != null">
+    	city_code like "${newCityCode}"
+    	</if>
+    </where>
+    order by stations_num
+  </select>
+  <select id="getStationNums" parameterType="hashMap" resultType="java.lang.Long">
+  	select count(1) from 
+		(select gms.sid as stationId,gms.stations_num as stationsNum,gme.sid as gmeId,gmp.sid as gmpId,ms.sid as msId,gho.sid as ghoId,gso.sid as gsoId from gms_monitoring_stations gms
+									left join gms_ms_ecological gme on gms.sid = gme.monitoring_stations_id
+									left join gms_ms_phenological gmp on gms.sid = gmp.monitoring_stations_id
+									left join gms_ms_social ms on gms.sid = ms.monitoring_stations_id
+									left join gms_herb_observation_area gho on gms.sid = gho.monitoring_stations_id
+									left join gms_shrubs_observation_area gso on gms.sid = gso.monitoring_stations_id
+						where gms.city_code like '${cityCode}' and 
+									(
+										DATE_FORMAT(gme.investigate_date,'%Y') = #{year,jdbcType=INTEGER}
+									or
+										DATE_FORMAT(gmp.investigate_date,'%Y') = #{year,jdbcType=INTEGER}
+									or
+										DATE_FORMAT(ms.investigate_date,'%Y') = #{year,jdbcType=INTEGER}
+									or
+										DATE_FORMAT(gho.investigate_date,'%Y') = #{year,jdbcType=INTEGER}
+									or
+										DATE_FORMAT(gso.investigate_date,'%Y') = #{year,jdbcType=INTEGER}
+									)
+									GROUP BY gms.sid
+		) t
+  
+  </select>
+</mapper>

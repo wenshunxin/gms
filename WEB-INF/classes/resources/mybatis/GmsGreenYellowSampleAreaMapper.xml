@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_green_yellow_sample_area">
+	<resultMap id="BaseResultMap"
+		type="com.tcxt.gms.investigation.bean.GmsGreenYellowSampleArea">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="sample_area_type" property="sampleAreaType"
+			jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="investigate_company_name" property="investigateCompanyName"
+			jdbcType="VARCHAR" />
+		<result column="investigate_area" property="investigateArea"
+			jdbcType="VARCHAR" />
+		<result column="sample_area_number" property="sampleAreaNumber"
+			jdbcType="VARCHAR" />
+		<result column="grass_category" property="grassCategory"
+			jdbcType="VARCHAR" />
+		<result column="grass_type" property="grassType" jdbcType="VARCHAR" />
+		<result column="grass_landscape" property="grassLandscape"
+			jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="altitude" property="altitude" jdbcType="DOUBLE" />
+		<result column="using_type" property="usingType" jdbcType="VARCHAR" />
+		<result column="change_date" property="changeDate" jdbcType="DATE" />
+		<result column="change_days_type" property="changeDaysType"
+			jdbcType="VARCHAR" />
+		<result column="change_days_num" property="changeDaysNum"
+			jdbcType="INTEGER" />
+		<result column="pre_year_days_type" property="preYearDaysType"
+			jdbcType="VARCHAR" />
+		<result column="pre_year_days_num" property="preYearDaysNum"
+			jdbcType="INTEGER" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.tcxt.gms.investigation.bean.GmsGreenYellowSampleArea"
+		extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="main_grass_types" property="mainGrassTypes"
+			jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, sample_area_type, investigate_data_id, investigate_date,
+		investigate_company_name,
+		investigate_area, sample_area_number, grass_category, grass_type, grass_landscape,
+		longitude, latitude, altitude, using_type, change_date,
+		change_days_type, change_days_num,
+		pre_year_days_type, pre_year_days_num, create_user_id, create_user_name, create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, main_grass_types, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_sample_area
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getGreenYellowSampleAreaByDataId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_sample_area
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	<select id="getMaxSampleAreaByNumber" resultType="hashMap"
+		parameterType="hashMap">
+		select max(cast(SUBSTRING(sample_area_number,CHAR_LENGTH('${preNumber}')+1) as signed)) as maxNumber
+		from gms_green_yellow_sample_area
+		where sample_area_number like '%${preNumber}%' and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<select id="getGreenYellowSampleAreaByNumber" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_green_yellow_sample_area
+		where sample_area_number =#{sampleAreaNumber,jdbcType=VARCHAR} and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_green_yellow_sample_area
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective"
+		parameterType="com.tcxt.gms.investigation.bean.GmsGreenYellowSampleArea" useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_green_yellow_sample_area
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="sampleAreaType != null">
+				sample_area_type,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="sampleAreaNumber != null">
+				sample_area_number,
+			</if>
+			<if test="grassCategory != null">
+				grass_category,
+			</if>
+			<if test="grassType != null">
+				grass_type,
+			</if>
+			<if test="grassLandscape != null">
+				grass_landscape,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="altitude != null">
+				altitude,
+			</if>
+			<if test="usingType != null">
+				using_type,
+			</if>
+			<if test="changeDate != null">
+				change_date,
+			</if>
+			<if test="changeDaysType != null">
+				change_days_type,
+			</if>
+			<if test="changeDaysNum != null">
+				change_days_num,
+			</if>
+			<if test="preYearDaysType != null">
+				pre_year_days_type,
+			</if>
+			<if test="preYearDaysNum != null">
+				pre_year_days_num,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="mainGrassTypes != null">
+				main_grass_types,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="sampleAreaType != null">
+				#{sampleAreaType,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="sampleAreaNumber != null">
+				#{sampleAreaNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="grassCategory != null">
+				#{grassCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="grassType != null">
+				#{grassType,jdbcType=VARCHAR},
+			</if>
+			<if test="grassLandscape != null">
+				#{grassLandscape,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="altitude != null">
+				#{altitude,jdbcType=DOUBLE},
+			</if>
+			<if test="usingType != null">
+				#{usingType,jdbcType=VARCHAR},
+			</if>
+			<if test="changeDate != null">
+				#{changeDate,jdbcType=DATE},
+			</if>
+			<if test="changeDaysType != null">
+				#{changeDaysType,jdbcType=VARCHAR},
+			</if>
+			<if test="changeDaysNum != null">
+				#{changeDaysNum,jdbcType=INTEGER},
+			</if>
+			<if test="preYearDaysType != null">
+				#{preYearDaysType,jdbcType=VARCHAR},
+			</if>
+			<if test="preYearDaysNum != null">
+				#{preYearDaysNum,jdbcType=INTEGER},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="mainGrassTypes != null">
+				#{mainGrassTypes,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tcxt.gms.investigation.bean.GmsGreenYellowSampleArea">
+		update gms_green_yellow_sample_area
+		<set>
+				sample_area_type = #{sampleAreaType,jdbcType=INTEGER},
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+				investigate_company_name =
+				#{investigateCompanyName,jdbcType=VARCHAR},
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+				sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR},
+				grass_category = #{grassCategory,jdbcType=VARCHAR},
+				grass_type = #{grassType,jdbcType=VARCHAR},
+				grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+				longitude = #{longitude,jdbcType=DOUBLE},
+				latitude = #{latitude,jdbcType=DOUBLE},
+				altitude = #{altitude,jdbcType=DOUBLE},
+				using_type = #{usingType,jdbcType=VARCHAR},
+				change_date = #{changeDate,jdbcType=DATE},
+				change_days_type = #{changeDaysType,jdbcType=VARCHAR},
+				change_days_num = #{changeDaysNum,jdbcType=INTEGER},
+				pre_year_days_type = #{preYearDaysType,jdbcType=VARCHAR},
+				pre_year_days_num = #{preYearDaysNum,jdbcType=INTEGER},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				main_grass_types = #{mainGrassTypes,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryGreenYellowSampleArea" parameterType="HashMap" resultType="hashMap">
+		select 
+		sa.sid as sid, sa.sample_area_type as sampleAreaType, sa.investigate_data_id as investigateDataId, sa.investigate_date as investigateDate,
+		sa.investigate_company_name as investigateCompanyName,
+		sa.investigate_area as investigateArea, sa.sample_area_number as sampleAreaNumber,
+		sa.grass_category as grassCategory, sa.grass_type as grassType, sa.grass_landscape as grassLandscape,
+		sa.longitude as longitude,
+		sa.latitude as latitude, 
+		sa.altitude as altitude, 
+		sa.using_type as usingType, 
+		sa.change_date as changeDate,
+		sa.change_days_type as changeDaysType, 
+		sa.change_days_num as changeDaysNum,
+		sa.pre_year_days_type as preYearDaysType, 
+		sa.pre_year_days_num as preYearDaysNum,
+		sa.main_grass_types as mainGrassTypes, sa.remark as remark,
+		d.audit_status as auditStatus,
+		d.investigate_user_names as investigateUserNames
+		from gms_green_yellow_sample_area sa left join gms_investigate_data d on sa.investigate_data_id = d.sid
+											 left join gms_user u on sa.create_user_id = u.sid
+		where 1=1
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and sa.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="sampleAreaType!=null and sampleAreaType !=-1">
+			and sample_area_type = #{sampleAreaType,jdbcType=INTEGER}
+		</if>
+		<if test="year !=null and year !=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="grassCategory !=null and grassCategory !=''">
+			and sa.grass_category = #{grassCategory,jdbcType=INTEGER}
+		</if>
+		<if test="grassLandscape !=null and grassLandscape !=''">
+			and sa.grass_landscape = #{grassLandscape,jdbcType=INTEGER}
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="queryGreenYellowSampleAreaList" parameterType="HashMap" resultType="HashMap">
+		SELECT ggysa.sid sid,ggysa.sample_area_type sampleAreaType,ggysa.investigate_data_id investigateDataId,ggysa.investigate_date 
+		investigateDate,ggysa.sample_area_number sampleAreaNumber,ggysa.investigate_user_ids investigateUserIds,
+		ggysa.investigate_user_names investigateUserNames,ggysa.investigate_company_name investigateCompanyName,ggysa.investigate_area investigateArea,
+		ggysa.grass_category grassCategory,ggysa.grass_type grassType,ggysa.grass_landscape grassLandscape,ggysa.longitude longitude,
+		ggysa.latitude latitude,ggysa.altitude altitude,ggysa.using_type usingType,ggysa.main_grass_types mainGrassTypes,ggysa.change_date changeDate,
+		ggysa.change_days_type changeDaysType,ggysa.change_days_num changeDaysNum,ggysa.pre_year_days_type preYearDaysType,ggysa.pre_year_days_num preYearDaysNum,
+		ggysa.create_user_id createUserId,ggysa.create_user_name createUserName,ggysa.create_time createTime,ggysa.remark remark
+		FROM `gms_investigate_data` gid LEFT JOIN gms_green_yellow_sample_area ggysa ON gid.sid=ggysa.investigate_data_id 
+		where gid.sid=ggysa.investigate_data_id 
+		<if test="auditStatus != null and auditStatus ==4">
+			 AND gid.audit_status=4 
+		</if>
+		<if test="auditStatus != null and auditStatus ==0">
+			 AND gid.audit_status=0 
+		</if>
+		<if test="auditStatus != null and auditStatus ==99">
+			 AND gid.audit_status>0
+		</if>
+		AND gid.investigate_type = #{investigateType} AND gid.`year` = #{year} AND ggysa.sample_area_type = #{sampleAreaType}
+		AND gid.create_user_id IN (select sid FROM gms_user where city_code LIKE '${cityCode}');
+	</select>
+</mapper>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_ms_phenological" >
+  <resultMap id="BaseResultMap" type="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="monitoring_stations_id" property="monitoringStationsId" jdbcType="INTEGER" />
+    <result column="investigate_date" property="investigateDate" jdbcType="DATE" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="green_date" property="greenDate" jdbcType="DATE" />
+    <result column="mowing_date" property="mowingDate" jdbcType="DATE" />
+    <result column="fire_date" property="fireDate" jdbcType="DATE" />
+    <result column="yellow_date" property="yellowDate" jdbcType="DATE" />
+    <result column="january_snow_thickness" property="januarySnowThickness" jdbcType="DOUBLE" />
+    <result column="february_snow_thickness" property="februarySnowThickness" jdbcType="DOUBLE" />
+    <result column="december_snow_thickness" property="decemberSnowThickness" jdbcType="DOUBLE" />
+    <result column="first_snow_date" property="firstSnowDate" jdbcType="DATE" />
+    <result column="snow_amount" property="snowAmount" jdbcType="INTEGER" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" extends="BaseResultMap" >
+    <result column="investigate_user_ids" property="investigateUserIds" jdbcType="LONGVARCHAR" />
+    <result column="investigate_user_names" property="investigateUserNames" jdbcType="LONGVARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, monitoring_stations_id, investigate_date, contact_phone, green_date, mowing_date, 
+    fire_date, yellow_date, january_snow_thickness, february_snow_thickness, december_snow_thickness, 
+    first_snow_date, snow_amount, create_user_id, create_user_name, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    investigate_user_ids, investigate_user_names, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gms_ms_phenological
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gms_ms_phenological
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    insert into gms_ms_phenological (sid, monitoring_stations_id, investigate_date, 
+      contact_phone, green_date, mowing_date, 
+      fire_date, yellow_date, january_snow_thickness, 
+      february_snow_thickness, december_snow_thickness, 
+      first_snow_date, snow_amount, create_user_id, 
+      create_user_name, create_time, investigate_user_ids, 
+      investigate_user_names, remark)
+    values (#{sid,jdbcType=INTEGER}, #{monitoringStationsId,jdbcType=INTEGER}, #{investigateDate,jdbcType=DATE}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{greenDate,jdbcType=DATE}, #{mowingDate,jdbcType=DATE}, 
+      #{fireDate,jdbcType=DATE}, #{yellowDate,jdbcType=DATE}, #{januarySnowThickness,jdbcType=DOUBLE}, 
+      #{februarySnowThickness,jdbcType=DOUBLE}, #{decemberSnowThickness,jdbcType=DOUBLE}, 
+      #{firstSnowDate,jdbcType=DATE}, #{snowAmount,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{investigateUserIds,jdbcType=LONGVARCHAR}, 
+      #{investigateUserNames,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    insert into gms_ms_phenological
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id,
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="greenDate != null" >
+        green_date,
+      </if>
+      <if test="mowingDate != null" >
+        mowing_date,
+      </if>
+      <if test="fireDate != null" >
+        fire_date,
+      </if>
+      <if test="yellowDate != null" >
+        yellow_date,
+      </if>
+      <if test="januarySnowThickness != null" >
+        january_snow_thickness,
+      </if>
+      <if test="februarySnowThickness != null" >
+        february_snow_thickness,
+      </if>
+      <if test="decemberSnowThickness != null" >
+        december_snow_thickness,
+      </if>
+      <if test="firstSnowDate != null" >
+        first_snow_date,
+      </if>
+      <if test="snowAmount != null" >
+        snow_amount,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createUserName != null" >
+        create_user_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids,
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="monitoringStationsId != null" >
+        #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="greenDate != null" >
+        #{greenDate,jdbcType=DATE},
+      </if>
+      <if test="mowingDate != null" >
+        #{mowingDate,jdbcType=DATE},
+      </if>
+      <if test="fireDate != null" >
+        #{fireDate,jdbcType=DATE},
+      </if>
+      <if test="yellowDate != null" >
+        #{yellowDate,jdbcType=DATE},
+      </if>
+      <if test="januarySnowThickness != null" >
+        #{januarySnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="februarySnowThickness != null" >
+        #{februarySnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="decemberSnowThickness != null" >
+        #{decemberSnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="firstSnowDate != null" >
+        #{firstSnowDate,jdbcType=DATE},
+      </if>
+      <if test="snowAmount != null" >
+        #{snowAmount,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    update gms_ms_phenological
+    <set >
+      <if test="monitoringStationsId != null" >
+        monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      </if>
+      <if test="investigateDate != null" >
+        investigate_date = #{investigateDate,jdbcType=DATE},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="greenDate != null" >
+        green_date = #{greenDate,jdbcType=DATE},
+      </if>
+      <if test="mowingDate != null" >
+        mowing_date = #{mowingDate,jdbcType=DATE},
+      </if>
+      <if test="fireDate != null" >
+        fire_date = #{fireDate,jdbcType=DATE},
+      </if>
+      <if test="yellowDate != null" >
+        yellow_date = #{yellowDate,jdbcType=DATE},
+      </if>
+      <if test="januarySnowThickness != null" >
+        january_snow_thickness = #{januarySnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="februarySnowThickness != null" >
+        february_snow_thickness = #{februarySnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="decemberSnowThickness != null" >
+        december_snow_thickness = #{decemberSnowThickness,jdbcType=DOUBLE},
+      </if>
+      <if test="firstSnowDate != null" >
+        first_snow_date = #{firstSnowDate,jdbcType=DATE},
+      </if>
+      <if test="snowAmount != null" >
+        snow_amount = #{snowAmount,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createUserName != null" >
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investigateUserIds != null" >
+        investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investigateUserNames != null" >
+        investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    update gms_ms_phenological
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      green_date = #{greenDate,jdbcType=DATE},
+      mowing_date = #{mowingDate,jdbcType=DATE},
+      fire_date = #{fireDate,jdbcType=DATE},
+      yellow_date = #{yellowDate,jdbcType=DATE},
+      january_snow_thickness = #{januarySnowThickness,jdbcType=DOUBLE},
+      february_snow_thickness = #{februarySnowThickness,jdbcType=DOUBLE},
+      december_snow_thickness = #{decemberSnowThickness,jdbcType=DOUBLE},
+      first_snow_date = #{firstSnowDate,jdbcType=DATE},
+      snow_amount = #{snowAmount,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+      investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcxt.gms.monitoringinfo.bean.GmsMsPhenological" >
+    update gms_ms_phenological
+    set monitoring_stations_id = #{monitoringStationsId,jdbcType=INTEGER},
+      investigate_date = #{investigateDate,jdbcType=DATE},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      green_date = #{greenDate,jdbcType=DATE},
+      mowing_date = #{mowingDate,jdbcType=DATE},
+      fire_date = #{fireDate,jdbcType=DATE},
+      yellow_date = #{yellowDate,jdbcType=DATE},
+      january_snow_thickness = #{januarySnowThickness,jdbcType=DOUBLE},
+      february_snow_thickness = #{februarySnowThickness,jdbcType=DOUBLE},
+      december_snow_thickness = #{decemberSnowThickness,jdbcType=DOUBLE},
+      first_snow_date = #{firstSnowDate,jdbcType=DATE},
+      snow_amount = #{snowAmount,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <!-- 列表  搜索 -->
+  <select id="queryGmp" resultType="hashMap" parameterType="HashMap" >
+    select 
+ 	gmp.sid as sid , gmp.monitoring_stations_id as stationId, gmp.investigate_date as investigateDate, gmp.contact_phone as contactPhone, gmp.green_date as greenDate, gmp.mowing_date as mowingDate, 
+    gmp.fire_date as fireDate, gmp.yellow_date as yellowDate, gmp.january_snow_thickness as januarySnowThickness, gmp.february_snow_thickness as februarySnowThickness,
+    gmp.december_snow_thickness as decemberSnowThickness, 
+    gmp.first_snow_date as firstSnowDate, gmp.snow_amount as snowAmount, gmp.investigate_user_names investigateUserNames,
+    ms.city_code as cityCode,
+    ms.grass_category as grassCategory,
+    ms.grass_type as grassType
+    from gms_ms_phenological gmp left join gms_monitoring_stations ms on gmp.monitoring_stations_id = ms.sid
+    <where>
+    	<if test="januarySnowThicknessStart !=null">
+    		and gmp.january_snow_thickness >=#{januarySnowThicknessStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="januarySnowThicknessEnd !=null">
+    		and gmp.january_snow_thickness &lt;=#{januarySnowThicknessEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="februarySnowThicknessStart !=null">
+    		and gmp.february_snow_thickness >=#{februarySnowThicknessStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="februarySnowThicknessEnd !=null ">
+    		and gmp.february_snow_thickness &lt;=#{februarySnowThicknessEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="decemberSnowThicknessStart !=null">
+    		and gmp.december_snow_thickness >=#{decemberSnowThicknessStart,jdbcType=DOUBLE}
+    	</if>
+    	<if test="decemberSnowThicknessEnd !=null">
+    		and gmp.december_snow_thickness &lt;=#{decemberSnowThicknessEnd,jdbcType=DOUBLE}
+    	</if>
+    	<if test="greenDateStart !=null and greenDateStart !=''">
+    		and gmp.green_date>='${greenDateStart}'
+    	</if>
+    	<if test="greenDateEnd !=null and greenDateEnd !=''">
+    		and gmp.green_date&lt;='${greenDateEnd}'
+    	</if>
+    	<if test="yellowDateStart !=null and yellowDateStart !=''">
+    		and gmp.yellow_date>='${yellowDateStart}'
+    	</if>
+    	<if test="yellowDateEnd !=null and yellowDateEnd !=''">
+    		and gmp.yellow_date&lt;='${yellowDateEnd}'
+    	</if>
+    	<if test="yellowDateEnd !=null and yellowDateEnd !=''">
+    		and gmp.yellow_date&lt;='${yellowDateEnd}'
+    	</if>
+    	<if test="grassCategory !=null and grassCategory !=''">
+    		and ms.grass_category = #{grassCategory,jdbcType=VARCHAR}
+    	</if>
+    	<if test="grassType !=null and grassType !=''">
+    		and ms.grass_type = #{grassType,jdbcType=VARCHAR}
+    	</if>
+    	<if test="cityCode !=null and cityCode !=''">
+    		and ms.city_code like '%${cityCode}%'
+    	</if>
+    	<if test="startYear != null and startYear !=0 ">
+    	and DATE_FORMAT(investigate_date,'%Y') >= #{startYear,jdbcType=INTEGER}
+    	</if>
+    	<if test="endYear!=null and endYear!=0">
+    	and DATE_FORMAT(investigate_date,'%Y') &lt;=#{endYear,jdbcType=INTEGER}
+    	</if>
+    	<!-- <if test="month != null and month !=0">
+    	and MONTH(investigate_date) = #{month}
+    	</if> -->
+    	<if test="hasShrubs != null and hasShrubs !=-1">
+    	and has_shrubs = #{hasShrubs}
+    	</if>
+    	<if test="sids != null and sids !=''">
+    	and gmp.sid in
+	    	<foreach item="item" index="index" collection="sids" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+    	</if>
+    </where>
+    <if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+  </select>
+  <!-- 单删或多删 -->
+  <delete id="deleteGmpById" parameterType="hashMap" >
+    delete from gms_ms_phenological where sid in
+    <foreach item="item" index="index" collection="sids" open="("
+			separator="," close=")">
+			#{item}
+	</foreach>
+  </delete>
+</mapper>

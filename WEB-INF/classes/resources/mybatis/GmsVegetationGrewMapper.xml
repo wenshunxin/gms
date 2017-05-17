@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_vegetation_grew">
+	<resultMap id="BaseResultMap"
+		type="com.tcxt.gms.investigation.bean.GmsVegetationGrew">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="investigate_company_name" property="investigateCompanyName"
+			jdbcType="VARCHAR" />
+		<result column="investigate_area" property="investigateArea"
+			jdbcType="VARCHAR" />
+		<result column="sample_area_number" property="sampleAreaNumber"
+			jdbcType="VARCHAR" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="altitude" property="altitude" jdbcType="DOUBLE" />
+		<result column="grass_category" property="grassCategory"
+			jdbcType="VARCHAR" />
+		<result column="grass_type" property="grassType" jdbcType="VARCHAR" />
+		<result column="grass_landscape" property="grassLandscape"
+			jdbcType="VARCHAR" />
+		<result column="grass_slope" property="grassSlope" jdbcType="VARCHAR" />
+		<result column="grass_slope_position" property="grassSlopePosition"
+			jdbcType="VARCHAR" />
+		<result column="avg_coverage" property="avgCoverage" jdbcType="DOUBLE" />
+		<result column="avg_highly" property="avgHighly" jdbcType="DOUBLE" />
+		<result column="avg_fresh_grass_amount" property="avgFreshGrassAmount"
+			jdbcType="DOUBLE" />
+		<result column="avg_grass_amount" property="avgGrassAmount"
+			jdbcType="DOUBLE" />
+		<result column="using_type" property="usingType" jdbcType="VARCHAR" />
+		<result column="using_status" property="usingStatus" jdbcType="VARCHAR" />
+		<result column="soil_moisture" property="soilMoisture"
+			jdbcType="VARCHAR" />
+		<result column="soil_moisture_other" property="soilMoistureOther"
+			jdbcType="VARCHAR" />
+		<result column="evaluation" property="evaluation" jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.tcxt.gms.investigation.bean.GmsVegetationGrew" extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, investigate_data_id, investigate_date, investigate_company_name,
+		investigate_area,
+		sample_area_number, longitude, latitude, altitude, grass_category, grass_type,
+		grass_landscape,
+		grass_slope, grass_slope_position, avg_coverage, avg_highly,
+		avg_fresh_grass_amount,
+		avg_grass_amount, using_type, using_status, soil_moisture, soil_moisture_other,
+		evaluation,
+		create_user_id,create_user_name,create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_vegetation_grew
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getVegetationGrewByDataId" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_vegetation_grew
+		where investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	<select id="getMaxSampleAreaByNumber" resultType="hashMap"
+		parameterType="hashMap">
+		select max(cast(SUBSTRING(sample_area_number,CHAR_LENGTH('${preNumber}')+1) as signed)) as maxNumber
+		from gms_vegetation_grew
+		where sample_area_number like '%${preNumber}%' and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<select id="getVegetationGrewByNumber" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_vegetation_grew
+		where sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR} and DATE_FORMAT(investigate_date,"%Y") = #{year,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_vegetation_grew
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsVegetationGrew" useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_vegetation_grew
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="investigateCompanyName != null">
+				investigate_company_name,
+			</if>
+			<if test="investigateArea != null">
+				investigate_area,
+			</if>
+			<if test="sampleAreaNumber != null">
+				sample_area_number,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="altitude != null">
+				altitude,
+			</if>
+			<if test="grassCategory != null">
+				grass_category,
+			</if>
+			<if test="grassType != null">
+				grass_type,
+			</if>
+			<if test="grassLandscape != null">
+				grass_landscape,
+			</if>
+			<if test="grassSlope != null">
+				grass_slope,
+			</if>
+			<if test="grassSlopePosition != null">
+				grass_slope_position,
+			</if>
+			<if test="avgCoverage != null">
+				avg_coverage,
+			</if>
+			<if test="avgHighly != null">
+				avg_highly,
+			</if>
+			<if test="avgFreshGrassAmount != null">
+				avg_fresh_grass_amount,
+			</if>
+			<if test="avgGrassAmount != null">
+				avg_grass_amount,
+			</if>
+			<if test="usingType != null">
+				using_type,
+			</if>
+			<if test="usingStatus != null">
+				using_status,
+			</if>
+			<if test="soilMoisture != null">
+				soil_moisture,
+			</if>
+			<if test="soilMoistureOther != null">
+				soil_moisture_other,
+			</if>
+			<if test="evaluation != null">
+				evaluation,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="investigateCompanyName != null">
+				#{investigateCompanyName,jdbcType=VARCHAR},
+			</if>
+			<if test="investigateArea != null">
+				#{investigateArea,jdbcType=VARCHAR},
+			</if>
+			<if test="sampleAreaNumber != null">
+				#{sampleAreaNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="altitude != null">
+				#{altitude,jdbcType=DOUBLE},
+			</if>
+			<if test="grassCategory != null">
+				#{grassCategory,jdbcType=VARCHAR},
+			</if>
+			<if test="grassType != null">
+				#{grassType,jdbcType=VARCHAR},
+			</if>
+			<if test="grassLandscape != null">
+				#{grassLandscape,jdbcType=VARCHAR},
+			</if>
+			<if test="grassSlope != null">
+				#{grassSlope,jdbcType=VARCHAR},
+			</if>
+			<if test="grassSlopePosition != null">
+				#{grassSlopePosition,jdbcType=VARCHAR},
+			</if>
+			<if test="avgCoverage != null">
+				#{avgCoverage,jdbcType=DOUBLE},
+			</if>
+			<if test="avgHighly != null">
+				#{avgHighly,jdbcType=DOUBLE},
+			</if>
+			<if test="avgFreshGrassAmount != null">
+				#{avgFreshGrassAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="avgGrassAmount != null">
+				#{avgGrassAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="usingType != null">
+				#{usingType,jdbcType=VARCHAR},
+			</if>
+			<if test="usingStatus != null">
+				#{usingStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="soilMoisture != null">
+				#{soilMoisture,jdbcType=VARCHAR},
+			</if>
+			<if test="soilMoistureOther != null">
+				#{soilMoistureOther,jdbcType=VARCHAR},
+			</if>
+			<if test="evaluation != null">
+				#{evaluation,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsVegetationGrew">
+		update gms_vegetation_grew
+		<set>
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+				investigate_company_name =
+				#{investigateCompanyName,jdbcType=VARCHAR},
+				investigate_area = #{investigateArea,jdbcType=VARCHAR},
+				sample_area_number = #{sampleAreaNumber,jdbcType=VARCHAR},
+				longitude = #{longitude,jdbcType=DOUBLE},
+				latitude = #{latitude,jdbcType=DOUBLE},
+				altitude = #{altitude,jdbcType=DOUBLE},
+				grass_category = #{grassCategory,jdbcType=VARCHAR},
+				grass_type = #{grassType,jdbcType=VARCHAR},
+				grass_landscape = #{grassLandscape,jdbcType=VARCHAR},
+				grass_slope = #{grassSlope,jdbcType=VARCHAR},
+				grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR},
+				avg_coverage = #{avgCoverage,jdbcType=DOUBLE},
+				avg_highly = #{avgHighly,jdbcType=DOUBLE},
+				avg_fresh_grass_amount = #{avgFreshGrassAmount,jdbcType=DOUBLE},
+				avg_grass_amount = #{avgGrassAmount,jdbcType=DOUBLE},
+				using_type = #{usingType,jdbcType=VARCHAR},
+				using_status = #{usingStatus,jdbcType=VARCHAR},
+				soil_moisture = #{soilMoisture,jdbcType=VARCHAR},
+				soil_moisture_other = #{soilMoistureOther,jdbcType=VARCHAR},
+				evaluation = #{evaluation,jdbcType=VARCHAR},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryVegetationGrew" parameterType="HashMap"
+		resultType="hashMap">
+		select 
+			g.sid as sid , g.investigate_data_id as investigateDataId, g.investigate_date as investigateDate,
+		g.investigate_area as investigateArea,
+		g.sample_area_number as sampleAreaNumber,  g.grass_category as grassCategory,
+		g.grass_landscape as grassLandscape,
+		g.grass_slope as grassSlope, g.grass_slope_position as grassSlopePosition, 
+		g.using_type as usingType, g.using_status as usingStatus, g.soil_moisture as soilMoisture,
+		g.evaluation as evaluation,
+		g.investigate_company_name as investigateCompanyName,
+		g.longitude, g.latitude, g.altitude,  g.grass_type as grassType,
+		g.avg_coverage as avgCoverage, g.avg_highly as avgHighly,
+		g.avg_fresh_grass_amount as avgFreshGrassAmount,
+		g.avg_grass_amount as avgGrassAmount, g.soil_moisture_other as soilMoistureOther,
+		d.audit_status as auditStatus,d.investigate_user_names as investigateUserNames
+		from gms_vegetation_grew g left join gms_investigate_data d on g.investigate_data_id = d.sid
+								   left join gms_user u on g.create_user_id = u.sid
+		where 1=1
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and g.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="year!=null and year!=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="grassSlope!=null and grassSlope!=''">
+			and g.grass_slope = #{grassSlope,jdbcType=VARCHAR}
+		</if>
+		<if test="grassSlopePosition!=null and grassSlopePosition!=''">
+			and g.grass_slope_position = #{grassSlopePosition,jdbcType=VARCHAR}
+		</if>
+		<if test="grassCategory !=null and grassCategory !=''">
+			and g.grass_category = #{grassCategory,jdbcType=VARCHAR}
+		</if>
+		<if test="grassLandscape !=null and grassLandscape !=''">
+			and g.grass_landscape = #{grassLandscape,jdbcType=VARCHAR}
+		</if>
+		<if test="soilMoisture !=null and soilMoisture !=''">
+			and g.soil_moisture = #{soilMoisture,jdbcType=VARCHAR}
+		</if>
+		<if test="evaluation !=null and evaluation !=''">
+			and g.evaluation = #{evaluation,jdbcType=VARCHAR}
+		</if>
+		<if test="usingType !=null and usingType !=''">
+			and g.using_type = #{usingType,jdbcType=VARCHAR}
+		</if>
+		<if test="usingStatus !=null and usingStatus !=''">
+			and g.using_status = #{usingStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="auditStatus !=null and auditStatus !=''">
+			and d.audit_status = #{auditStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="sort!=''">
+			order by ${sort}
+			<if test="order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="queryVegetationGrewList" parameterType="HashMap" resultType="hashMap">
+		SELECT gvg.sid sid,gvg.investigate_data_id investigateDataId,gvg.investigate_date investigateDate,gvg.investigate_user_ids investigateUserIds,
+			gvg.investigate_user_names investigateUserNames,gvg.investigate_company_name investigateCompanyName,gvg.investigate_area investigateArea,gvg.sample_area_number sampleAreaNumber,
+			gvg.longitude longitude,gvg.latitude latitude,gvg.altitude altitude,gvg.grass_category grassCategory,gvg.grass_type grassType,gvg.grass_landscape grassLandscape,
+			gvg.grass_slope grassSlope,gvg.grass_slope_position grassSlopePosition,gvg.avg_coverage avgCoverage,gvg.avg_highly avgHighly,gvg.avg_fresh_grass_amount avgFreshGrassAmount,
+			gvg.avg_grass_amount avgGrassAmount,gvg.using_type usingType,gvg.using_status usingStatus,gvg.soil_moisture soilMoisture,gvg.soil_moisture_other soilMoistureOther,
+			gvg.evaluation evaluation,gvg.create_user_id createUserId,gvg.create_user_name createUserName,gvg.create_time createTime,gvg.remark remark
+			FROM `gms_investigate_data` gid LEFT JOIN gms_vegetation_grew gvg 
+			ON gid.sid=gvg.investigate_data_id 
+			where gid.sid=gvg.investigate_data_id 
+			<if test="auditStatus != null and auditStatus ==4">
+				 AND gid.audit_status=4 
+			</if>
+			<if test="auditStatus != null and auditStatus ==0">
+				 AND gid.audit_status=0 
+			</if>
+			<if test="auditStatus != null and auditStatus ==99">
+				 AND gid.audit_status>0
+			</if>
+			AND gid.investigate_type=7 and gid.year = #{year,jdbcType=INTEGER}
+			AND gid.create_user_id IN (select sid FROM gms_user where city_code LIKE '${cityCode}');
+	</select>
+</mapper>

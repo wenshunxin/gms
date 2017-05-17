@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_sys_category">
+	<resultMap id="BaseResultMap" type="com.tcxt.gms.category.bean.GmsSysCategory">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+		<result column="category_name" property="categoryName"
+			jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.tcxt.gms.category.bean.GmsSysCategory"
+		extends="BaseResultMap">
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, category_no, category_name, parent_id
+	</sql>
+	<sql id="Blob_Column_List">
+		remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="selectParentCategory" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where parent_id=0
+		<if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="selectChildCategoryListByParentId" resultMap="ResultMapWithBLOBs" parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where parent_id = #{parentId,jdbcType=INTEGER}
+		<if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="selectParentCategoryByNo" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where category_no = #{categoryNo,jdbcType=VARCHAR} and parent_id = 0
+	</select>
+	<select id="getCategoryName" resultMap="ResultMapWithBLOBs"
+		parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where parent_id = (select sid from gms_sys_category where category_no = #{typeCode,jdbcType=VARCHAR} and parent_id = 0) and category_no = #{codeValue,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getCategoryList" resultMap="ResultMapWithBLOBs"
+		parameterType="hashMap">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_sys_category
+		where category_no = #{categoryNo,jdbcType=VARCHAR} and parent_id =
+		#{parentId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteCatetoryById" parameterType="java.lang.Integer">
+		delete from gms_sys_category
+		where sid = #{sid,jdbcType=INTEGER} or parent_id = #{sid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.tcxt.gms.category.bean.GmsSysCategory">
+		insert into gms_sys_category (sid, category_no, category_name,
+		parent_id, remark)
+		values (#{sid,jdbcType=INTEGER}, #{categoryNo,jdbcType=VARCHAR},
+		#{categoryName,jdbcType=VARCHAR},
+		#{parentId,jdbcType=INTEGER}, #{remark,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.category.bean.GmsSysCategory">
+		insert into gms_sys_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="categoryNo != null">
+				category_no,
+			</if>
+			<if test="categoryName != null">
+				category_name,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="categoryNo != null">
+				#{categoryNo,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				#{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.category.bean.GmsSysCategory">
+		update gms_sys_category
+		<set>
+			<if test="categoryNo != null">
+				category_no = #{categoryNo,jdbcType=VARCHAR},
+			</if>
+			<if test="categoryName != null">
+				category_name = #{categoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+</mapper>

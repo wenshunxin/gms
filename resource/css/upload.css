@@ -1,0 +1,25 @@
+.fileUpload {
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	top: 25px;
+	margin: 0 auto;
+}
+
+.fileUpload input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 150px;
+	z-index: 9;
+}
+
+.fileUpload .tempImg {
+	position: absolute;
+	top: 0;
+	width: 150px;
+	height: 150px;
+	z-index: 9999;
+	background: #ffffff;
+}

@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gms_shrubs_quadrat">
+	<resultMap id="BaseResultMap"
+		type="com.tcxt.gms.investigation.bean.GmsShrubsQuadrat">
+		<id column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="investigate_data_id" property="investigateDataId"
+			jdbcType="INTEGER" />
+		<result column="sample_area_id" property="sampleAreaId"
+			jdbcType="INTEGER" />
+		<result column="investigate_date" property="investigateDate"
+			jdbcType="DATE" />
+		<result column="in_or_out" property="inOrOut" jdbcType="INTEGER" />
+		<result column="quadrat_number" property="quadratNumber"
+			jdbcType="VARCHAR" />
+		<result column="quadrat_size" property="quadratSize" jdbcType="DOUBLE" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="altitude" property="altitude" jdbcType="DOUBLE" />
+		<result column="herb_grass_avg_height" property="herbGrassAvgHeight"
+			jdbcType="DOUBLE" />
+		<result column="herb_plant_nums" property="herbPlantNums"
+			jdbcType="INTEGER" />
+		<result column="herb_avg_fresh_amount" property="herbAvgFreshAmount"
+			jdbcType="DOUBLE" />
+		<result column="herb_avg_dry_amount" property="herbAvgDryAmount"
+			jdbcType="DOUBLE" />
+		<result column="herb_avg_edible_fresh_amount" property="herbAvgEdibleFreshAmount"
+			jdbcType="DOUBLE" />
+		<result column="herb_avg_edible_dry_amount" property="herbAvgEdibleDryAmount"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_grass_avg_height" property="shrubsGrassAvgHeight"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_plant_nums" property="shrubsPlantNums"
+			jdbcType="INTEGER" />
+		<result column="total_cover_size" property="totalCoverSize"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_avg_fresh_amount" property="shrubsAvgFreshAmount"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_avg_dry_amount" property="shrubsAvgDryAmount"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_avg_edible_fresh_amount" property="shrubsAvgEdibleFreshAmount"
+			jdbcType="DOUBLE" />
+		<result column="shrubs_avg_edible_dry_amount" property="shrubsAvgEdibleDryAmount"
+			jdbcType="DOUBLE" />
+		<result column="coverage" property="coverage" jdbcType="DOUBLE" />
+		<result column="fresh_amount" property="freshAmount" jdbcType="DOUBLE" />
+		<result column="dry_amount" property="dryAmount" jdbcType="DOUBLE" />
+		<result column="create_user_id" property="createUserId"
+			jdbcType="INTEGER" />
+		<result column="create_user_name" property="createUserName"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.tcxt.gms.investigation.bean.GmsShrubsQuadrat" extends="BaseResultMap">
+		<result column="investigate_user_ids" property="investigateUserIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="investigate_user_names" property="investigateUserNames"
+			jdbcType="LONGVARCHAR" />
+		<result column="herb_main_plant" property="herbMainPlant"
+			jdbcType="LONGVARCHAR" />
+		<result column="shrubs_main_plant" property="shrubsMainPlant"
+			jdbcType="LONGVARCHAR" />
+		<result column="litters" property="litters" jdbcType="LONGVARCHAR" />
+		<result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		sid, investigate_data_id, sample_area_id, investigate_date, in_or_out,
+		quadrat_number,
+		quadrat_size, longitude, latitude, altitude, herb_grass_avg_height,
+		herb_plant_nums,
+		herb_avg_fresh_amount, herb_avg_dry_amount, herb_avg_edible_fresh_amount,
+		herb_avg_edible_dry_amount,
+		shrubs_grass_avg_height, shrubs_plant_nums, total_cover_size, shrubs_avg_fresh_amount,
+		shrubs_avg_dry_amount, shrubs_avg_edible_fresh_amount,
+		shrubs_avg_edible_dry_amount,
+		coverage, fresh_amount, dry_amount, create_user_id,create_user_name,create_time
+	</sql>
+	<sql id="Blob_Column_List">
+		investigate_user_ids, investigate_user_names, herb_main_plant, shrubs_main_plant,
+		litters, remark
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_shrubs_quadrat
+		where sid = #{sid,jdbcType=INTEGER}
+	</select>
+	<select id="getShrubsQuadratBySampleAreaId" resultType="HashMap"
+		parameterType="java.lang.Integer">
+		select
+		sid, investigate_data_id investigateDataId, sample_area_id sampleAreaId, investigate_date investigateDate, in_or_out inOrOut,
+		quadrat_number quadratNumber,quadrat_size quadratSize, longitude, latitude, altitude, herb_grass_avg_height herbGrassAvgHeight,
+		herb_plant_nums herbPlantNums,herb_avg_fresh_amount herbAvgFreshAmount, herb_avg_dry_amount herbAvgDryAmount, 
+		herb_avg_edible_fresh_amount herbAvgEdibleFreshAmount,herb_avg_edible_dry_amount herbAvgEdibleDryAmount,
+		shrubs_grass_avg_height shrubsGrassAvgHeight, shrubs_plant_nums shrubsPlantNums, total_cover_size totalCoverSize, 
+		shrubs_avg_fresh_amount shrubsAvgFreshAmount,shrubs_avg_dry_amount shrubsAvgDryAmount, shrubs_avg_edible_fresh_amount shrubsAvgEdibleFreshAmount,
+		shrubs_avg_edible_dry_amount shrubsAvgEdibleDryAmount,coverage, fresh_amount freshAmount, dry_amount dryAmount, create_user_id createUserId,
+		create_user_name createUserName,create_time createTime,investigate_user_ids investigateUserIds, investigate_user_names investigateUserNames, 
+		herb_main_plant herbMainPlant, shrubs_main_plant shrubsMainPlant,
+		litters, remark
+		from gms_shrubs_quadrat
+		where sample_area_id = #{gsasid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from gms_shrubs_quadrat
+		where sid = #{sid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteShrubsQuadratByDataId" parameterType="java.lang.Integer">
+		delete from gms_shrubs_quadrat
+		where investigate_data_id = #{investigateDataId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteShrubsQuadratByNumber" parameterType="hashMap">
+		delete from gms_shrubs_quadrat
+		where quadrat_number = #{quadratNumber,jdbcType=VARCHAR} and investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsQuadrat" useGeneratedKeys="true" keyProperty="sid">
+		insert into gms_shrubs_quadrat
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="investigateDataId != null">
+				investigate_data_id,
+			</if>
+			<if test="sampleAreaId != null">
+				sample_area_id,
+			</if>
+			<if test="investigateDate != null">
+				investigate_date,
+			</if>
+			<if test="inOrOut != null">
+				in_or_out,
+			</if>
+			<if test="quadratNumber != null">
+				quadrat_number,
+			</if>
+			<if test="quadratSize != null">
+				quadrat_size,
+			</if>
+			<if test="longitude != null">
+				longitude,
+			</if>
+			<if test="latitude != null">
+				latitude,
+			</if>
+			<if test="altitude != null">
+				altitude,
+			</if>
+			<if test="herbGrassAvgHeight != null">
+				herb_grass_avg_height,
+			</if>
+			<if test="herbPlantNums != null">
+				herb_plant_nums,
+			</if>
+			<if test="herbAvgFreshAmount != null">
+				herb_avg_fresh_amount,
+			</if>
+			<if test="herbAvgDryAmount != null">
+				herb_avg_dry_amount,
+			</if>
+			<if test="herbAvgEdibleFreshAmount != null">
+				herb_avg_edible_fresh_amount,
+			</if>
+			<if test="herbAvgEdibleDryAmount != null">
+				herb_avg_edible_dry_amount,
+			</if>
+			<if test="shrubsGrassAvgHeight != null">
+				shrubs_grass_avg_height,
+			</if>
+			<if test="shrubsPlantNums != null">
+				shrubs_plant_nums,
+			</if>
+			<if test="totalCoverSize != null">
+				total_cover_size,
+			</if>
+			<if test="shrubsAvgFreshAmount != null">
+				shrubs_avg_fresh_amount,
+			</if>
+			<if test="shrubsAvgDryAmount != null">
+				shrubs_avg_dry_amount,
+			</if>
+			<if test="shrubsAvgEdibleFreshAmount != null">
+				shrubs_avg_edible_fresh_amount,
+			</if>
+			<if test="shrubsAvgEdibleDryAmount != null">
+				shrubs_avg_edible_dry_amount,
+			</if>
+			<if test="coverage != null">
+				coverage,
+			</if>
+			<if test="freshAmount != null">
+				fresh_amount,
+			</if>
+			<if test="dryAmount != null">
+				dry_amount,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids,
+			</if>
+			<if test="investigateUserNames != null">
+				investigate_user_names,
+			</if>
+			<if test="herbMainPlant != null">
+				herb_main_plant,
+			</if>
+			<if test="shrubsMainPlant != null">
+				shrubs_main_plant,
+			</if>
+			<if test="litters != null">
+				litters,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDataId != null">
+				#{investigateDataId,jdbcType=INTEGER},
+			</if>
+			<if test="sampleAreaId != null">
+				#{sampleAreaId,jdbcType=INTEGER},
+			</if>
+			<if test="investigateDate != null">
+				#{investigateDate,jdbcType=DATE},
+			</if>
+			<if test="inOrOut != null">
+				#{inOrOut,jdbcType=INTEGER},
+			</if>
+			<if test="quadratNumber != null">
+				#{quadratNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="quadratSize != null">
+				#{quadratSize,jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null">
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="latitude != null">
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="altitude != null">
+				#{altitude,jdbcType=DOUBLE},
+			</if>
+			<if test="herbGrassAvgHeight != null">
+				#{herbGrassAvgHeight,jdbcType=DOUBLE},
+			</if>
+			<if test="herbPlantNums != null">
+				#{herbPlantNums,jdbcType=INTEGER},
+			</if>
+			<if test="herbAvgFreshAmount != null">
+				#{herbAvgFreshAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="herbAvgDryAmount != null">
+				#{herbAvgDryAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="herbAvgEdibleFreshAmount != null">
+				#{herbAvgEdibleFreshAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="herbAvgEdibleDryAmount != null">
+				#{herbAvgEdibleDryAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsGrassAvgHeight != null">
+				#{shrubsGrassAvgHeight,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsPlantNums != null">
+				#{shrubsPlantNums,jdbcType=INTEGER},
+			</if>
+			<if test="totalCoverSize != null">
+				#{totalCoverSize,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsAvgFreshAmount != null">
+				#{shrubsAvgFreshAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsAvgDryAmount != null">
+				#{shrubsAvgDryAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsAvgEdibleFreshAmount != null">
+				#{shrubsAvgEdibleFreshAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="shrubsAvgEdibleDryAmount != null">
+				#{shrubsAvgEdibleDryAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="coverage != null">
+				#{coverage,jdbcType=DOUBLE},
+			</if>
+			<if test="freshAmount != null">
+				#{freshAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="dryAmount != null">
+				#{dryAmount,jdbcType=DOUBLE},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				#{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="investigateUserNames != null">
+				#{investigateUserNames,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="herbMainPlant != null">
+				#{herbMainPlant,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="shrubsMainPlant != null">
+				#{shrubsMainPlant,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="litters != null">
+				#{litters,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tcxt.gms.investigation.bean.GmsShrubsQuadrat">
+		update gms_shrubs_quadrat
+		<set>
+				investigate_data_id = #{investigateDataId,jdbcType=INTEGER},
+				sample_area_id = #{sampleAreaId,jdbcType=INTEGER},
+				investigate_date = #{investigateDate,jdbcType=DATE},
+			<if test="inOrOut!=null">
+				in_or_out = #{inOrOut,jdbcType=INTEGER},
+			</if>
+				quadrat_number = #{quadratNumber,jdbcType=VARCHAR},
+				quadrat_size = #{quadratSize,jdbcType=DOUBLE},
+				longitude = #{longitude,jdbcType=DOUBLE},
+				latitude = #{latitude,jdbcType=DOUBLE},
+				altitude = #{altitude,jdbcType=DOUBLE},
+				herb_grass_avg_height = #{herbGrassAvgHeight,jdbcType=DOUBLE},
+				herb_plant_nums = #{herbPlantNums,jdbcType=INTEGER},
+				herb_avg_fresh_amount = #{herbAvgFreshAmount,jdbcType=DOUBLE},
+				herb_avg_dry_amount = #{herbAvgDryAmount,jdbcType=DOUBLE},
+				herb_avg_edible_fresh_amount =
+				#{herbAvgEdibleFreshAmount,jdbcType=DOUBLE},
+				herb_avg_edible_dry_amount =
+				#{herbAvgEdibleDryAmount,jdbcType=DOUBLE},
+				shrubs_grass_avg_height = #{shrubsGrassAvgHeight,jdbcType=DOUBLE},
+				shrubs_plant_nums = #{shrubsPlantNums,jdbcType=INTEGER},
+				total_cover_size = #{totalCoverSize,jdbcType=DOUBLE},
+				shrubs_avg_fresh_amount = #{shrubsAvgFreshAmount,jdbcType=DOUBLE},
+				shrubs_avg_dry_amount = #{shrubsAvgDryAmount,jdbcType=DOUBLE},
+				shrubs_avg_edible_fresh_amount =
+				#{shrubsAvgEdibleFreshAmount,jdbcType=DOUBLE},
+				shrubs_avg_edible_dry_amount =
+				#{shrubsAvgEdibleDryAmount,jdbcType=DOUBLE},
+				coverage = #{coverage,jdbcType=DOUBLE},
+				fresh_amount = #{freshAmount,jdbcType=DOUBLE},
+				dry_amount = #{dryAmount,jdbcType=DOUBLE},
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="investigateUserIds != null">
+				investigate_user_ids = #{investigateUserIds,jdbcType=LONGVARCHAR},
+			</if>
+				investigate_user_names = #{investigateUserNames,jdbcType=LONGVARCHAR},
+				herb_main_plant = #{herbMainPlant,jdbcType=LONGVARCHAR},
+				shrubs_main_plant = #{shrubsMainPlant,jdbcType=LONGVARCHAR},
+				litters = #{litters,jdbcType=LONGVARCHAR},
+				remark = #{remark,jdbcType=LONGVARCHAR},
+		</set>
+		where sid = #{sid,jdbcType=INTEGER}
+	</update>
+	<select id="queryShrubsQuadratByData" parameterType="HashMap" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_shrubs_quadrat
+		where 1=1
+		<if test="investigateDataId!=null and investigateDataId!=0">
+			and investigate_data_id = #{investigateDataId,jdbcType=INTEGER} and
+			in_or_out in (0,1)
+		</if>
+		<if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="queryShrubsQuadrat" parameterType="HashMap" resultType="hashMap">
+		select distinct(sq.sid) as sid, sq.quadrat_number as quadratNumber,sq.investigate_date as investigateDate,
+		sq.sample_area_id as sampleAreaId,sq.coverage as coverage,sq.fresh_amount as freshAmount,
+		sq.dry_amount as dryAmount,sq.in_or_out as inOrOut,
+		sq.investigate_data_id as dataId,sq.investigate_data_id as investigateDataId,
+		sq.quadrat_size as quadratSize, sq.longitude as longitude, sq.latitude as latitude, 
+		sq.altitude as altitude, sq.herb_grass_avg_height as herbGrassAvgHeight,
+		sq.herb_plant_nums as herbPlantNums,
+		sq.herb_avg_fresh_amount as herbAvgFreshAmount, sq.herb_avg_dry_amount as herbAvgDryAmount,
+		sq.herb_avg_edible_fresh_amount as herbAvgEdibleFreshAmount,
+		sq.herb_avg_edible_dry_amount as herbAvgEdibleDryAmount,
+		sq.shrubs_grass_avg_height as shrubsGrassAvgHeight, sq.shrubs_plant_nums as shrubsPlantNums,
+		sq.total_cover_size as totalCoverSize, sq.shrubs_avg_fresh_amount as shrubsAvgFreshAmount,
+		sq.shrubs_avg_dry_amount as shrubsAvgDryAmount, sq.shrubs_avg_edible_fresh_amount as shurbsAvgEdibleFreshAmount,
+		sq.shrubs_avg_edible_dry_amount as shrubsAvgEdibleDryAmount,
+		sq.investigate_user_names as investigateUserNames, sq.herb_main_plant as herbMainPlant,
+		sq.shrubs_main_plant as shrubsMainPlant,
+		sq.litters as litters, sq.remark as remark,
+		
+		d.audit_status as auditStatus,
+		p.project_name as projectName,p.project_size as projectSize,p.project_building_date as buildingDate,
+		p.project_investment as projectInvestment
+		from gms_shrubs_quadrat sq left join gms_sample_area sa on sq.sample_area_id = sa.sid
+									left join gms_investigate_data d on sq.investigate_data_id = d.sid
+									left join gms_user u on sq.create_user_id = u.sid
+									left join gms_project p on sa.project_id = p.sid
+									 left join gms_audit_records rs on (rs.investigate_data_id = d.sid and rs.quadrat_id>0 and rs.sample_area_id !=0)
+		where 1=1
+		<if test="auditPriv!=null">
+			and d.audit_status in
+			<foreach item="item" index="index" collection="auditPriv"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="dataIds!=null">
+			and sq.sid in
+			<foreach item="item" index="index" collection="dataIds"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="inOrOut!=null and inOrOut!=-1">
+			and sq.in_or_out = #{inOrOut,jdbcType=INTEGER}
+		</if>
+		<if test="inOrOut!=null and inOrOut==-1">
+			and sq.in_or_out > 0
+		</if>
+		<if test="year !=null and year !=0">
+			and d.year = #{year,jdbcType=INTEGER}
+		</if>
+		<if test="coverage !=null ">
+			and sq.coverage = #{coverage,jdbcType=DOUBLE}
+		</if>
+		<if test="freshAmount !=null">
+			and sq.fresh_amount = #{freshAmount,jdbcType=DOUBLE}
+		</if>
+		<if test="dryAmount !=null">
+			and sq.dry_amount = #{dryAmount,jdbcType=DOUBLE}
+		</if>
+		<if test="cityCode !=null and cityCode !=''">
+			and u.city_code like '%${cityCode}%'
+		</if>
+		<if test="auditStatus !=null and auditStatus ==0 and auditStatus!=''">
+			and d.audit_status = #{auditStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="auditStatus !=null and auditStatus ==1">
+			and d.audit_status = #{auditStatus,jdbcType=VARCHAR} and ((select count(1) from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid)=0 or
+			 sq.sid = (select quadrat_id from gms_audit_records where records_type in(1,3) and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid)))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==2">
+			 and sq.sid = (select quadrat_id from gms_audit_records where records_type=0 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==3">
+			 and sq.sid = (select quadrat_id from gms_audit_records where  records_type= 1 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==4">
+			 and sq.sid = (select quadrat_id from gms_audit_records where records_type= 2 and  sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid))
+		</if>
+		<if test="auditStatus !=null and auditStatus ==5">
+			and sq.sid = (select quadrat_id from gms_audit_records where  records_type= 3 and sid = (select max(sid) as maxAuditSid from gms_audit_records where sample_area_id = sa.sid and quadrat_id = sq.sid))
+		</if>
+		<if test="grassCategory !=null and grassCategory !=''">
+			and sa.grass_category = #{grassCategory,jdbcType=INTEGER}
+		</if>
+		<if test="herbMainPlant !=null and herbMainPlant !=''">
+			and sq.herb_main_plant like '%${herbMainPlant}%'
+		</if>
+		<if test="shrubsMainPlant !=null and shrubsMainPlant !=''">
+			and sq.shrubs_main_plant like '%${shrubsMainPlant}%'
+		</if>
+		<if test="sort!=null and sort!=''">
+			order by ${sort}
+			<if test="order!=null and order!=''">
+				${order}
+			</if>
+		</if>
+	</select>
+	<select id="getQuadratListByNumber" parameterType="HashMap"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_shrubs_quadrat
+		where quadrat_number = #{quadratNumber,jdbcType = VARCHAR} and investigate_data_id = #{dataId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getShrubsQuadratByNumber" parameterType="HashMap"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from gms_shrubs_quadrat
+		where in_or_out = #{inOrOut,jdbcType=INTEGER} and sample_area_id = #{saId,jdbcType=INTEGER} and quadrat_number = #{quadratNumber,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getMaxQuadratNumber" parameterType="HashMap" resultType="hashMap">
+		select max(cast(SUBSTRING(quadrat_number,CHAR_LENGTH('${saNumber}')+2) as signed)) as maxQuadratNumber
+		from gms_shrubs_quadrat
+		where sample_area_id = #{saId,jdbcType=INTEGER} and quadrat_number like '%${saNumber}%'
+	</select>
+</mapper>
